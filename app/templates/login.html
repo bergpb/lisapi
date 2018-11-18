@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }}| Login{% endblock %}}
+
+{% block content %}
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 offset-md-3 offset-lg-3 offset-xl-3 mt-4">
+    <h3 class="text-center mb-4">Login</h3>
+    <form novalidate class="form-horizontal" action="" method="POST">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.username(class="form-control", placeholder="username") }}
+        {% if form.errors.username %}
+          <ul class="list-group">
+            {% for error in form.errors.username %}
+              <li class="list-group-item list-group-item-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.password(class="form-control", placeholder="password") }}
+        {% if form.errors.password %}
+          <ul class="list-group">
+            {% for error in form.errors.password %}
+              <li class="list-group-item list-group-item-danger">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="form-check mb-3">
+        {{ form.remember_me(class="form-check-input") }}
+        <label name="remember_me" class="form-check-label">Remember Me</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+    </form>
+    <div class="mt-3">
+      <div class="row">
+        <div class="col-6 text-center">
+          <a class="btn btn-default" href="#">Sign Up</a>
+        </div>
+        <div class="col-6 text-center">
+          <a class="btn btn-default" href="#">Forgot Password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %} Lisa {% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+  </head>
+  
+  <body style="padding-top: 3.5rem;">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <button class="navbar-toggler" type="button" data-target="#navbar" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+        {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}" >Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('control_pins') }}">Control Device</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list_pins') }}">Edit Pins</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        {% endif %}
+        </ul>
+        {% if current_user %}
+          <span class="navbar-text">
+            {{ current_user.username }}
+          </span>
+        {% endif %}
+      </div>
+    </nav>
+    
+    <div style="padding-top: 3.5rem;" class="container">
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <div class="mb-4">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
+        </div>
+      </div>
+      {% block content %} {% endblock %}
+      <hr>
+    </div>
+    
+    <footer class="container text-center footer">
+      <p>LisaPi | Made with <i class="fas fa-heart" style="color:red"></i>
+      by: <a href="https://github.com/lisapi-flask">@bergpb</a></p>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  </body>
+</html>
