@@ -116,5 +116,7 @@ dmypy.json
 
 #my files
 storage.db
+storage_dev.db
+config.py
 anotacoes.txt
 /migrations

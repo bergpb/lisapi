@@ -5,7 +5,7 @@ from app import app, db, login
 import RPi.GPIO as gpio
 
 from app.models.tables import User, Pin
-from app.models.forms import Login, SignUp, NewPin
+from app.models.forms import Login, SignUp, NewPin, ChangePassword
 
 
 gpio.setmode(gpio.BCM)
@@ -22,7 +22,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/login", methods=["GET","POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form_login = Login()
     if form_login.validate_on_submit():
@@ -36,11 +36,13 @@ def login():
             return render_template('login.html',
                            form=form_login)
     else:
+        if len(form_login.errors) > 0:
+            flash("Check data.", "danger")
         return render_template('login.html',
                            form=form_login)
 
 
-@app.route("/create", methods=["GET","POST"])
+@app.route("/create", methods=["GET", "POST"])
 def create_pin():
     form_new_pin = NewPin()
     if form_new_pin.validate_on_submit():
@@ -65,7 +67,7 @@ def list_pins():
                             pins=list_pins)
 
 
-@app.route("/edit/<int:pin_id>", methods=["GET","POST"])
+@app.route("/edit/<int:pin_id>", methods=["GET", "POST"])
 @login_required
 def edit_pin(pin_id):
     pin_data = Pin.query.filter_by(id=pin_id, user_id=current_user.id)
@@ -111,15 +113,52 @@ def control_pin(pin_number):
         pin.state = not pin.state
 
     else:
-        flash("{} changed.".format(pin.name), "danger")
+        flash("Fail to change state for {} pin.".format(pin.name), "danger")
         return redirect(url_for('control_pins'))
     
     
     db.session.commit()
-    flash("{} changed.".format(pin.name), "danger")
+    flash("{} changed.".format(pin.name), "success")
     return redirect(url_for('control_pins'))
     
+    
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template('about.html')
+    
+    
+@app.route("/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    form_password = ChangePassword()
+    user = User.query.filter_by(id=current_user.id).first()
+    if form_password.validate_on_submit():
+        if user.password == form_password.current_password.data:
+            
+            if form_password.new_password.data == form_password.confirm_password.data:
+                user.password = form_password.confirm_password.data
+                db.session.commit()
+                logout_user()
+                flash("Password Changed.", "success")
+                return redirect(url_for('login'))
+                
+            else:
+                flash("Password dont match.", "danger")
+                return render_template('change_password.html',
+                                        form=form_password)
+            
+        else:
+            flash("Wrong password.", "danger")
+            return render_template('change_password.html',
+                                    form=form_password)
+                                    
+    else:
+        if len(form_password.errors) > 0:
+            flash("Check data.", "danger")
+        return render_template('change_password.html',
+                                    form=form_password)
 
+    
 @app.route("/logout", methods=["GET"])
 @login_required
 def logout():

@@ -15,15 +15,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
-        {% if current_user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('index') }}" >Home</a>
           </li>
+        {% if current_user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('control_pins') }}">Control Device</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('list_pins') }}">Edit Pins</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('change_password') }}">Change Password</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
@@ -33,7 +36,7 @@
             <a class="nav-link" href="{{ url_for('login') }}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
           </li>
         {% endif %}
         </ul>
@@ -60,10 +63,10 @@
         </div>
       </div>
       {% block content %} {% endblock %}
-      <hr>
     </div>
     
-    <footer class="container text-center footer">
+    <footer class="container text-center footer fixed-bottom">
+      <hr>
       <p>LisaPi | Made with <i class="fas fa-heart" style="color:red"></i>
       by: <a href="https://github.com/lisapi-flask">@bergpb</a></p>
     </footer>

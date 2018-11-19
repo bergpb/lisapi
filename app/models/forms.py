@@ -19,3 +19,8 @@ class SignUp(FlaskForm):
 class NewPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
     pin = IntegerField("pin", validators=[DataRequired()])
+    
+class ChangePassword(FlaskForm):
+    current_password = PasswordField("current_password", validators=[DataRequired()])
+    new_password = PasswordField("new_password", validators=[DataRequired()])
+    confirm_password = PasswordField("confirm_password", validators=[DataRequired()])
