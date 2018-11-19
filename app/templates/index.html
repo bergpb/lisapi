@@ -5,8 +5,11 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 offset-md-3 offset-lg-3 offset-xl-5 text-center">
-      <p>Hello Darkness My Old Friend!</p>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+      {% if current_user %}
+        <h3>Hello {{ current_user.username }}!</h3>
+        <p class="mt-3">Please configure your pins in Edit Pins.</p>
+      {% endif %}
     </div>
   </div>
   

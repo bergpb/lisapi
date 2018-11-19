@@ -8,7 +8,7 @@ from app.models.tables import User, Pin
 from app.models.forms import Login, SignUp, NewPin
 
 
-pio.setmode(gpio.BCM)
+gpio.setmode(gpio.BCM)
 gpio.setwarnings(False)
 
 
@@ -96,35 +96,27 @@ def control_pins():
 @login_required
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
-    pin.state = not pin.state # toogle pin
-    db.session.commit()
     
     gpio.setup(pin_number, gpio.OUT)
     state = gpio.input(pin_number)
     
-    try:
-        state_pin = isinstance(pin, int)
-        pin = int(pin)
-        
-        if state_pin == True:
-            gpio.setup(pin, gpio.OUT)
-            state = gpio.input(pin)
-        
-        if state == 0:
-            gpio.output(pin, 1)
-            state = gpio.input(pin)
-        
-        elif state == 1:
-            gpio.output(pin, 0)
-            state = gpio.input(pin)
+    if state == 0:
+        gpio.output(pin_number, 1)
+        state = gpio.input(pin_number)
+        pin.state = not pin.state
     
-        else:
-            pass
+    elif state == 1:
+        gpio.output(pin_number, 0)
+        state = gpio.input(pin_number)
+        pin.state = not pin.state
+
+    else:
+        flash("{} changed.".format(pin.name), "danger")
+        return redirect(url_for('control_pins'))
     
-    except:
-        pass
     
-    flash("Pin {} toogled.".format(pin.state), "primary")
+    db.session.commit()
+    flash("{} changed.".format(pin.name), "danger")
     return redirect(url_for('control_pins'))
     
 

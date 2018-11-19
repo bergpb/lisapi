@@ -1,9 +1,17 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
+class Config(object):
+    DEBUG = False
+    TESTING = False
+    CSRF_ENABLED = True
+    SECRET_KEY = 'your_secret_key'
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage.db')
-SQLALCHEMY_TRACK_MODIFICATIONS = True
+class production(Config):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage.db')
 
-SECRET_KEY = 'db1e5bdb0a7d47e3bbfa859c8f9f2fc2'
+class development(Config):
+    DEBUG = True
+    DEVELOPMENT = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage_dev.db')
