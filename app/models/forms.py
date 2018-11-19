@@ -20,6 +20,10 @@ class NewPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()])
     pin = IntegerField("pin", validators=[DataRequired()])
     
+class EditPin(FlaskForm):
+    name = StringField("name", validators=[DataRequired()], description="Pin name")
+    pin = IntegerField("pin", validators=[DataRequired()], description="Number pin")
+    
 class ChangePassword(FlaskForm):
     current_password = PasswordField("current_password", validators=[DataRequired()])
     new_password = PasswordField("new_password", validators=[DataRequired()])

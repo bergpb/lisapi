@@ -2,14 +2,14 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login
 
-import RPi.GPIO as gpio
+# import RPi.GPIO as gpio
 
 from app.models.tables import User, Pin
-from app.models.forms import Login, SignUp, NewPin, ChangePassword
+from app.models.forms import Login, SignUp, NewPin, ChangePassword, EditPin
 
 
-gpio.setmode(gpio.BCM)
-gpio.setwarnings(False)
+# gpio.setmode(gpio.BCM)
+# gpio.setwarnings(False)
 
 
 @login.user_loader
@@ -54,7 +54,8 @@ def create_pin():
         flash("Pin created", "success")
         return redirect(url_for('list_pins'))
     else:
-        flash("Check form data", "danger")
+        if len(form_new_pin.errors) > 0:
+            flash("Check form data", "danger")
         return render_template('new.html',
                            form=form_new_pin)
 
@@ -70,11 +71,20 @@ def list_pins():
 @app.route("/edit/<int:pin_id>", methods=["GET", "POST"])
 @login_required
 def edit_pin(pin_id):
-    pin_data = Pin.query.filter_by(id=pin_id, user_id=current_user.id)
-    if pin_data:
-        return render_template('new.html', pin = pin_data)
+    form_editpin = EditPin()
+    if form_editpin.validate_on_submit():
+        pin = Pin.query.get(pin_id)
+        pin.name = form_editpin.name.data
+        pin.pin = form_editpin.pin.data
+        db.session.commit()
+        flash("Pin edited", "success")
+        return redirect(url_for('list_pins'))
     else:
-        return render_template('404.html', tab_name="404 error")
+        if len(form_editpin.errors) > 0:
+            flash("Check form data", "danger")
+        pin = Pin.query.get(pin_id)
+        return render_template('edit.html',
+                           form=form_editpin, pin=pin)
 
 
 @app.route("/delete/<int:pin_id>", methods=["GET"])
@@ -99,25 +109,25 @@ def control_pins():
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
     
-    gpio.setup(pin_number, gpio.OUT)
-    state = gpio.input(pin_number)
+    # gpio.setup(pin_number, gpio.OUT)
+    # state = gpio.input(pin_number)
     
-    if state == 0:
-        gpio.output(pin_number, 1)
-        state = gpio.input(pin_number)
-        pin.state = not pin.state
+    # if state == 0:
+    #     gpio.output(pin_number, 1)
+    #     state = gpio.input(pin_number)
+    #     pin.state = not pin.state
     
-    elif state == 1:
-        gpio.output(pin_number, 0)
-        state = gpio.input(pin_number)
-        pin.state = not pin.state
+    # elif state == 1:
+    #     gpio.output(pin_number, 0)
+    #     state = gpio.input(pin_number)
+    #     pin.state = not pin.state
 
-    else:
-        flash("Fail to change state for {} pin.".format(pin.name), "danger")
-        return redirect(url_for('control_pins'))
+    # else:
+    #     flash("Fail to change state for {} pin.".format(pin.name), "danger")
+    #     return redirect(url_for('control_pins'))
     
     
-    db.session.commit()
+    # db.session.commit()
     flash("{} changed.".format(pin.name), "success")
     return redirect(url_for('control_pins'))
     

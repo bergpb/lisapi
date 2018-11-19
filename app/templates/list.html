@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+
 {% block content %}
+
+  <h3 class="text-center mb-4">List Pins</h3>
   {% if pins %}
     <table class="table table-hover">
     <thead>
-      <tr>
+      <tr class="text-center">
           <th scope="col">Name</th>
           <th scope="col">Pin</th>
           <th scope="col">Status</th>
@@ -12,7 +15,7 @@
     </thead>
     <tbody>
     {% for pin in pins %}
-      <tr>
+      <tr class="text-center">
         <td>{{ pin.name }}</td>
         <td>{{ pin.pin }}</td>
         <td>{{ pin.state }}</td>
