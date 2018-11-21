@@ -4,7 +4,7 @@
 
   <h3 class="text-center mb-4">List Pins</h3>
   {% if pins %}
-    <table class="table table-hover">
+    <table class="table table-sm table-striped">
     <thead>
       <tr class="text-center">
           <th scope="col">Name</th>
@@ -31,6 +31,6 @@
     <p>Your list is empty</p>
   {% endif %}
   <div>
-    <a class="btn btn-success" href="{{ url_for('create_pin') }}"><i class="fa fa-plus"></i></a>
+    <a class="btn btn-success" href="{{ url_for('create_pin') }}">New Pin</a>
   </div>
 {% endblock %}

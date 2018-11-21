@@ -3,7 +3,7 @@
 {% block content %}
   <h3 class="text-center mb-4">Control Pins</h3>
   {% if pins %}
-    <table class="table table-hover">
+    <table class="table table-sm table-striped">
     <thead>
       <tr class="text-center">
           <th scope="col">Name</th>
@@ -17,7 +17,7 @@
         <td>{{ pin.name }}</td>
         <td>{{ pin.pin }}</td>
         <td>
-          <a href="{{ url_for('control_pin', pin_number = pin.pin) }}">
+          <a class="btn btn-secondary" href="{{ url_for('control_pin', pin_number = pin.pin) }}">
             {% if pin.state == False %}
               <i class="fas fa-lightbulb" style="color: black"></i>
             {% else %}
@@ -30,6 +30,6 @@
     </tbody>
   </table>
   {% else %}
-    <p>Pin not selected.</p>
+    <p>Please register pin in <a href="{{ url_for('list_pins') }}">Edit pins</a>.</p>
   {% endif %}
 {% endblock %}

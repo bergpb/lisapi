@@ -2,14 +2,14 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login
 
-# import RPi.GPIO as gpio
+import RPi.GPIO as gpio
 
 from app.models.tables import User, Pin
 from app.models.forms import Login, SignUp, NewPin, ChangePassword, EditPin
 
 
-# gpio.setmode(gpio.BCM)
-# gpio.setwarnings(False)
+gpio.setmode(gpio.BCM)
+gpio.setwarnings(False)
 
 
 @login.user_loader
@@ -46,13 +46,19 @@ def login():
 def create_pin():
     form_new_pin = NewPin()
     if form_new_pin.validate_on_submit():
-        name = form_new_pin.name.data
-        pin = form_new_pin.pin.data
-        pin = Pin(name=name, pin=pin, state=False, user_id=current_user.id)
-        db.session.add(pin)
-        db.session.commit()
-        flash("Pin created", "success")
-        return redirect(url_for('list_pins'))
+        pin_name = form_new_pin.name.data
+        pin_number = form_new_pin.pin.data
+        pin_exists = Pin.query.filter_by(pin=pin_number).first()
+        if pin_exists:
+            flash("Pin {} is not disponible!".format(pin_number), "warning")
+            return render_template('new.html',
+                                    form=form_new_pin)
+        else:
+            pin = Pin(name=pin_name, pin=pin_number, state=False, user_id=current_user.id)
+            db.session.add(pin)
+            db.session.commit()
+            flash("Pin created", "success")
+            return redirect(url_for('list_pins'))
     else:
         if len(form_new_pin.errors) > 0:
             flash("Check form data", "danger")
@@ -63,7 +69,7 @@ def create_pin():
 @app.route("/list", methods=["GET"])
 @login_required
 def list_pins():
-    list_pins = Pin.query.filter_by(user_id=current_user.id)
+    list_pins = Pin.query.all()
     return render_template('list.html',
                             pins=list_pins)
 
@@ -100,7 +106,7 @@ def delete_pin(pin_id):
 @app.route("/control", methods=["GET"])
 @login_required
 def control_pins():
-    list_pins = Pin.query.filter_by(user_id=current_user.id)
+    list_pins = Pin.query.all()
     return render_template('control.html', pins=list_pins)
     
     
@@ -109,25 +115,25 @@ def control_pins():
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
     
-    # gpio.setup(pin_number, gpio.OUT)
-    # state = gpio.input(pin_number)
+    gpio.setup(pin_number, gpio.OUT)
+    state = gpio.input(pin_number)
     
-    # if state == 0:
-    #     gpio.output(pin_number, 1)
-    #     state = gpio.input(pin_number)
-    #     pin.state = not pin.state
+    if state == 0:
+        gpio.output(pin_number, 1)
+        state = gpio.input(pin_number)
+        pin.state = not pin.state
     
-    # elif state == 1:
-    #     gpio.output(pin_number, 0)
-    #     state = gpio.input(pin_number)
-    #     pin.state = not pin.state
+    elif state == 1:
+        gpio.output(pin_number, 0)
+        state = gpio.input(pin_number)
+        pin.state = not pin.state
 
-    # else:
-    #     flash("Fail to change state for {} pin.".format(pin.name), "danger")
-    #     return redirect(url_for('control_pins'))
+    else:
+        flash("Fail to change state for {} pin.".format(pin.name), "danger")
+        return redirect(url_for('control_pins'))
     
     
-    # db.session.commit()
+    db.session.commit()
     flash("{} changed.".format(pin.name), "success")
     return redirect(url_for('control_pins'))
     

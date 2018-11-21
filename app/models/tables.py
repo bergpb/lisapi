@@ -2,7 +2,6 @@ from app import db
 from flask_login import UserMixin
 
 
-
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     
@@ -36,6 +35,5 @@ class Pin(db.Model):
         self.state = state
         self.user_id = user_id
         
-    # representation (represenacao bonitinha de mostrar os registros salvos no banco)
     def __repr__(self):
         return "<Pin %r>" % self.id
