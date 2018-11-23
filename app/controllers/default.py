@@ -50,7 +50,7 @@ def create_pin():
         pin_number = form_new_pin.pin.data
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if pin_exists:
-            flash("Pin {} is not disponible!".format(pin_number), "warning")
+            flash("Pin {} not disponible!".format(pin_number), "warning")
             return render_template('new.html',
                                     form=form_new_pin)
         else:
@@ -120,13 +120,11 @@ def control_pin(pin_number):
     
     if state == 0:
         gpio.output(pin_number, 1)
-        state = gpio.input(pin_number)
-        pin.state = not pin.state
+        pin.state = True
     
     elif state == 1:
         gpio.output(pin_number, 0)
-        state = gpio.input(pin_number)
-        pin.state = not pin.state
+        pin.state = False
 
     else:
         flash("Fail to change state for {} pin.".format(pin.name), "danger")
