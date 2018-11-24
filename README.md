@@ -19,7 +19,7 @@ System requirements: ```python3```, ```pip3```, ```virtualenv```.
 3. Activate virtualenv: ```. .env/bin/activate```,
 4. Install requirements: ```pip3 install -r requirements.txt```,
 4. Run migrations: ```flask db init && flask db migrate && flask db upgrade```,
-5. Create a admin user: ```flask db seed```,
+5. Create a admin user: ```flask seed```,
 6. Run project: ```flask run```.
 
 To do:

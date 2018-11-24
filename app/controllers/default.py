@@ -104,27 +104,17 @@ def control_pins():
 @login_required
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
-<<<<<<< HEAD
     
-    gpio.setup(pin_number, gpio.OUT)
-    state = gpio.input(pin_number)
-    
-    if state == 0:
-        gpio.output(pin_number, 1)
-        pin.state = True
-    
-    elif state == 1:
-        gpio.output(pin_number, 0)
-        pin.state = False
-=======
-    pin_state = helpers.test(pin_number)
->>>>>>> 6a753617fc95642d8a7d120e71a80f87ac1883a9
+    pin_state = helpers.setPin(pin_number)
 
-    if pin_state:
+    if pin_state == True:
         print(pin)
         pin.state = pin_state
-    else:
+    elif pin_state == False:
         flash("Fail to change state for {} pin.".format(pin.name), "danger")
+        return redirect(url_for('control_pins'))
+    else:
+        flash("Pin {} not disponible.".format(pin.pin), "danger")
         return redirect(url_for('control_pins'))
 
     db.session.commit()
@@ -150,15 +140,12 @@ def change_password():
                 logout_user()
                 flash("Password Changed.", "success")
                 return redirect(url_for('login'))
-
             else:
                 flash("Password dont match.", "danger")
                 return render_template('change_password.html', form=form_passwd)
-
         else:
             flash("Wrong password.", "danger")
             return render_template('change_password.html', form=form_passwd)
-
     else:
         if len(form_passwd.errors) > 0:
             flash("Check data.", "danger")
