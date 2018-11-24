@@ -15,4 +15,4 @@ def setPin(pin_number):
             gpio.output(pin_number, 0)
             return False
     except ValueError:
-        return 'Error'
+        return 'error'

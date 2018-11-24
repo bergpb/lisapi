@@ -41,8 +41,12 @@ def create_pin():
     if form_new_pin.validate_on_submit():
         pin_name = form_new_pin.name.data
         pin_number = form_new_pin.pin.data
+        check_pin = helpers.setPin(pin_number)
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
-        if pin_exists:
+        if check_pin == 'error':
+            flash("Pin {} cannot be controlled!".format(pin_number), "warning")
+            return render_template('new.html', form=form_new_pin)
+        elif pin_exists:
             flash("Pin {} is not disponible!".format(pin_number), "warning")
             return render_template('new.html', form=form_new_pin)
         else:
@@ -108,13 +112,11 @@ def control_pin(pin_number):
     pin_state = helpers.setPin(pin_number)
 
     if pin_state == True:
-        print(pin)
         pin.state = pin_state
     elif pin_state == False:
-        flash("Fail to change state for {} pin.".format(pin.name), "danger")
-        return redirect(url_for('control_pins'))
+        pin.state = pin_state
     else:
-        flash("Pin {} not disponible.".format(pin.pin), "danger")
+        flash("Pin {} cannot be controlled!".format(pin.pin), "danger")
         return redirect(url_for('control_pins'))
 
     db.session.commit()
