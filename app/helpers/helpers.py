@@ -3,10 +3,17 @@ import RPi.GPIO as gpio
 gpio.setmode(gpio.BCM)
 gpio.setwarnings(False)
 
+def checkPin(pin_number):
+    gpio.setup(pin_number, gpio.OUT)
+    try:
+        state = gpio.input(pin_number)
+        return True
+    except ValueError:
+        return False
 
 def setPin(pin_number):
+    gpio.setup(pin_number, gpio.OUT)
     try:
-        gpio.setup(pin_number, gpio.OUT)
         state = gpio.input(pin_number)
         if state == 0:
             gpio.output(pin_number, 1)
