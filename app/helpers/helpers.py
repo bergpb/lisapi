@@ -4,16 +4,16 @@ gpio.setmode(gpio.BCM)
 gpio.setwarnings(False)
 
 def checkPin(pin_number):
-    gpio.setup(pin_number, gpio.OUT)
     try:
+        gpio.setup(pin_number, gpio.OUT)
         state = gpio.input(pin_number)
         return True
     except ValueError:
         return False
 
 def setPin(pin_number):
-    gpio.setup(pin_number, gpio.OUT)
     try:
+        gpio.setup(pin_number, gpio.OUT)
         state = gpio.input(pin_number)
         if state == 0:
             gpio.output(pin_number, 1)
@@ -21,5 +21,5 @@ def setPin(pin_number):
         elif state == 1:
             gpio.output(pin_number, 0)
             return False
-    except ValueError:
-        return 'error'
+    except:
+        pass

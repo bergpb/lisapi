@@ -44,18 +44,16 @@ def create_pin():
         check_pin = helpers.checkPin(pin_number)
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if not check_pin:
-            print('Controller - Checked - {}'.format(check_pin))
-            flash("Pin {} dont exists!".format(pin_number), "warning")
+            flash("Pin {} dont exists!".format(pin_number), "danger")
             return render_template('new.html', form=form_new_pin)
         elif pin_exists:
-            flash("Pin {} is not disponible!".format(pin_number), "warning")
+            flash("Pin {} is not disponible!".format(pin_number), "danger")
             return render_template('new.html', form=form_new_pin)
         else:
-            id = current_user.id
-            pin = Pin(name=pin_name, pin=pin_number, state=check_pin, user_id=id)
+            pin = Pin(name=pin_name, pin=pin_number, state=False, user_id=current_user.id)
             db.session.add(pin)
             db.session.commit()
-            flash("Pin created", "success")
+            flash("Pin created!", "success")
             return redirect(url_for('list_pins'))
     else:
         if len(form_new_pin.errors) > 0:

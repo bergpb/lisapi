@@ -23,9 +23,9 @@ System requirements: ```python3```, ```pip3```, ```virtualenv```.
 6. Run project: ```flask run```.
 
 To do:
-- [x] Login
-- [x] Save pins in db
-- [x] Check if pin is disponible
-- [ ] Return system status in dashboard
-- [ ] Check status of pin before set in bd
-- [ ] RestFull Api
+- [x] Login.
+- [x] Save pins in db.
+- [x] Check if pin is disponible.
+- [x] Verify if pins exist in Raspberry Pi.
+- [ ] Return system status in dashboard.
+- [ ] RestFull Api.
