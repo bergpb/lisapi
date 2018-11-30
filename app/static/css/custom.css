@@ -1,3 +1,7 @@
 .table > tbody > tr > td {
   vertical-align: middle !important;
 }
+
+.fixed-bottom {
+  position: absolute !important;
+}

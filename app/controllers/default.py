@@ -14,7 +14,7 @@ def load_user(id):
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('index.html')
+    return render_template('index.html', **locals())
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -42,6 +42,7 @@ def create_pin():
         pin_name = form_new_pin.name.data
         pin_number = form_new_pin.pin.data
         check_pin = helpers.checkPin(pin_number)
+        # check_pin = True
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if not check_pin:
             flash("Pin {} dont exists!".format(pin_number), "danger")

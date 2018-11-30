@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <h3 class="text-center mb-4">List Pins</h3>
+  <h3 class="mb-4">List Pins</h3>
   {% if pins %}
     <table class="table table-sm table-striped">
     <thead>
@@ -21,7 +21,15 @@
         <td>{{ pin.state }}</td>
         <td>
           <a class="btn btn-success" href="{{ url_for('edit_pin', pin_id = pin.id) }}"><i class="fa fa-edit"></i></a>
-          <a class="btn btn-danger" href="{{ url_for('delete_pin', pin_id = pin.id) }}"><i class="fa fa-trash"></i></a>
+          <a id="btn-delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+          <script>
+            $(function(){
+              $('#btn-delete').click(function() {
+                showSwLink("Delete pin?", "warning", true, "Delete",
+                           "red", "{{ url_for('delete_pin', pin_id = pin.id) }}")
+              });
+            });
+          </script>
         </td>
       </tr>
     {% endfor %}
