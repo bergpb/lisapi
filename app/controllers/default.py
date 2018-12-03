@@ -27,11 +27,11 @@ def login():
             flash("Logged in.", "success")
             return redirect(url_for("index"))
         else:
-            flash("Invalid login.", "danger")
+            flash("Invalid login.", "error")
             return render_template('login.html', form=form_login)
     else:
         if len(form_login.errors) > 0:
-            flash("Check data.", "danger")
+            flash("Check data.", "error")
         return render_template('login.html', form=form_login)
 
 
@@ -42,13 +42,12 @@ def create_pin():
         pin_name = form_new_pin.name.data
         pin_number = form_new_pin.pin.data
         check_pin = helpers.checkPin(pin_number)
-        # check_pin = True
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if not check_pin:
-            flash("Pin {} dont exists!".format(pin_number), "danger")
+            flash("Pin {} dont exists!".format(pin_number), "error")
             return render_template('new.html', form=form_new_pin)
         elif pin_exists:
-            flash("Pin {} is not disponible!".format(pin_number), "danger")
+            flash("Pin {} is not disponible!".format(pin_number), "error")
             return render_template('new.html', form=form_new_pin)
         else:
             pin = Pin(name=pin_name, pin=pin_number, state=False, user_id=current_user.id)
@@ -58,7 +57,7 @@ def create_pin():
             return redirect(url_for('list_pins'))
     else:
         if len(form_new_pin.errors) > 0:
-            flash("Check form data", "danger")
+            flash("Check form data", "error")
         return render_template('new.html', form=form_new_pin)
 
 
@@ -82,7 +81,7 @@ def edit_pin(pin_id):
         return redirect(url_for('list_pins'))
     else:
         if len(form_editpin.errors) > 0:
-            flash("Check form data", "danger")
+            flash("Check form data", "error")
         pin = Pin.query.get(pin_id)
         return render_template('edit.html', form=form_editpin, pin=pin)
 
@@ -108,9 +107,7 @@ def control_pins():
 @login_required
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
-    
     pin_state = helpers.setPin(pin_number)
-
     if pin_state == True:
         pin.state = pin_state
     elif pin_state == False:
@@ -118,7 +115,6 @@ def control_pin(pin_number):
     else:
         flash("Pin {} dont exists!".format(pin.pin), "warning")
         return redirect(url_for('control_pins'))
-
     db.session.commit()
     flash("{} changed.".format(pin.name), "success")
     return redirect(url_for('control_pins'))
@@ -143,14 +139,14 @@ def change_password():
                 flash("Password Changed.", "success")
                 return redirect(url_for('login'))
             else:
-                flash("Password dont match.", "danger")
+                flash("Password dont match.", "error")
                 return render_template('change_password.html', form=form_passwd)
         else:
-            flash("Wrong password.", "danger")
+            flash("Wrong password.", "error")
             return render_template('change_password.html', form=form_passwd)
     else:
         if len(form_passwd.errors) > 0:
-            flash("Check data.", "danger")
+            flash("Check data.", "error")
         return render_template('change_password.html', form=form_passwd)
 
 

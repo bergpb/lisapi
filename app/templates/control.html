@@ -1,34 +1,32 @@
 {% extends "base.html" %}
 
+{% block title %}{{ super() }}| Control Pins{% endblock %}}
+
+{% block page %} Control Pins {% endblock %}}
+
 {% block content %}
-  <h3 class="mb-4">Control Pins</h3>
   {% if pins %}
-    <table class="table table-sm table-striped">
-    <thead>
-      <tr class="text-center">
-          <th scope="col">Name</th>
-          <th scope="col">Pin</th>
-          <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for pin in pins %}
-      <tr class="text-center">
-        <td>{{ pin.name }}</td>
-        <td>{{ pin.pin }}</td>
-        <td>
-          <a class="btn btn-secondary" href="{{ url_for('control_pin', pin_number = pin.pin) }}">
-            {% if pin.state == False %}
-              <i class="fas fa-lightbulb" style="color: black"></i>
-            {% else %}
-              <i class="fas fa-lightbulb" style="color: yellow"></i>
-            {% endif %}
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    {% for pin in pins %}
+    <div class="col-lg-4">
+      <div class="widget style1 navy-bg">
+        <div class="row">
+          <div class="col-7">
+            <a href="{{ url_for('control_pin', pin_number = pin.pin) }}">
+              {% if pin.state == False %}
+                <i class="fas fa-lightbulb fa-4x" style="color: black"></i>
+              {% else %}
+                <i class="fas fa-lightbulb fa-4x" style="color: yellow"></i>
+              {% endif %}
+            </a>
+          </div>
+          <div class="col-5 text-right">
+            <h5><strong>{{ pin.name }}</strong></h5>
+            <h6 class="font-bold"><strong>{{ pin.pin }}</strong></h6>
+          </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
   {% else %}
     <p>Please register pin in <a href="{{ url_for('list_pins') }}">Edit pins</a>.</p>
   {% endif %}

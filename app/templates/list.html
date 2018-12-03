@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block title %}{{ super() }}| List Pins {% endblock %}}
 
-  <h3 class="mb-4">List Pins</h3>
+{% block page %} List Pins {% endblock %}}
+
+{% block content %}
   {% if pins %}
     <table class="table table-sm table-striped">
     <thead>
@@ -25,7 +27,7 @@
           <script>
             $(function(){
               $('#btn-delete').click(function() {
-                showSwLink("Delete pin?", "warning", true, "Delete",
+                showSwLink("Delete pin?", "question", true, "Delete",
                            "red", "{{ url_for('delete_pin', pin_id = pin.id) }}")
               });
             });
