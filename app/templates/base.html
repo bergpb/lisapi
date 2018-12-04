@@ -81,27 +81,22 @@
                </strong>
             </div>
         </nav>
-        <div class="container">
-          {% with messages = get_flashed_messages(with_categories = true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <script>
-                  showToast("{{ message }}", "{{ category }}");
-                </script>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          {% block content %} {% endblock %}
-        </div>
-      </div>
-      <footer class="footer fixed-bottom mb-3">
-        <div class="row">
-          <div class="col-md-5 offset-md-4 col-8 offset-2" style="font-size: 0.8em;">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <script>
+                showToast("{{ message }}", "{{ category }}");
+              </script>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        {% block content %} {% endblock %}
+        <footer class="footer">
+          <div class="container">
             <div class="text-center">LisaPi | Made with <i class="fas fa-heart fa-sm" style="color:red"></i>
-            by: <a href="https://github.com/lisapi-flask">@bergpb</a></div>
-        </div>
-        </div>
-      </footer>
+              by: <a href="https://github.com/lisapi-flask">@bergpb</a></div>
+          </div>
+        </footer>
     </div>
 
    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>

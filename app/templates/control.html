@@ -7,10 +7,10 @@
 {% block content %}
   {% if pins %}
     {% for pin in pins %}
-    <div class="col-lg-4">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
       <div class="widget style1 navy-bg">
         <div class="row">
-          <div class="col-7">
+          <div class="col-7 col-sm-7 col-md-7 col-lg-7">
             <a href="{{ url_for('control_pin', pin_number = pin.pin) }}">
               {% if pin.state == False %}
                 <i class="fas fa-lightbulb fa-4x" style="color: black"></i>
@@ -19,7 +19,7 @@
               {% endif %}
             </a>
           </div>
-          <div class="col-5 text-right">
+          <div class="col-5 col-sm-5 col-md-5 col-lg-5 text-right">
             <h5><strong>{{ pin.name }}</strong></h5>
             <h6 class="font-bold"><strong>{{ pin.pin }}</strong></h6>
           </div>
