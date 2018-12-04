@@ -23,4 +23,3 @@ def setPin(pin_number):
             return False
     except:
         pass
-    

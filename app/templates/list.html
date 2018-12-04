@@ -27,10 +27,10 @@
         {% endif %}
         <td>
           <a class="btn btn-success" href="{{ url_for('edit_pin', pin_id = pin.id) }}"><i class="fa fa-edit"></i></a>
-          <a class="btn btn-danger" id="btn-delete"><i class="fa fa-trash"></i></a>
+          <a class="btn btn-danger btn-delete"><i class="fa fa-trash"></i></a>
           <script>
             $(function(){
-              $('#btn-delete').click(function() {
+              $('.btn-delete').on('click', function() {
                 showSwLink("Delete pin?", "question", true, "Delete",
                            "red", "{{ url_for('delete_pin', pin_id = pin.id) }}")
               });
