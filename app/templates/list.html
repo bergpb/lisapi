@@ -6,18 +6,18 @@
 
 {% block content %}
   {% if pins %}
-    <table class="table table-sm table-striped">
+    <table class="centered">
     <thead>
-      <tr class="text-center">
-          <th scope="col">Name</th>
-          <th scope="col">Pin</th>
-          <th scope="col">Status</th>
-          <th scope="col">Actions</th>
+      <tr>
+          <th>Name</th>
+          <th>Pin</th>
+          <th>Current Status</th>
+          <th>Actions</th>
       </tr>
     </thead>
     <tbody>
     {% for pin in pins %}
-      <tr class="text-center">
+      <tr>
         <td>{{ pin.name }}</td>
         <td>{{ pin.pin }}</td>
         {% if pin.state == True %}
@@ -26,8 +26,8 @@
           <td>Off</td>
         {% endif %}
         <td>
-          <a class="btn btn-success" href="{{ url_for('edit_pin', pin_id = pin.id) }}"><i class="fa fa-edit"></i></a>
-          <a class="btn btn-danger btn-delete"><i class="fa fa-trash"></i></a>
+          <a class="btn blue" href="{{ url_for('edit_pin', pin_id = pin.id) }}"><i class="fa fa-edit"></i></a>
+          <a class="btn red btn-delete"><i class="fa fa-trash"></i></a>
           <script>
             $(function(){
               $('.btn-delete').on('click', function() {
@@ -44,7 +44,7 @@
   {% else %}
     <p>Your list is empty.</p>
   {% endif %}
-  <div>
+  <div style="margin-top: 10px;">
     <a class="btn btn-success" href="{{ url_for('create_pin') }}">New Pin</a>
   </div>
 {% endblock %}
