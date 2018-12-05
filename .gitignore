@@ -114,10 +114,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#my files
+#ignore my files
 storage.db
 storage_dev.db
-app/__init_.py
+app/__init__.py
 config.py
 anotacoes.txt
 /migrations

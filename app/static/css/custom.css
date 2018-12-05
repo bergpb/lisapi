@@ -1,8 +1,6 @@
 .widget {
   border-radius: 5px;
   padding: 5px 20px;
-  margin-bottom: 10px;
-  margin-top: 10px;
 }
 
 .widget > .row > div > i{
@@ -13,42 +11,16 @@
    margin-top: 0px !important;
 }
 
+.sidenav{
+  width: 250px !important;
+}
+
 .footer {
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute;
   margin-bottom: 10px;
-}
-
-.br-white {
-  background-color: #ffffff;
-}
-.bg-success {
-  background-color: #1c84c6;
-  color: #ffffff;
-}
-.bg-primary {
-  background-color: #1ab394;
-  color: #ffffff;
-}
-.bg-secondary {
-  background-color: #6C757D;
-}
-.bg-info {
-  background-color: #23c6c8;
-  color: #ffffff;
-}
-.bg-warning {
-  background-color: #f8ac59;
-  color: #ffffff;
-}
-.bg-danger {
-  background-color: #ed5565;
-  color: #ffffff;
-}
-.bg-black {
-  background-color: #262626;
 }
 
 .mr1{

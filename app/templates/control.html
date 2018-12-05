@@ -5,11 +5,11 @@
 {% block page %} Control Pins {% endblock %}}
 
 {% block content %}
+  <div class="row">
   {% if pins %}
     {% for pin in pins %}
-    <div class="row">
-      <div class="col s12 m6 l4 x3">
-        <div class="widget bg-info">
+      <div class="col s12 m6 l6 x3 mt1">
+        <div class="widget teal">
           <div class="row">
             <div style="margin-top: 15px" class="col s7">
               <a href="{{ url_for('control_pin', pin_number = pin.pin) }}">
@@ -21,15 +21,15 @@
               </a>
             </div>
             <div class="col s5">
-              <h5 class="right-align"><strong>{{ pin.name }}</strong></h5>
-              <h6 class="font-bold right-align"><strong>{{ pin.pin }}</strong></h6>
+              <h5 class="right-align white-text"><strong>{{ pin.name }}</strong></h5>
+              <h6 class="right-align white-text"><strong>{{ pin.pin }}</strong></h6>
             </div>
           </div>
         </div>
       </div>
-    </div>
     {% endfor %}
   {% else %}
     <p>Please register pin in <a href="{{ url_for('list_pins') }}">Edit pins</a>.</p>
   {% endif %}
+  </div>
 {% endblock %}
