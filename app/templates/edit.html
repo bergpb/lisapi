@@ -5,26 +5,28 @@
 {% block page %} Edit Pins {% endblock %}}
 
 {% block content %}
-<div class="row">
-  <div class="col s12 m6 l4 offset-m3 offset-l4 mt4">
-    <form novalidate action="" method="POST">
-      {{ form.csrf_token }}
-      {{ form.name(class="form-control", value=pin.name) }}
-        {% if form.errors.name %}
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6 l4 offset-m3 offset-l4 mt4">
+      <form novalidate action="" method="POST">
+        {{ form.csrf_token }}
+        {{ form.name(class="form-control", value=pin.name) }}
+          {% if form.errors.name %}
+            {% for error in form.errors.current_password %}
+              <span class="helper-text red-text">{{ error }}</span>
+            {% endfor %}
+          {% endif %}
+        {{ form.pin(class="form-control", value=pin.pin) }}
+        {% if form.errors.pin %}
           {% for error in form.errors.current_password %}
             <span class="helper-text red-text">{{ error }}</span>
           {% endfor %}
         {% endif %}
-      {{ form.pin(class="form-control", value=pin.pin) }}
-      {% if form.errors.pin %}
-        {% for error in form.errors.current_password %}
-          <span class="helper-text red-text">{{ error }}</span>
-        {% endfor %}
-      {% endif %}
-      <div class="col s12 m12 l12 center-align mt1">
-        <button type="submit" class="btn btn-primary">Change Pin</button>
-      </div>
-    </form>
+        <div class="col s12 m12 l12 center-align mt1">
+          <button type="submit" class="btn btn-primary">Change Pin</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}

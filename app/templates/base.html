@@ -78,22 +78,20 @@
     </li>
   {% endif %}
   </ul>
-  <div class="container">
-    {% with messages = get_flashed_messages(with_categories = true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <script>
-            showToast("{{ message }}", "{{ category }}");
-          </script>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    {% block content %} {% endblock %}
-    <div class="footer footer-copyright">
-      <div class="container">
-        <div class="center">LisaPi | Made with <i class="fas fa-heart fa-sm" style="color:red"></i>
-          by: <a href="https://github.com/bergpb">bergpb</a></div>
-      </div>
+  {% with messages = get_flashed_messages(with_categories = true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <script>
+          showToast("{{ message }}", "{{ category }}");
+        </script>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %} {% endblock %}
+  <div class="footer footer-copyright">
+    <div class="container">
+      <div class="center">LisaPi | Made with <i class="fas fa-heart fa-sm" style="color:red"></i>
+        by: <a href="https://github.com/bergpb">bergpb</a></div>
     </div>
   </div>
   <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>

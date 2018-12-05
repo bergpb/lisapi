@@ -6,6 +6,7 @@
 
 {% block content %}
   {% if pins %}
+  <div class="container">
     <table class="centered">
     <thead>
       <tr>
@@ -47,4 +48,5 @@
   <div style="margin-top: 10px;">
     <a class="btn btn-success" href="{{ url_for('create_pin') }}">New Pin</a>
   </div>
+</div>
 {% endblock %}
