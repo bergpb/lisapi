@@ -21,8 +21,16 @@ def index():
 @app.route("/api/status", methods=["GET"])
 def status():
     process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
+    uptime = subprocess.getstatusoutput('uptime -p')[1]
+    mem_total = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 16-18')[1]
+    mem_used = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 28-30')[1]
+    mem_free = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 41-42')[1]
     return jsonify(
-        process=process
+        process=process,
+        uptime=uptime,
+        mem_total=mem_total,
+        mem_used=mem_used,
+        mem_free=mem_free
     )
 
 

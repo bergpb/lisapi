@@ -14,7 +14,8 @@
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
     <script src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -96,10 +97,11 @@
         by: <a href="https://github.com/bergpb">bergpb</a></div>
     </div>
   </div>
-
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript">
     sidenavSelect(window.location.pathname);
+    $(document).ready(function(){
+      $('.sidenav').sidenav();
+    });
   </script>
 </body>
 

@@ -7,11 +7,17 @@
     <div class="col s12 m6 l4 offset-m3 offset-l4 mt4">
       {% if current_user.id %}
         <h4>Hello {{ current_user.username }}!</h4>
-        <p class="mt-3">Please configure your pins in Edit Pins.</p>
         <div id="status">
-          Mensagem aqui: {% raw %}{{ status }}{% endraw %}
-          <br>
-          Processos: {% raw %}{{ status.process }}{% endraw %}
+          <div v-if="loading">
+            <p>Carregando...</p>
+          </div>
+          <div v-else>
+            <p>Processos: {% raw %}{{ status.process }}{% endraw %}</p>
+            <p>Uptime: {% raw %}{{ status.uptime }}{% endraw %}</p>
+            <p>Mem: {% raw %}{{ status.mem_total }}{% endraw %}</p>
+            <p>Used: {% raw %}{{ status.mem_used }}{% endraw %}</p>
+            <p>Free: {% raw %}{{ status.mem_free }}{% endraw %}</p>
+          </div>
         </div>
       {% else %}
       <div class="col s12 m12 l12 center-align mt1">
@@ -28,19 +34,21 @@
     data () {
       return {
         status: '',
+        loading: true,
       }
     },
     mounted () {
-      this.update;
+      this.getData;
       this.interval = setInterval(
-        this.getData, 1000
+        this.getData, 500
       );
     },
     methods: {
       getData: function() {
         axios.get('http://localhost:5000/api/status')
         .then((response) => {
-          this.status = response.data
+          this.status = response.data;
+          this.loading = false;
         })
       },
     },

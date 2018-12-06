@@ -23,3 +23,9 @@
 #             return False
 #     except:
 #         pass
+
+def checkPin(pin):
+    return True
+    
+def setPin(pin):
+    return True
