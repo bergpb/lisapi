@@ -1,6 +1,7 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login
+import subprocess
 
 from app.models.tables import User, Pin
 from app.models.forms import Login, NewPin, ChangePassword, EditPin
@@ -15,6 +16,14 @@ def load_user(id):
 @app.route("/", methods=["GET"])
 def index():
     return render_template('index.html', **locals())
+
+
+@app.route("/api/status", methods=["GET"])
+def status():
+    process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
+    return jsonify(
+        process=process
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])
