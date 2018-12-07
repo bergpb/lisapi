@@ -1,8 +1,8 @@
 # import RPi.GPIO as gpio
-#
+
 # gpio.setmode(gpio.BCM)
 # gpio.setwarnings(False)
-#
+
 # def checkPin(pin_number):
 #     try:
 #         gpio.setup(pin_number, gpio.OUT)
@@ -10,7 +10,7 @@
 #         return True
 #     except ValueError:
 #         return False
-#
+
 # def setPin(pin_number):
 #     try:
 #         gpio.setup(pin_number, gpio.OUT)
@@ -24,8 +24,8 @@
 #     except:
 #         pass
 
-def checkPin(pin):
+def checkPin(pin_number):
     return True
     
-def setPin(pin):
+def setPin(pin_number):
     return True

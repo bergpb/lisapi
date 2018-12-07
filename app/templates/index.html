@@ -6,23 +6,31 @@
   <div class="row">
     <div class="col s12 m6 l4 offset-m3 offset-l4 mt4">
       {% if current_user.id %}
-        <h4>Hello {{ current_user.username }}!</h4>
         <div id="status">
-          <div v-if="loading">
-            <p>Carregando...</p>
+          {{ error }}
+          {{ loading }}
+          <div v-if="loading" class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-circle-notch fa-spin fa-4x"></i>
+            {{ error }}
+          {{ loading }}
+          </div>
+          <div v-else-if="error" class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-exclamation-triangle fa-4x"></i>
+            <p><strong>Some error as ocurred.</strong></p>
           </div>
           <div v-else>
-            <p>Processos: {% raw %}{{ status.process }}{% endraw %}</p>
+            <h4>Hello {{ current_user.username }}!</h4>
+            <p>Process: {% raw %}{{ status.process }}{% endraw %}</p>
             <p>Uptime: {% raw %}{{ status.uptime }}{% endraw %}</p>
-            <p>Mem: {% raw %}{{ status.mem_total }}{% endraw %}</p>
-            <p>Used: {% raw %}{{ status.mem_used }}{% endraw %}</p>
-            <p>Free: {% raw %}{{ status.mem_free }}{% endraw %}</p>
+            <p>Memory Total: {% raw %}{{ status.mem_total }}{% endraw %}</p>
+            <p>Memory Used: {% raw %}{{ status.mem_used }}{% endraw %}</p>
+            <p>Memory Free: {% raw %}{{ status.mem_free }}{% endraw %}</p>
           </div>
         </div>
       {% else %}
       <div class="col s12 m12 l12 center-align mt1">
         <p>Hello anonymous user, please login.</p>
-        <a class="btn btn-primary" href="{{ url_for('login') }}">Login</a>
+        <a class="btn" href="{{ url_for('login') }}">Login</a>
       </div>
       {% endif %}
     </div>
@@ -35,21 +43,27 @@
       return {
         status: '',
         loading: true,
+        error: null,
       }
     },
     mounted () {
-      this.getData;
       this.interval = setInterval(
-        this.getData, 500
+        this.getData, 1000
       );
     },
     methods: {
       getData: function() {
-        axios.get('http://localhost:5000/api/status')
+        console.log('axios getting information');
+        axios.get('https://receding-cat-9495.dataplicity.io/api/status')
         .then((response) => {
           this.status = response.data;
           this.loading = false;
         })
+        .catch((error) => {
+          this.loading = false;
+          this.error = true;
+          clearInterval(this.interval);
+        });
       },
     },
   });

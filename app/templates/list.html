@@ -28,8 +28,12 @@
         <td>{{ pin.color }}</td>
         <td>{{ pin.icon }}</td>
         <td>
-          <a class="btn blue" href="{{ url_for('edit_pin', pin_id = pin.id) }}"><i class="fa fa-edit"></i></a>
-          <a class="btn red btn-delete"><i class="fa fa-trash"></i></a>
+          <a href="{{ url_for('edit_pin', pin_id = pin.id) }}">
+            <i style="color: blue" class="fa fa-edit"></i>
+          </a>
+          <a class="btn-delete">
+            <i style="color: red" class="fa fa-trash"></i>
+          </a>
           <script>
             $(function(){
               $('.btn-delete').on('click', function() {
@@ -44,10 +48,10 @@
     </tbody>
   </table>
   {% else %}
-    <p>Your list is empty.</p>
+    <p class="mt4">Your list is empty.</p>
   {% endif %}
-  <div style="margin-top: 10px;">
-    <a class="btn btn-success" href="{{ url_for('create_pin') }}">New Pin</a>
+  <div>
+    <a class="btn" href="{{ url_for('create_pin') }}">New Pin</a>
   </div>
 </div>
 {% endblock %}

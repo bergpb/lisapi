@@ -5,6 +5,7 @@
 {% block page %} Control Pins {% endblock %}}
 
 {% block content %}
+<div class="container">
   <div class="row">
   {% if pins %}
     {% for pin in pins %}
@@ -29,7 +30,9 @@
       </div>
     {% endfor %}
   {% else %}
-    <p>Please register pin in <a href="{{ url_for('list_pins') }}">Edit pins</a>.</p>
+    <p class="mt4">Please register a pin.</p>
+    <a class="btn" href="{{ url_for('create_pin') }}">New Pin</a>
   {% endif %}
   </div>
+</div>
 {% endblock %}
