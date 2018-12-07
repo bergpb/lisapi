@@ -8,21 +8,21 @@
   <div class="row">
   {% if pins %}
     {% for pin in pins %}
-      <div class="col s12 m4 l4 x4 mt1">
-        <div class="widget teal">
+      <div class="col s6 m4 l4 x4 mt1">
+        <div class="widget {{ pin.color }}">
           <div class="row">
-            <div style="margin-top: 15px" class="col s7">
+            <div style="margin-top: 15px" class="col s5">
               <a href="{{ url_for('control_pin', pin_number = pin.pin) }}">
                 {% if pin.state == False %}
-                  <i class="fas fa-lightbulb fa-4x" style="color: black"></i>
+                  <i class="fas fa-{{ pin.icon }} fa-4x" style="color: black; margin-left: -5px"></i>
                 {% else %}
-                  <i class="fas fa-lightbulb fa-4x" style="color: yellow"></i>
+                  <i class="fas fa-{{ pin.icon }} fa-4x" style="color: yellow; margin-left: -5px"></i>
                 {% endif %}
               </a>
             </div>
-            <div class="col s5">
-              <h5 class="right-align white-text"><strong>{{ pin.name }}</strong></h5>
-              <h6 class="right-align white-text"><strong>{{ pin.pin }}</strong></h6>
+            <div class="col s7">
+              <h5 class="right-align black-text"><strong>{{ pin.name }}</strong></h5>
+              <h6 class="right-align black-text"><strong>{{ pin.pin }}</strong></h6>
             </div>
           </div>
         </div>

@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
-
 {% block title %}{{ super() }}| Login{% endblock %}}
-
 {% block content %}
 <div class="row">
-  <div class="col s12 m6 l4 offset-m3 offset-l4 mt4">
+  <div class="col s10 m6 l4 offset-s1 offset-m3 offset-l4 mt4">
     <h3>Login</h3>
     <form novalidate action="" method="POST">
       {{ form.csrf_token }}
@@ -25,7 +23,7 @@
       <!--  <label name="remember_me" class="form-check-label">Remember Me</label>-->
       <!--</div>-->
       <div class="col s12 m12 l12 center-align mt1">
-        <button type="submit" class="btn btn-primary">Confirm</button>
+        <button type="submit" class="btn">Confirm</button>
       </div>
     </form>
   </div>

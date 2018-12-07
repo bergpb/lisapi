@@ -1,10 +1,10 @@
+.side-nav {
+    transform: translateX(0%) !important;
+}
+
 .widget {
   border-radius: 5px;
   padding: 5px 20px;
-}
-
-.widget > .row > div > i{
-  margin: 6px 10px 10px 10px;
 }
 
 .sidenav .user-view .name {
@@ -31,8 +31,16 @@
   margin-top: 1em;
 }
 
+.mt2{
+  margin-top: 2em;
+}
+
 .mt4{
   margin-top: 4em;
+}
+
+.input-field > select {
+  display: unset !important;
 }
 
 
@@ -42,3 +50,5 @@
       display: unset !important;
   }
 }
+
+/*https://stackoverflow.com/questions/42435938/simple-materialize-ui-responsive-side-menu*/

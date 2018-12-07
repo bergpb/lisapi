@@ -1,18 +1,17 @@
 {% extends "base.html" %}
-
 {% block title %}{{ super() }}| List Pins {% endblock %}}
-
 {% block page %} List Pins {% endblock %}}
-
 {% block content %}
+<div class="container">
   {% if pins %}
-  <div class="container">
-    <table class="centered">
+    <table class="centered mt4">
     <thead>
       <tr>
           <th>Name</th>
           <th>Pin</th>
           <th>Current Status</th>
+          <th>Color</th>
+          <th>Icon</th>
           <th>Actions</th>
       </tr>
     </thead>
@@ -26,6 +25,8 @@
         {% else %}
           <td>Off</td>
         {% endif %}
+        <td>{{ pin.color }}</td>
+        <td>{{ pin.icon }}</td>
         <td>
           <a class="btn blue" href="{{ url_for('edit_pin', pin_id = pin.id) }}"><i class="fa fa-edit"></i></a>
           <a class="btn red btn-delete"><i class="fa fa-trash"></i></a>

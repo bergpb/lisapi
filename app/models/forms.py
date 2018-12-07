@@ -23,18 +23,19 @@ class SignUp(FlaskForm):
     
     
 class NewPin(FlaskForm):
-        
     name = StringField("name", validators=[DataRequired()], description="Pin name")
-    # pin = QuerySelectField('List Pins', query_factory=choice_query,
-                            # allow_blank=False, get_label='pin')
     pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
+    color = SelectField('Select Color', validators=[DataRequired()],
+                        choices=[('red', 'Red'), ('green', 'Green'), ('blue', 'Blue')])
+    icon = StringField("icon", validators=[DataRequired()], description="Card icon")
     
 
 class EditPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
-    # pin = QuerySelectField('List Pins', query_factory=choice_query,
-                            # allow_blank=False, get_label='pin')
     pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
+    color = SelectField('Select Color', validators=[DataRequired()],
+                        choices=[('red', 'Red'), ('green', 'Green'), ('blue', 'Blue')])
+    icon = StringField("icon", validators=[DataRequired()], description="Card icon")
 
 
 class ChangePassword(FlaskForm):

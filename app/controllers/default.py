@@ -1,6 +1,7 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login
+import subprocess
 
 from app.models.tables import User, Pin
 from app.models.forms import Login, NewPin, ChangePassword, EditPin
@@ -15,6 +16,22 @@ def load_user(id):
 @app.route("/", methods=["GET"])
 def index():
     return render_template('index.html', **locals())
+
+
+@app.route("/api/status", methods=["GET"])
+def status():
+    process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
+    uptime = subprocess.getstatusoutput('uptime -p')[1]
+    mem_total = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 16-18')[1]
+    mem_used = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 28-30')[1]
+    mem_free = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 41-42')[1]
+    return jsonify(
+        process=process,
+        uptime=uptime,
+        mem_total=mem_total,
+        mem_used=mem_used,
+        mem_free=mem_free
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -41,6 +58,8 @@ def create_pin():
     if form_new_pin.validate_on_submit():
         pin_name = form_new_pin.name.data
         pin_number = form_new_pin.pin.data
+        pin_color = form_new_pin.color.data
+        pin_icon = form_new_pin.icon.data
         check_pin = helpers.checkPin(pin_number)
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if not check_pin:
@@ -50,7 +69,9 @@ def create_pin():
             flash("Pin {} is not disponible!".format(pin_number), "error")
             return render_template('new.html', form=form_new_pin)
         else:
-            pin = Pin(name=pin_name, pin=pin_number, state=False, user_id=current_user.id)
+            pin = Pin(name=pin_name, pin=pin_number,
+                      color=pin_color, icon=pin_icon,
+                      state=False, user_id=current_user.id)
             db.session.add(pin)
             db.session.commit()
             flash("Pin created!", "success")
@@ -76,6 +97,8 @@ def edit_pin(pin_id):
         pin = Pin.query.get(pin_id)
         pin.name = form_editpin.name.data
         pin.pin = form_editpin.pin.data
+        pin.color = form_editpin.color.data
+        pin.icon = form_editpin.icon.data
         db.session.commit()
         flash("Pin edited", "success")
         return redirect(url_for('list_pins'))
