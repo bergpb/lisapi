@@ -26,13 +26,17 @@ class Pin(db.Model):
     name = db.Column(db.String(40))
     pin = db.Column(db.Integer, unique=True)
     state = db.Column(db.Boolean, default=False)
+    color = db.Column(db.String(30), default=False)
+    icon = db.Column(db.String(30), default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', foreign_keys=user_id)
     
-    def __init__ (self, name, pin, state, user_id):
+    def __init__ (self, name, pin, state, color, icon, user_id):
         self.name = name
         self.pin = pin
         self.state = state
+        self.color = color
+        self.icon = icon
         self.user_id = user_id
         
     def __repr__(self):
