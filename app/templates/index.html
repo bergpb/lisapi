@@ -4,27 +4,88 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col s12 m6 l4 offset-m3 offset-l4 mt4">
+    <div class="col s12 m12 l12 center-align mt2">
       {% if current_user.id %}
         <div id="status">
-          {{ error }}
-          {{ loading }}
           <div v-if="loading" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-circle-notch fa-spin fa-4x"></i>
-            {{ error }}
-          {{ loading }}
           </div>
           <div v-else-if="error" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-exclamation-triangle fa-4x"></i>
             <p><strong>Some error as ocurred.</strong></p>
           </div>
           <div v-else>
-            <h4>Hello {{ current_user.username }}!</h4>
-            <p>Process: {% raw %}{{ status.process }}{% endraw %}</p>
-            <p>Uptime: {% raw %}{{ status.uptime }}{% endraw %}</p>
-            <p>Memory Total: {% raw %}{{ status.mem_total }}{% endraw %}</p>
-            <p>Memory Used: {% raw %}{{ status.mem_used }}{% endraw %}</p>
-            <p>Memory Free: {% raw %}{{ status.mem_free }}{% endraw %}</p>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-microchip fa-2x left-align" style="color: white"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Process: {% raw %}{{ status.process }}{% endraw %}</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-memory fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Memory Used/Free: {% raw %}{{ status.mem_used }}{% endraw %} / {% raw %}{{ status.mem_free }}{% endraw %}%</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-hdd fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>SdCard Used/Free: {% raw %}{{ status.sdcard_used }}{% endraw %} / {% raw %}{{ status.sdcard_free }}{% endraw %}</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-network-wired fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Ip Adress: {% raw %}{{ status.local_ip }}{% endraw %}</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-network-wired fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Network In / Out: {% raw %}{{ status.network_in }}{% endraw %} /
+                              {% raw %}{{ status.network_out }}{% endraw %}</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       {% else %}
@@ -54,7 +115,8 @@
     methods: {
       getData: function() {
         console.log('axios getting information');
-        axios.get('https://receding-cat-9495.dataplicity.io/api/status')
+        axios.get('http://192.168.4.140:5000/api/status')
+        // axios.get('http://192.168.4.103:5000/api/status')
         .then((response) => {
           this.status = response.data;
           this.loading = false;

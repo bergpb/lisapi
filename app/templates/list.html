@@ -9,7 +9,6 @@
       <tr>
           <th>Name</th>
           <th>Pin</th>
-          <th>Current Status</th>
           <th>Color</th>
           <th>Icon</th>
           <th>Actions</th>
@@ -20,23 +19,18 @@
       <tr>
         <td>{{ pin.name }}</td>
         <td>{{ pin.pin }}</td>
-        {% if pin.state == True %}
-          <td>On</td>
-        {% else %}
-          <td>Off</td>
-        {% endif %}
         <td>{{ pin.color }}</td>
         <td>{{ pin.icon }}</td>
         <td>
-          <a href="{{ url_for('edit_pin', pin_id = pin.id) }}">
-            <i style="color: blue" class="fa fa-edit"></i>
+          <a class="btn white" href="{{ url_for('edit_pin', pin_id = pin.id) }}">
+            <i style="color: green" class="fa fa-edit"></i>
           </a>
-          <a class="btn-delete">
+          <a id="btn-delete" class="btn white">
             <i style="color: red" class="fa fa-trash"></i>
           </a>
           <script>
             $(function(){
-              $('.btn-delete').on('click', function() {
+              $('#btn-delete').on('click', function() {
                 showSwLink("Delete pin?", "question", true, "Delete",
                            "red", "{{ url_for('delete_pin', pin_id = pin.id) }}")
               });
@@ -51,7 +45,7 @@
     <p class="mt4">Your list is empty.</p>
   {% endif %}
   <div>
-    <a class="btn" href="{{ url_for('create_pin') }}">New Pin</a>
+    <a class="btn mt1" href="{{ url_for('create_pin') }}">New Pin</a>
   </div>
 </div>
 {% endblock %}

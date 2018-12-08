@@ -1,7 +1,6 @@
 from flask import render_template, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login
-import subprocess
 
 from app.models.tables import User, Pin
 from app.models.forms import Login, NewPin, ChangePassword, EditPin
@@ -20,18 +19,8 @@ def index():
 
 @app.route("/api/status", methods=["GET"])
 def status():
-    process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
-    uptime = subprocess.getstatusoutput('uptime -p')[1]
-    mem_total = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 16-18')[1]
-    mem_used = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 28-30')[1]
-    mem_free = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 41-42')[1]
-    return jsonify(
-        process=process,
-        uptime=uptime,
-        mem_total=mem_total,
-        mem_used=mem_used,
-        mem_free=mem_free
-    )
+    status = helpers.statusInfo()
+    return jsonify(status)
 
 
 @app.route("/login", methods=["GET", "POST"])
