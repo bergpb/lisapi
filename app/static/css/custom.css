@@ -3,8 +3,13 @@
 }
 
 .widget {
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 5px 20px;
+}
+
+.widget-min {
+  border-radius: 10px;
+  padding: 0 15px;
 }
 
 .sidenav .user-view .name {
@@ -51,4 +56,14 @@
   }
 }
 
+@media only screen and (min-width: 601px){
+  .container {
+    width: 95% !important;
+  }
+}
+@media only screen and (min-width: 993px){
+  .container {
+    width: 95% !important;
+  }
+}
 /*https://stackoverflow.com/questions/42435938/simple-materialize-ui-responsive-side-menu*/

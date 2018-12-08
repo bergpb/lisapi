@@ -26,7 +26,20 @@ class NewPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
     pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
     color = SelectField('Select Color', validators=[DataRequired()],
-                        choices=[('red', 'Red'), ('green', 'Green'), ('blue', 'Blue')])
+                        choices=[('red', 'Red'),
+                                ('green', 'Green'),
+                                ('blue', 'Blue'),
+                                ('pink', 'Pink'),
+                                ('purple', 'Purple'),
+                                ('indingo', 'Indingo'),
+                                ('cyan', 'Cyan'),
+                                ('teal', 'Teal'),
+                                ('lime', 'Lime'),
+                                ('yellow', 'Yellow'),
+                                ('amber', 'Amber'),
+                                ('orange', 'Orange'),
+                                ('brown', 'Brown'),
+                                ('grey  ', 'Grey')])
     icon = StringField("icon", validators=[DataRequired()], description="Card icon")
     
 
@@ -34,7 +47,20 @@ class EditPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
     pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
     color = SelectField('Select Color', validators=[DataRequired()],
-                        choices=[('red', 'Red'), ('green', 'Green'), ('blue', 'Blue')])
+                        choices=[('red', 'Red'),
+                                ('green', 'Green'),
+                                ('blue', 'Blue'),
+                                ('pink', 'Pink'),
+                                ('purple', 'Purple'),
+                                ('indingo', 'Indingo'),
+                                ('cyan', 'Cyan'),
+                                ('teal', 'Teal'),
+                                ('lime', 'Lime'),
+                                ('yellow', 'Yellow'),
+                                ('amber', 'Amber'),
+                                ('orange', 'Orange'),
+                                ('brown', 'Brown'),
+                                ('grey  ', 'Grey')])
     icon = StringField("icon", validators=[DataRequired()], description="Card icon")
 
 
