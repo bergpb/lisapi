@@ -14,7 +14,7 @@ def load_user(id):
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('index.html', **locals())
+    return render_template('index.html', api_url=app.config['URL_API'])
 
 
 @app.route("/api/status", methods=["GET"])
