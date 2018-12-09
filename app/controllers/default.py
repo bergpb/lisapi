@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, jsonify
+from flask import render_template, flash, redirect, url_for, jsonify, request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login
 
@@ -81,21 +81,25 @@ def list_pins():
 @app.route("/edit/<int:pin_id>", methods=["GET", "POST"])
 @login_required
 def edit_pin(pin_id):
-    form_editpin = EditPin()
-    if form_editpin.validate_on_submit():
-        pin = Pin.query.get(pin_id)
-        pin.name = form_editpin.name.data
-        pin.pin = form_editpin.pin.data
-        pin.color = form_editpin.color.data
-        pin.icon = form_editpin.icon.data
-        db.session.commit()
-        flash("Pin edited", "success")
-        return redirect(url_for('list_pins'))
+    if request.method is 'POST':
+        form_editpin = EditPin()
+        if form_editpin.validate_on_submit():
+            pin = Pin.query.get(pin_id)
+            pin.name = form_editpin.name.data
+            pin.pin = form_editpin.pin.data
+            pin.color = form_editpin.color.data
+            pin.icon = form_editpin.icon.data
+            db.session.commit()
+            flash("Pin edited", "success")
+            return redirect(url_for('list_pins'))
+        else:
+            if len(form_editpin.errors) > 0:
+                flash("Check form data", "error")
     else:
-        if len(form_editpin.errors) > 0:
-            flash("Check form data", "error")
         pin = Pin.query.get(pin_id)
-        return render_template('edit.html', form=form_editpin, pin=pin)
+        form_editpin = EditPin(obj=pin)
+        
+    return render_template('edit.html', form=form_editpin, pin=pin)
 
 
 @app.route("/delete/<int:pin_id>", methods=["GET"])
