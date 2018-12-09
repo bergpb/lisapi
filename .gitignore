@@ -122,3 +122,4 @@ config.py
 anotacoes.txt
 /migrations
 lisapi.ini
+helpers.py

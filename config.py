@@ -6,9 +6,11 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'your_secret_key'
+    URL_API = 'http://192.168.4.103:5000/api/status'
 
 class production(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage.db')
+    URL_API = 'http://192.168.4.103:5000/api/status'
 
 class development(Config):
     DEBUG = True

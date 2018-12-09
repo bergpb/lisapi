@@ -47,6 +47,20 @@
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-clock fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Uptime: {% raw %}{{ status.uptime }}{% endraw %}</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
                     <i class="fas fa-memory fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
                   <div class="col s10 m10 l10">
@@ -75,7 +89,7 @@
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
-                    <i class="fas fa-network-wired fa-2x" style="color: white; margin-left: -5px"></i>
+                    <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
                   <div class="col s10 m10 l10">
                     <p class="right-align white-text">
@@ -128,16 +142,16 @@
     },
     methods: {
       getData: function() {
-        console.log('axios getting information');
-        axios.get('http://192.168.4.140:5000/api/status')
-        // axios.get('http://192.168.4.103:5000/api/status')
+        axios.get('{{ api_url }}')
         .then((response) => {
+          console.log('{{ api_url }}')
           this.status = response.data;
           this.loading = false;
         })
         .catch((error) => {
           this.loading = false;
           this.error = true;
+          console.log(error);
           clearInterval(this.interval);
         });
       },
