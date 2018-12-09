@@ -25,13 +25,6 @@ def setPin(pin_number):
     except:
         pass
 
-# only for test
-# def checkPin(pin):
-#     return True
-    
-# def setPin(pin):
-#     return True
-
 def statusInfo():
     process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
     uptime = subprocess.getstatusoutput('uptime -p')[1]
