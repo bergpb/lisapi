@@ -5,10 +5,6 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from app.models.tables import Pin
 
 
-def choice_query():
-        return Pin.query.filter_by(disponible=True)
-
-
 class Login(FlaskForm):
     username = StringField("username", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
@@ -31,7 +27,7 @@ class NewPin(FlaskForm):
                                 ('blue', 'Blue'),
                                 ('pink', 'Pink'),
                                 ('purple', 'Purple'),
-                                ('indingo', 'Indingo'),
+                                ('indigo', 'Indigo'),
                                 ('cyan', 'Cyan'),
                                 ('teal', 'Teal'),
                                 ('lime', 'Lime'),
@@ -46,13 +42,13 @@ class NewPin(FlaskForm):
 class EditPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
     pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
-    color = SelectField('Select Color', validators=[DataRequired()],
+    color = SelectField("color", validators=[DataRequired()],
                         choices=[('red', 'Red'),
                                 ('green', 'Green'),
                                 ('blue', 'Blue'),
                                 ('pink', 'Pink'),
                                 ('purple', 'Purple'),
-                                ('indingo', 'Indingo'),
+                                ('indigo', 'Indigo'),
                                 ('cyan', 'Cyan'),
                                 ('teal', 'Teal'),
                                 ('lime', 'Lime'),
