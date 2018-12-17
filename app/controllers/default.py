@@ -81,7 +81,7 @@ def list_pins():
 @app.route("/edit/<int:pin_id>", methods=["GET", "POST"])
 @login_required
 def edit_pin(pin_id):
-    if request.method is 'POST':
+    if request.method == 'POST':
         form_editpin = EditPin()
         if form_editpin.validate_on_submit():
             pin = Pin.query.get(pin_id)
