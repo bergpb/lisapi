@@ -52,3 +52,8 @@ function sidenavSelect(path){
         break;
   }
 }
+
+sidenavSelect(window.location.pathname);
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+});

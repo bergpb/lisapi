@@ -20,7 +20,8 @@ System requirements: ```python3```, ```pip3```, ```virtualenv```.
 4. Install requirements: ```pip3 install -r requirements.txt```,
 4. Run migrations: ```flask db init && flask db migrate && flask db upgrade```,
 5. Create a admin user: ```flask seed```,
-6. Run project: ```flask run --host=0.0.0.0```.
+6. Export your app to flask env: ```export FLASK_APP=app```
+7. Run project: ```flask run --host=0.0.0.0```.
 
 To do:
 - [x] Login.
