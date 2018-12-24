@@ -15,5 +15,5 @@ class development(Config):
     DEBUG = True
     DEVELOPMENT = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    URL_API = 'http://192.168.4.105:5000/api/status'
+    URL_API = 'http://0.0.0.0:5000/api/status'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage_dev.db')

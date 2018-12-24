@@ -28,5 +28,5 @@ To do:
 - [x] Save pins in db.
 - [x] Check if pin is disponible.
 - [x] Verify if pins exist in Raspberry Pi.
-- [ ] Return system status in dashboard.
+- [x] Return system status in dashboard.
 - [ ] RestFull Api.
