@@ -1,30 +1,43 @@
 import subprocess
-import RPi.GPIO as gpio
+import platform
+import random
 
-gpio.setmode(gpio.BCM)
-gpio.setwarnings(False)
+os = platform.machine()[0:4]
 
-def checkPin(pin_number):
-    try:
-        gpio.setup(pin_number, gpio.OUT)
-        state = gpio.input(pin_number)
-        return True
-    except ValueError:
-        return False
+# check if platform is a arvm* processor
+# and then import RPi.GPIO
+if os == 'armv':
+    import RPi.GPIO as gpio
 
-def setPin(pin_number):
-    try:
-        gpio.setup(pin_number, gpio.OUT)
-        state = gpio.input(pin_number)
-        if state == 0:
-            gpio.output(pin_number, 1)
+    gpio.setmode(gpio.BCM)
+    gpio.setwarnings(False)
+
+    def checkPin(pin_number):
+        try:
+            gpio.setup(pin_number, gpio.OUT)
+            state = gpio.input(pin_number)
             return True
-        elif state == 1:
-            gpio.output(pin_number, 0)
+        except ValueError:
             return False
-    except:
-        pass
-    
+
+    def setPin(pin_number):
+        try:
+            gpio.setup(pin_number, gpio.OUT)
+            state = gpio.input(pin_number)
+            if state == 0:
+                gpio.output(pin_number, 1)
+                return True
+            elif state == 1:
+                gpio.output(pin_number, 0)
+                return False
+        except:
+            pass
+else:
+    def checkPin(pin_number):
+        return random.choice([True, False])
+    def setPin(pin_number):
+        return random.choice([True, False])
+
 def statusInfo():
     process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
     uptime = subprocess.getstatusoutput('uptime -p')[1]
