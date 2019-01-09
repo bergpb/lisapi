@@ -1,5 +1,5 @@
 import platform
-import random
+import subprocess
 
 os = platform.machine()[0:4]
 
@@ -32,6 +32,7 @@ if os == 'armv':
         except:
             pass
 else:
+    import random
     def checkPin(pin_number):
         return random.choice([True, False])
     def setPin(pin_number):
