@@ -1,4 +1,4 @@
-from app import db
+from app import db, bcrypt
 from flask_login import UserMixin
 
 
@@ -13,11 +13,13 @@ class User(UserMixin, db.Model):
     def __init__ (self, username, email, password):
         self.username = username
         self.email = email
-        self.password = password
+        self.password = bcrypt.generate_password_hash(password)
         
     def __repr__(self):
         return "<User %r>" % self.username
         
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
 
 class Pin(db.Model):
     __tablename__ = "pins"

@@ -6,7 +6,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'your_secret_key'
-    
+
 class production(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage.db')
     URL_API = 'https://receding-cat-9495.dataplicity.io/api/status'

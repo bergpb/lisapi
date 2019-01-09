@@ -29,4 +29,5 @@ To do:
 - [x] Check if pin is disponible.
 - [x] Verify if pins exist in Raspberry Pi.
 - [x] Return system status in dashboard.
+- [ ] Apply Unit Tests.
 - [ ] RestFull Api.

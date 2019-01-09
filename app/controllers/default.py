@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, jsonify, request
 from flask_login import login_user, logout_user, login_required, current_user
-from app import app, db, login
+from app import app, db, login, bcrypt
 
 from app.models.tables import User, Pin
 from app.models.forms import Login, NewPin, ChangePassword, EditPin
@@ -28,7 +28,9 @@ def login():
     form_login = Login()
     if form_login.validate_on_submit():
         user = User.query.filter_by(username=form_login.username.data).first()
-        if user and user.password == form_login.password.data:
+        # if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+        if user and user.check_password(form_login.password.data):
+            print('password is correct');
             login_user(user, remember=form_login.remember_me.data)
             flash("Logged in.", "success")
             return redirect(url_for("index"))
