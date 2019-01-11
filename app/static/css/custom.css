@@ -48,6 +48,10 @@
   display: unset !important;
 }
 
+.swal2-container{
+  margin-top: 60px;
+}
+
 
 /*show hamburger menu in large screens*/
 @media only screen and (min-width: 993px){

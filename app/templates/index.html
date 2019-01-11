@@ -15,7 +15,7 @@
             <p><strong>Some error as ocurred.</strong></p>
           </div>
           <div v-else>
-            <div class="col s12 m6 l6 x6">
+            <div class="col s6 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
@@ -29,8 +29,8 @@
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
-              <div class="widget-min teal">
+            <div class="col s6 m6 l6 x6">
+              <div class="widget-min" v-bind:class="{ 'teal': status.cpu_temp <= 50, 'red': status.cpu_temp > 50 }">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
                     <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: -5px"></i>
