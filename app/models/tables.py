@@ -14,9 +14,10 @@ class User(UserMixin, db.Model):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
-
+        
     def __repr__(self):
         return "<User %r>" % self.username
+
 
 class Pin(db.Model):
     __tablename__ = "pins"

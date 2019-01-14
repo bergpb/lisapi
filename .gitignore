@@ -115,10 +115,11 @@ dmypy.json
 .pyre/
 
 #ignore my files
-storage.db
-storage_dev.db
+storage*
 app/__init__.py
+app/helpers/helpers.py
 config.py
 anotacoes.txt
 /migrations
 lisapi.ini
+wsgi.py

@@ -27,28 +27,28 @@ function showSwLink(title, type, showCancel, textConfirm, colorConfirm, link){
 }
 
 function sidenavSelect(path){
-  let color = 'teal lighten-5'
+  let color = 'teal lighten-5';
   switch (path) {
     case '/':
-        $('#home').addClass(color)
+        $('#home').addClass(color);
         break;
     case '/control':
-        $('#control_pins').addClass(color)
+        $('#control_pins').addClass(color);
         break;
     case '/list':
-        $('#list_pins').addClass(color)
+        $('#list_pins').addClass(color);
         break;
     case '/change_password':
-        $('#change_password').addClass(color)
+        $('#change_password').addClass(color);
         break;
     case '/logout':
-        $('#logout').addClass(color)
+        $('#logout').addClass(color);
         break;
     case '/login':
-        $('#login').addClass(color)
+        $('#login').addClass(color);
         break;
     case '/about':
-        $('#about').addClass(color)
+        $('#about').addClass(color);
         break;
   }
 }

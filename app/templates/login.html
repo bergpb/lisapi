@@ -18,12 +18,12 @@
             <span class="helper-text red-text">{{ error }}</span>
           {% endfor %}
         {% endif %}
-      <!--<div class="form-check mb-3">-->
-      <!--  {{ form.remember_me(class="form-check-input") }}-->
-      <!--  <label name="remember_me" class="form-check-label">Remember Me</label>-->
-      <!--</div>-->
+      <label>
+        {{ form.remember_me }}
+        <span>Remember Me</span>
+      </label>
       <div class="col s12 m12 l12 center-align mt1">
-        <button type="submit" class="btn">Confirm</button>
+        <button type="submit" class="btn">Login</button>
       </div>
     </form>
   </div>

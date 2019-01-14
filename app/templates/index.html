@@ -15,7 +15,7 @@
             <p><strong>Some error as ocurred.</strong></p>
           </div>
           <div v-else>
-            <div class="col s12 m6 l6 x6">
+            <div class="col s6 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
@@ -29,15 +29,15 @@
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
-              <div class="widget-min teal">
+            <div class="col s6 m6 l6 x6">
+              <div class="widget-min" v-bind:class="{ 'teal': status.cpu_temp <= 50, 'red': status.cpu_temp > 50 }">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
                     <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
                   <div class="col s10 m10 l10">
                     <p class="right-align white-text">
-                      <strong>CPU Temp: {% raw %}{{ status.cpu_temp }}{% endraw %}º</strong>
+                      <strong>CPU: {% raw %}{{ status.cpu_temp }}{% endraw %}º</strong>
                     </p>
                   </div>
                 </div>
@@ -125,6 +125,7 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
 <script type="text/javascript">
   new Vue({
     el: '#status',
