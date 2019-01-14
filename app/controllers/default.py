@@ -147,9 +147,10 @@ def change_password():
     form_passwd = ChangePassword()
     user = User.query.filter_by(id=current_user.id).first()
     if form_passwd.validate_on_submit():
-        if user.password == form_passwd.current_password.data:
+        # if user.password == form_passwd.current_password.data:
+        if bcrypt.check_password_hash(user.password, form_passwd.current_password.data):
             if form_passwd.new_password.data == form_passwd.confirm_password.data:
-                user.password = form_passwd.confirm_password.data
+                user.password = bcrypt.generate_password_hash(form_passwd.confirm_password.data).decode('utf-8')
                 db.session.commit()
                 logout_user()
                 flash("Password Changed.", "success")
