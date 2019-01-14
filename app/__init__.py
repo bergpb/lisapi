@@ -30,7 +30,7 @@ def seed():
     admin = tables.User.query.filter_by(username='admin').first()
     if not admin:
         print('Creating user admin.')
-        admin = tables.User('admin', 'admin@email.com', bcrypt.generate_password_hash('admin').decode('utf-8'))
+        admin = tables.User('admin', 'admin@email.com', 'admin')
         db.session.add(admin)
         db.session.commit()
         print('User created.')
