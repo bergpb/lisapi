@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, jsonify, request
 from flask_login import login_user, logout_user, login_required, current_user
-from app import app, db, login
+from app import app, db, login, bcrypt
 
 from app.models.tables import User, Pin
 from app.models.forms import Login, NewPin, ChangePassword, EditPin
@@ -28,7 +28,7 @@ def login():
     form_login = Login()
     if form_login.validate_on_submit():
         user = User.query.filter_by(username=form_login.username.data).first()
-        if user and user.password == form_login.password.data:
+        if user and bcrypt.check_password_hash(user.password, form_login.password.data):
             login_user(user, remember=form_login.remember_me.data)
             flash("Logged in.", "success")
             return redirect(url_for("index"))
@@ -81,7 +81,7 @@ def list_pins():
 @app.route("/edit/<int:pin_id>", methods=["GET", "POST"])
 @login_required
 def edit_pin(pin_id):
-    if request.method is 'POST':
+    if request.method == 'POST':
         form_editpin = EditPin()
         if form_editpin.validate_on_submit():
             pin = Pin.query.get(pin_id)
@@ -98,7 +98,7 @@ def edit_pin(pin_id):
     else:
         pin = Pin.query.get(pin_id)
         form_editpin = EditPin(obj=pin)
-        
+
     return render_template('edit.html', form=form_editpin, pin=pin)
 
 
@@ -147,9 +147,9 @@ def change_password():
     form_passwd = ChangePassword()
     user = User.query.filter_by(id=current_user.id).first()
     if form_passwd.validate_on_submit():
-        if user.password == form_passwd.current_password.data:
+        if bcrypt.check_password_hash(user.password, form_passwd.current_password.data):
             if form_passwd.new_password.data == form_passwd.confirm_password.data:
-                user.password = form_passwd.confirm_password.data
+                user.password = bcrypt.generate_password_hash(form_passwd.confirm_password.data).decode('utf-8')
                 db.session.commit()
                 logout_user()
                 flash("Password Changed.", "success")
