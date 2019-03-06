@@ -1,10 +1,11 @@
 ### Lisa Pi - Flask Application
 
-Control your Raspberry Pin with Flask application.
+Control your Raspberry Pi Pins with Flask application.
 
 Features:
-- Login
-- Registre pins
+- Login,
+- Some system info,
+- Registre pins,
 - Control state between on/off
 
 Flask modules:
@@ -12,8 +13,10 @@ Flask modules:
 - Flask-WTF
 - Flask-Migrate
 - Flask-SQLAlchemy
+- Flask-Bcrypt
+- Flask-Cors
 
-System requirements: ```python2.7``` or ```python3```, ```pip``` and ```pipenv```.
+System requirements:```python3```, ```pip``` and ```pipenv```.
 
 1. Clone project,
 2. Install dependencies: ```pipenv install```,
