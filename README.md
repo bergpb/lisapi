@@ -13,21 +13,24 @@ Flask modules:
 - Flask-Migrate
 - Flask-SQLAlchemy
 
-System requirements: ```python3```, ```pip3```, ```virtualenv```.
+System requirements: ```python2.7``` or ```python3```, ```pip``` and ```pipenv```.
+
 1. Clone project,
-2. Create a virtualenv: ```python3 -m venv .env```,
-3. Activate virtualenv: ```. .env/bin/activate```,
-4. Install requirements: ```pip3 install -r requirements.txt```,
+2. Install dependencies: ```pipenv install```,
+3. Activate virtualenv: ```pipenv shell```,
 4. Run migrations: ```flask db init && flask db migrate && flask db upgrade```,
 5. Create a admin user: ```flask seed```,
-6. Export your app to flask env: ```export FLASK_APP=app```
-7. Run project: ```flask run --host=0.0.0.0```.
+7. Export your app to flask env: ```export FLASK_APP=app```
+7. Export development in FLASK_ENV: ```export FLASK_ENV=development```
+9. Export your api url with: ```export LISA_API=your_url/api/status```
+10. Run project: ```flask run --host=0.0.0.0```.
 
 To do:
-- [x] Login.
-- [x] Save pins in db.
-- [x] Check if pin is disponible.
-- [x] Verify if pins exist in Raspberry Pi.
+- [x] User login.
+- [x] Save pins in database.
+- [x] Check if pin is disponible before register.
+- [x] Verify if pins exist in Raspberry Pi GPIO.
 - [x] Return system status in dashboard.
+- [ ] User permissions.
 - [ ] Apply Unit Tests.
 - [ ] RestFull Api.
