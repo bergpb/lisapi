@@ -124,9 +124,9 @@ def control_pins():
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
     pin_state = helpers.setPin(pin_number)
-    if pin_state == True:
+    if pin_state is True:
         pin.state = pin_state
-    elif pin_state == False:
+    elif pin_state is False:
         pin.state = pin_state
     else:
         flash("Pin {} dont exists!".format(pin.pin), "warning")

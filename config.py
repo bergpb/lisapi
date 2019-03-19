@@ -1,21 +1,20 @@
 import os
+
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    # to generate a secret key
-    # python -c 'import os; os.urandom(24)'
-    SECRET_KEY = 'your_secret_key'
+    SECRET_KEY = os.urandom(24)
 
 class production(Config):
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    URL_API = 'http://localhost:5000/api/status'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage.db')
-    URL_API = os.getenv('LISA_API')
 
 class development(Config):
-    DEBUG = True
-    DEVELOPMENT = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    URL_API = os.getenv('LISA_API_DEV')
+    URL_API = 'http://localhost:5000/api/status'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage_dev.db')
