@@ -39,13 +39,13 @@ else:
         return random.choice([True, False])
 
 def statusInfo():
-    process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
+    process = subprocess.getstatusoutput('ps -o pid')[1].count('\n')
     uptime = subprocess.getstatusoutput('uptime -p')[1]
-    mem_used = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 28-30')[1]
-    mem_free = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 41-42')[1]
-    sdcard_used = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 23-25 | head -1')[1]
-    sdcard_free = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 30-31 | head -1')[1]
-    sdcard_percent = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 35-36 | head -1')[1]
+    mem_used = subprocess.getstatusoutput('free -m | grep \'Mem\' | cut -c 27-29')[1]
+    mem_free = subprocess.getstatusoutput('free -m | grep \'Mem\' | cut -c 38-40')[1]
+    sdcard_used = subprocess.getstatusoutput('df -h | grep \'overlay\'| cut -c 36-40')[1]
+    sdcard_free = subprocess.getstatusoutput('df -h | grep \'overlay\'| cut -c 46-49')[1]
+    sdcard_percent = subprocess.getstatusoutput('df -h | grep \'overlay\'| cut -c 26-30')[1]
     cpu_temp = float(subprocess.getstatusoutput('cat /sys/class/thermal/thermal_zone0/temp')[1][:3]) / 10
     return{
         'process': process,
