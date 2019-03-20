@@ -46,10 +46,7 @@ def statusInfo():
     sdcard_used = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 23-25 | head -1')[1]
     sdcard_free = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 30-31 | head -1')[1]
     sdcard_percent = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 35-36 | head -1')[1]
-    local_ip = subprocess.getstatusoutput('ifconfig wlan0 |  grep inet | cut -c 14-26 | head -1')[1]
     cpu_temp = float(subprocess.getstatusoutput('cat /sys/class/thermal/thermal_zone0/temp')[1][:3]) / 10
-    rx_float_mb = round(float(subprocess.getstatusoutput('cat /sys/class/net/wlan0/statistics/rx_bytes')[1]) / 1024 / 1024, 2)
-    tx_float_mb = round(float(subprocess.getstatusoutput('cat /sys/class/net/wlan0/statistics/tx_bytes')[1]) / 1024 / 1024, 2)
     return{
         'process': process,
         'uptime': uptime,
@@ -59,7 +56,4 @@ def statusInfo():
         'sdcard_used': sdcard_used,
         'sdcard_free': sdcard_free,
         'sdcard_percent': sdcard_percent,
-        'local_ip': local_ip,
-        'network_in' : rx_float_mb,
-        'network_out' : tx_float_mb
     }
