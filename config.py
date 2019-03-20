@@ -7,7 +7,9 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = os.urandom(24)
+    # generate a key in python 3.6
+    # python3 -c 'import secrets; print(secrets.token_hex(16))'
+    SECRET_KEY = 'your_secret_key'
 
 class production(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False

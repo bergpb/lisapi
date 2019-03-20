@@ -16,6 +16,7 @@ flask-sqlalchemy = "*"
 flask-wtf = "*"
 uwsgi = "*"
 gunicorn = "*"
-"RPi.GPIO" = "*"
+'RPi.GPIO' = "*"
+
 [requires]
 python_version = "3"
