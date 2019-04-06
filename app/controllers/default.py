@@ -14,7 +14,7 @@ def load_user(id):
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('index.html', api_url=app.config['URL_API'])
+    return render_template('index.html')
 
 
 @app.route("/api/status", methods=["GET"])
@@ -28,7 +28,9 @@ def login():
     form_login = Login()
     if form_login.validate_on_submit():
         user = User.query.filter_by(username=form_login.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+        form_pass = form_login.password.data
+        user_pass = user.password
+        if user and bcrypt.check_password_hash(user_pass, form_pass):
             login_user(user, remember=form_login.remember_me.data)
             flash("Logged in.", "success")
             return redirect(url_for("index"))
@@ -129,7 +131,7 @@ def control_pin(pin_number):
     elif pin_state is False:
         pin.state = pin_state
     else:
-        flash("Pin {} dont exists!".format(pin.pin), "warning")
+        flash("Pin {} don't exists!".format(pin.pin), "warning")
         return redirect(url_for('control_pins'))
     db.session.commit()
     flash("{} changed.".format(pin.name), "success")

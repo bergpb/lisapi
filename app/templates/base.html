@@ -29,7 +29,7 @@
       <div class="user-view">
         <div class="background teal"></div>
         <a><span class="white-text name">Hello {{ current_user.username }}!</span></a>
-        <a><span class="white-text email">Have a great day!</span></a>
+        <a><span class="white-text email"></span></a>
       </div>
     </li>
     <li>
@@ -54,7 +54,7 @@
     <li>
       <a id="change_password" href="{{ url_for('change_password') }}">
         <i class="fas fa-user fa-lg"></i>
-        User Settings
+        Change Password
       </a>
     </li>
     <li>
@@ -95,7 +95,6 @@
     sidenavSelect(window.location.pathname);
   </script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/axios.min.js') }}"></script>
 </body>
 
 </html>

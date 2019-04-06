@@ -27,8 +27,10 @@
       </div>
     {% endfor %}
   {% else %}
-    <p class="mt4">Please register a pin.</p>
-    <a class="btn" href="{{ url_for('create_pin') }}">New Pin</a>
+    <div class="center-align">
+      <h4 class="mt2">Please register a pin.</h4>
+      <a class="btn mt2" href="{{ url_for('create_pin') }}">New Pin</a>
+    </div>
   {% endif %}
   </div>
 </div>

@@ -7,11 +7,11 @@
     <table class="centered mt4">
     <thead>
       <tr>
-          <th>Name</th>
-          <th>Pin</th>
-          <th>Color</th>
-          <th>Icon</th>
-          <th>Actions</th>
+        <th>Name</th>
+        <th>Pin</th>
+        <th>Color</th>
+        <th>Icon</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -42,10 +42,12 @@
     </tbody>
   </table>
   {% else %}
-    <p class="mt4">Your list is empty.</p>
+  <div class="center-align">
+    <h4 class="mt2">Your list is empty.</h4>
+  </div>
   {% endif %}
-  <div>
-    <a class="btn mt1" href="{{ url_for('create_pin') }}">New Pin</a>
+  <div class="center-align">
+    <a class="btn mt2" href="{{ url_for('create_pin') }}">New Pin</a>
   </div>
 </div>
 {% endblock %}
