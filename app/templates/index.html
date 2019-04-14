@@ -6,16 +6,145 @@
   <div class="row">
     <div class="col s12 m12 l12 center-align mt2">
       {% if current_user.id %}
-      <div class="col s12 m12 l12 center-align mt1">
-        <h4>Hello <strong>{{current_user.username}}</strong>.</h4>
-      </div>
+        <div id="app">
+          <div v-if="loading" class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-circle-notch fa-spin fa-4x"></i>
+          </div>
+          <!-- <div v-else-if="error" class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-exclamation-triangle fa-4x"></i>
+            <p><strong>Some error as ocurred.</strong></p>
+          </div> -->
+          <div v-else>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-microchip fa-2x left-align" style="color: white"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Process: ${ status.process }</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>CPU Temp: ${ status.cpu_temp }º</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-clock fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Uptime: ${ status.uptime }</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-memory fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Memory Used / Free: ${ status.mem_used } Mb / ${ status.mem_free } Mb</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-hdd fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>SdCard Used / Free: ${ status.sdcard_used } Gb / ${ status.sdcard_free } Gb</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Ip Adress: ${ status.local_ip }</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                    <i class="fas fa-network-wired fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s10 m10 l10">
+                    <p class="right-align white-text">
+                      <strong>Network In / Out: ${ status.network_in } /
+                              ${ status.network_out }</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       {% else %}
-      <div class="col s12 m12 l12 center-align mt2">
-        <h5>Hello anonymous user, please login.</h5>
-        <a class="btn mt2" href="{{ url_for('login') }}">Login</a>
+      <div class="col s12 m12 l12 center-align mt1">
+        <p>Hello, please login.</p>
+        <a class="btn" href="{{ url_for('login') }}">Login</a>
       </div>
       {% endif %}
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  var app = new Vue({
+      el: "#app",
+      delimiters: ['${', '}'],
+      data: {
+              status: '',
+              loading: true
+            },
+  });
+  socket.on('connect', function() {
+      console.log('Websocket connected!');
+  });
+  function updateValues() {
+    socket.emit('updateStatus', {});
+  }
+  socket.on('statusUpdated', function(data) {
+      app.$set(app, 'status', data);
+      app.$set(app, 'loading', false);
+  });
+  setInterval(function(){ updateValues(); }, 1000);
+</script>
 {% endblock %}

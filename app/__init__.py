@@ -24,6 +24,8 @@ login.init_app(app)
 from app.models import tables, forms
 from app.controllers import default
 from app.errors import errors
+from app.helpers import helpers
+
 
 
 @app.cli.command()

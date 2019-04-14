@@ -17,6 +17,9 @@ flask-wtf = "*"
 uwsgi = "*"
 gunicorn = "*"
 'RPi.GPIO' = "*"
+flask-socketio = "*"
+python-dotenv = "*"
+eventlet = "*"
 
 [requires]
 python_version = "3"

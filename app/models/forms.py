@@ -9,15 +9,15 @@ class Login(FlaskForm):
     username = StringField("username", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
     remember_me = BooleanField("remember_me")
-    
-    
+
+
 class SignUp(FlaskForm):
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
     accept_terms = BooleanField("accept_terms", validators=[DataRequired()])
-    
-    
+
+
 class NewPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
     pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
@@ -30,7 +30,7 @@ class NewPin(FlaskForm):
                                 ('amber', 'Amber'), ('orange', 'Orange'),
                                 ('brown', 'Brown'), ('grey  ', 'Grey')])
     icon = StringField("icon", validators=[DataRequired()], description="Card icon")
-    
+
 
 class EditPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")

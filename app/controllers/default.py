@@ -14,13 +14,7 @@ def load_user(id):
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('index.html')
-
-
-@app.route("/api/status", methods=["GET"])
-def status():
-    status = helpers.statusInfo()
-    return jsonify(status)
+    return render_template('index.html', data=helpers.statusInfo())
 
 
 @app.route("/login", methods=["GET", "POST"])

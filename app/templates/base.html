@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 </head>
 
 <body>
@@ -32,13 +35,13 @@
         <a><span class="white-text email"></span></a>
       </div>
     </li>
+  {% if current_user.is_authenticated %}
     <li>
-      <a id="home" data-target="#" data-toggle="pill" href="{{ url_for('index') }}">
+      <a id="dashboard" data-target="#" data-toggle="pill" href="{{ url_for('index') }}">
         <i class="fas fa-home fa-lg"></i>
-        Home
+        Dashboard
       </a>
     </li>
-  {% if current_user.is_authenticated %}
     <li>
       <a id="control_pins" href="{{ url_for('control_pins') }}">
         <i class="fas fa-cogs fa-lg"></i>
@@ -94,7 +97,5 @@
     });
     sidenavSelect(window.location.pathname);
   </script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 </body>
-
 </html>
