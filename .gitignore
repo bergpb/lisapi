@@ -122,3 +122,4 @@ anotacoes.txt
 /migrations
 lisapi.ini
 wsgi.py
+/.vscode

@@ -126,14 +126,14 @@
   </div>
 </div>
 <script type="text/javascript">
-  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  var socket = io.connect('http://' + document.domain + ':' + location.port + '/sockets');
   var app = new Vue({
       el: "#app",
       delimiters: ['${', '}'],
       data: {
-              status: '',
-              loading: true
-            },
+        status: '',
+        loading: true
+      },
   });
   socket.on('connect', function() {
       console.log('Websocket connected!');

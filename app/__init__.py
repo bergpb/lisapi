@@ -27,9 +27,10 @@ from app.errors import errors
 from app.helpers import helpers
 
 
-
 @app.cli.command()
 def seed():
+    """Start all migrations and create admin user."""
+    os.system('flask db init && flask db migrate && flask db upgrade')
     admin = tables.User.query.filter_by(username='admin').first()
     if not admin:
         print('Creating user admin.')
@@ -42,11 +43,6 @@ def seed():
 
 @app.cli.command()
 def drop():
-    admin = tables.User.query.filter_by(username='admin').first()
-    if admin:
-        print('Drop admin.')
-        db.session.delete(admin)
-        db.session.commit()
-        print('User removed.')
-    else:
-        print('User not found.')
+    """Remove migrations and databases."""
+    os.system('rm -rf migrations && rm storage*')
+    print('Databases and migrations removed.')

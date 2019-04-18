@@ -42,13 +42,13 @@ else:
 
 def statusInfo():
     process = getstatusoutput('ps -o pid')[1].count('\n')
-    uptime = getstatusoutput('uptime -p')[1]
-    mem_used = getstatusoutput('free -m | grep \'Mem\' | cut -c 27-29')[1]
-    mem_free = getstatusoutput('free -m | grep \'Mem\' | cut -c 38-40')[1]
-    sdcard_used = getstatusoutput('df -h | grep \'overlay\'| cut -c 36-40')[1]
-    sdcard_free = getstatusoutput('df -h | grep \'overlay\'| cut -c 46-49')[1]
-    sdcard_percent = getstatusoutput('df -h | grep \'overlay\'| cut -c 26-30')[1]
-    cpu_temp = float(getstatusoutput('cat /sys/class/thermal/thermal_zone0/temp')[1][:3]) / 10
+    uptime = getstatusoutput('uptime -p')[1].split(',')[0]
+    mem_used = getstatusoutput("free -m | grep 'Mem' | cut -c 26-29")[1]
+    mem_free = getstatusoutput("free -m | grep 'Mem' | cut -c 37-40")[1]
+    sdcard_used = getstatusoutput("df -h | grep 'overlay' | cut -c 36-39")[1]
+    sdcard_free = getstatusoutput("df -h | grep 'overlay'| cut -c 46-49")[1]
+    sdcard_percent = getstatusoutput("df -h | grep 'overlay'| cut -c 26-29")[1]
+    cpu_temp = float(getstatusoutput("cat /sys/class/thermal/thermal_zone0/temp")[1][:3]) / 10
     data = {
         'process': process,
         'uptime': uptime,

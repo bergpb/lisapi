@@ -6,7 +6,7 @@ from flask_socketio import SocketIO, emit
 socketio = SocketIO(app)
 
 
-@socketio.on('updateStatus')
+@socketio.on('updateStatus', namespace='/sockets')
 def on_update(data):
     """Update content in page"""
     data = helpers.statusInfo()
@@ -14,4 +14,4 @@ def on_update(data):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
