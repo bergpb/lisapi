@@ -19,6 +19,8 @@ gunicorn = "*"
 'RPi.GPIO' = "*"
 flask-socketio = "*"
 python-dotenv = "*"
+eventlet = "*"
+requests = "*"
 
 [requires]
 python_version = "3"

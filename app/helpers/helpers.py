@@ -1,5 +1,6 @@
 import random
 import platform
+import requests
 from flask import jsonify
 from subprocess import getstatusoutput
 
@@ -30,8 +31,8 @@ if os == 'armv':
             elif state == 1:
                 gpio.output(pin_number, 0)
                 return False
-        except:
-            pass
+        except ValueError:
+            print('Fail to set pin.')
 else:
     def checkPin(pin_number):
         return random.choice([True, False])
@@ -49,6 +50,7 @@ def statusInfo():
     sdcard_free = getstatusoutput("df -h | grep 'overlay'| cut -c 46-49")[1]
     sdcard_percent = getstatusoutput("df -h | grep 'overlay'| cut -c 26-29")[1]
     cpu_temp = float(getstatusoutput("cat /sys/class/thermal/thermal_zone0/temp")[1][:3]) / 10
+    ip_external = getstatusoutput(requests.get('http://bot.whatismyipaddress.com').content.decode('utf-8'))
     data = {
         'process': process,
         'uptime': uptime,
@@ -58,5 +60,6 @@ def statusInfo():
         'sdcard_used': sdcard_used,
         'sdcard_free': sdcard_free,
         'sdcard_percent': sdcard_percent,
+        'ip_external': ip_external[1][9:24]
     }
     return jsonify(data)

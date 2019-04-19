@@ -5,15 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>{% block title %} Lisa {% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/custom.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 </head>

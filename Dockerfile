@@ -1,4 +1,4 @@
-FROM arm32v6/alpine
+FROM alpine
 MAINTAINER bergpb
 RUN mkdir /home/lisapi
 ENV FLASK_ENV=production
