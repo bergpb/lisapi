@@ -10,10 +10,6 @@
           <div v-if="loading" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-circle-notch fa-spin fa-4x"></i>
           </div>
-          <!-- <div v-else-if="error" class="col s12 m12 l12 center-align mt4">
-            <i class="fas fa-exclamation-triangle fa-4x"></i>
-            <p><strong>Some error as ocurred.</strong></p>
-          </div> -->
           <div v-else>
             <div class="col s12 m6 l6 x6">
               <div class="widget-min teal">
@@ -23,7 +19,7 @@
                   </div>
                   <div class="col s10 m10 l10">
                     <p class="right-align white-text">
-                      <strong>Process: ${ status.process }</strong>
+                      <strong>Container Process: ${ status.process }</strong>
                     </p>
                   </div>
                 </div>
@@ -130,6 +126,6 @@
       app.$set(app, 'status', data);
       app.$set(app, 'loading', false);
   });
-  setInterval(function(){ updateValues(); }, 1000);
+  setInterval(function(){ updateValues(); }, 5000);
 </script>
 {% endblock %}

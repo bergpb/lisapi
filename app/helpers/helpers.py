@@ -6,8 +6,6 @@ from subprocess import getstatusoutput
 
 os = platform.machine()[0:4]
 
-# check if platform is a arvm* processor
-# and then import RPi.GPIO
 if os == 'armv':
     import RPi.GPIO as gpio
 
