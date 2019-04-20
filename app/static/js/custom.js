@@ -30,7 +30,7 @@ function sidenavSelect(path){
   let color = 'teal lighten-5';
   switch (path) {
     case '/':
-        $('#home').addClass(color);
+        $('#dashboard').addClass(color);
         break;
     case '/control':
         $('#control_pins').addClass(color);

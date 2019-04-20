@@ -1,10 +1,11 @@
+import random
 import platform
-import subprocess
+import requests
+from flask import jsonify
+from subprocess import getstatusoutput
 
 os = platform.machine()[0:4]
 
-# check if platform is a arvm* processor
-# and then import RPi.GPIO
 if os == 'armv':
     import RPi.GPIO as gpio
 
@@ -14,7 +15,6 @@ if os == 'armv':
     def checkPin(pin_number):
         try:
             gpio.setup(pin_number, gpio.OUT)
-            state = gpio.input(pin_number)
             return True
         except ValueError:
             return False
@@ -29,28 +29,27 @@ if os == 'armv':
             elif state == 1:
                 gpio.output(pin_number, 0)
                 return False
-        except:
-            pass
+        except ValueError:
+            print('Fail to set pin.')
 else:
-    import random
     def checkPin(pin_number):
         return random.choice([True, False])
+
     def setPin(pin_number):
         return random.choice([True, False])
 
+
 def statusInfo():
-    process = subprocess.getstatusoutput('ps -aux | wc -l')[1]
-    uptime = subprocess.getstatusoutput('uptime -p')[1]
-    mem_used = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 28-30')[1]
-    mem_free = subprocess.getstatusoutput('free -h | grep \'Mem\' | cut -c 41-42')[1]
-    sdcard_used = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 23-25 | head -1')[1]
-    sdcard_free = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 30-31 | head -1')[1]
-    sdcard_percent = subprocess.getstatusoutput('df -h | grep \'/dev\'| cut -c 35-36 | head -1')[1]
-    local_ip = subprocess.getstatusoutput('ifconfig wlan0 |  grep inet | cut -c 14-26 | head -1')[1]
-    cpu_temp = float(subprocess.getstatusoutput('cat /sys/class/thermal/thermal_zone0/temp')[1][:3]) / 10
-    rx_float_mb = round(float(subprocess.getstatusoutput('cat /sys/class/net/wlan0/statistics/rx_bytes')[1]) / 1024 / 1024, 2)
-    tx_float_mb = round(float(subprocess.getstatusoutput('cat /sys/class/net/wlan0/statistics/tx_bytes')[1]) / 1024 / 1024, 2)
-    return{
+    process = getstatusoutput('ps -o pid')[1].count('\n')
+    uptime = getstatusoutput('uptime -p')[1].split(',')[0]
+    mem_used = getstatusoutput("free -m | grep 'Mem' | cut -c 26-29")[1]
+    mem_free = getstatusoutput("free -m | grep 'Mem' | cut -c 37-40")[1]
+    sdcard_used = getstatusoutput("df -h | grep 'overlay' | cut -c 36-39")[1]
+    sdcard_free = getstatusoutput("df -h | grep 'overlay'| cut -c 46-49")[1]
+    sdcard_percent = getstatusoutput("df -h | grep 'overlay'| cut -c 26-29")[1]
+    cpu_temp = float(getstatusoutput("cat /sys/class/thermal/thermal_zone0/temp")[1][:3]) / 10
+    ip_external = getstatusoutput(requests.get('http://bot.whatismyipaddress.com').content.decode('utf-8'))
+    data = {
         'process': process,
         'uptime': uptime,
         'cpu_temp': cpu_temp,
@@ -59,7 +58,6 @@ def statusInfo():
         'sdcard_used': sdcard_used,
         'sdcard_free': sdcard_free,
         'sdcard_percent': sdcard_percent,
-        'local_ip': local_ip,
-        'network_in' : rx_float_mb,
-        'network_out' : tx_float_mb
+        'ip_external': ip_external[1][9:24]
     }
+    return jsonify(data)

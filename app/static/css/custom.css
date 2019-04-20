@@ -1,3 +1,5 @@
+[v-cloak] > * { display: none; }
+
 .side-nav {
     transform: translateX(0%) !important;
 }
@@ -48,7 +50,7 @@
   display: unset !important;
 }
 
-.swal2-container{
+.swal2-top-end{
   margin-top: 60px;
 }
 

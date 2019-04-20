@@ -10,7 +10,8 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 CORS(app)
 bcrypt = Bcrypt(app)
-app.config.from_object('config.' + os.getenv('FLASK_ENV', 'development'))
+env = os.getenv('FLASK_ENV', 'development')
+app.config.from_object('config.' + env)
 
 
 db = SQLAlchemy(app)
@@ -23,10 +24,13 @@ login.init_app(app)
 from app.models import tables, forms
 from app.controllers import default
 from app.errors import errors
+from app.helpers import helpers
 
 
 @app.cli.command()
-def seed():
+def db_seed():
+    """Start migrations and seeds."""
+    os.system('flask db init && flask db migrate && flask db upgrade')
     admin = tables.User.query.filter_by(username='admin').first()
     if not admin:
         print('Creating user admin.')
@@ -38,12 +42,7 @@ def seed():
         print('User exists.')
 
 @app.cli.command()
-def drop():
-    admin = tables.User.query.filter_by(username='admin').first()
-    if admin:
-        print('Drop admin.')
-        db.session.delete(admin)
-        db.session.commit()
-        print('User removed.')
-    else:
-        print('User not found.')
+def db_drop():
+    """Remove migrations and databases."""
+    os.system('rm -rf migrations && rm storage*')
+    print('Databases and migrations removed.')

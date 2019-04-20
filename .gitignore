@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# IDE files
+/.vscode
+
 # C extensions
 *.so
 
@@ -116,10 +119,4 @@ dmypy.json
 
 #ignore my files
 storage*
-app/__init__.py
-app/helpers/helpers.py
-config.py
-anotacoes.txt
 /migrations
-lisapi.ini
-wsgi.py

@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, jsonify, request
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app, db, login, bcrypt
 
@@ -14,13 +14,7 @@ def load_user(id):
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template('index.html', api_url=app.config['URL_API'])
-
-
-@app.route("/api/status", methods=["GET"])
-def status():
-    status = helpers.statusInfo()
-    return jsonify(status)
+    return render_template('index.html', data=helpers.statusInfo())
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -28,7 +22,9 @@ def login():
     form_login = Login()
     if form_login.validate_on_submit():
         user = User.query.filter_by(username=form_login.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+        form_pass = form_login.password.data
+        user_pass = user.password
+        if user and bcrypt.check_password_hash(user_pass, form_pass):
             login_user(user, remember=form_login.remember_me.data)
             flash("Logged in.", "success")
             return redirect(url_for("index"))
@@ -124,12 +120,12 @@ def control_pins():
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
     pin_state = helpers.setPin(pin_number)
-    if pin_state == True:
+    if pin_state is True:
         pin.state = pin_state
-    elif pin_state == False:
+    elif pin_state is False:
         pin.state = pin_state
     else:
-        flash("Pin {} dont exists!".format(pin.pin), "warning")
+        flash("Pin {} don't exists!".format(pin.pin), "warning")
         return redirect(url_for('control_pins'))
     db.session.commit()
     flash("{} changed.".format(pin.name), "success")
