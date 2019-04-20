@@ -1,3 +1,5 @@
+[v-cloak] > * { display: none; }
+
 .side-nav {
     transform: translateX(0%) !important;
 }

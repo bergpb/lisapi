@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col s12 m12 l12 center-align mt2">
       {% if current_user.id %}
-        <div id="app">
+        <div id="app" v-cloak>
           <div v-if="loading" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-circle-notch fa-spin fa-4x"></i>
           </div>
@@ -26,7 +26,12 @@
               </div>
             </div>
             <div class="col s12 m6 l6 x6">
-              <div class="widget-min teal">
+              <div 
+                v-bind:class="{ 'teal': (status.cpu_temp <= 50),
+                                'amber darken-4': (status.cpu_temp > 50 && status.cpu_temp <= 60),
+                                'red accent-4': (status.cpu_temp > 60) }"
+                class="widget-min"
+              >
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s2 m2 l2">
                     <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: -5px"></i>
@@ -117,15 +122,18 @@
       },
   });
   socket.on('connect', function() {
-      console.log('Websocket connected!');
+    console.log('Websocket connected!');
   });
   function updateValues() {
     socket.emit('updateStatus', {});
   }
+
   socket.on('statusUpdated', function(data) {
-      app.$set(app, 'status', data);
-      app.$set(app, 'loading', false);
+    app.$set(app, 'status', data);
+    app.$set(app, 'loading', false);
   });
-  setInterval(function(){ updateValues(); }, 5000);
+
+  updateValues();
+  setInterval(function(){ updateValues(); }, 2000);
 </script>
 {% endblock %}

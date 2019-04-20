@@ -28,8 +28,8 @@ from app.helpers import helpers
 
 
 @app.cli.command()
-def seed():
-    """Start all migrations and create admin user."""
+def db_seed():
+    """Start migrations and seeds."""
     os.system('flask db init && flask db migrate && flask db upgrade')
     admin = tables.User.query.filter_by(username='admin').first()
     if not admin:
@@ -42,7 +42,7 @@ def seed():
         print('User exists.')
 
 @app.cli.command()
-def drop():
+def db_drop():
     """Remove migrations and databases."""
     os.system('rm -rf migrations && rm storage*')
     print('Databases and migrations removed.')

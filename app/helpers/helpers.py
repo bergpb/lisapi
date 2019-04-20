@@ -41,7 +41,7 @@ else:
 
 def statusInfo():
     process = getstatusoutput('ps -o pid')[1].count('\n')
-    uptime = getstatusoutput('uptime -p')[1].split(',')[0]
+    uptime = getstatusoutput('uptime -p')[1].split(',')[0][-10:]
     mem_used = getstatusoutput("free -m | grep 'Mem' | cut -c 26-29")[1]
     mem_free = getstatusoutput("free -m | grep 'Mem' | cut -c 37-40")[1]
     sdcard_used = getstatusoutput("df -h | grep 'overlay' | cut -c 36-39")[1]
