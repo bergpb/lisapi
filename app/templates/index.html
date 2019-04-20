@@ -8,16 +8,16 @@
       {% if current_user.id %}
         <div id="app" v-cloak>
           <div v-if="loading" class="col s12 m12 l12 center-align mt4">
-            <i class="fas fa-circle-notch fa-spin fa-4x"></i>
+            <i class="fas fa-sync-alt fa-spin fa-4x"></i>
           </div>
           <div v-else>
             <div class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
-                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
                     <i class="fas fa-microchip fa-2x left-align" style="color: white"></i>
                   </div>
-                  <div class="col s10 m10 l10">
+                  <div class="col s11 m11 l11">
                     <p class="right-align white-text">
                       <strong>Container Process: ${ status.process }</strong>
                     </p>
@@ -33,10 +33,10 @@
                 class="widget-min"
               >
                 <div class="row">
-                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
                     <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
-                  <div class="col s10 m10 l10">
+                  <div class="col s11 m11 l11">
                     <p class="right-align white-text">
                       <strong>CPU Temp: ${ status.cpu_temp }º</strong>
                     </p>
@@ -47,10 +47,10 @@
             <div class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
-                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
                     <i class="fas fa-clock fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
-                  <div class="col s10 m10 l10">
+                  <div class="col s11 m11 l11">
                     <p class="right-align white-text">
                       <strong>Uptime: ${ status.uptime }</strong>
                     </p>
@@ -61,10 +61,10 @@
             <div class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
-                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
                     <i class="fas fa-memory fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
-                  <div class="col s10 m10 l10">
+                  <div class="col s11 m11 l11">
                     <p class="right-align white-text">
                       <strong>Memory Used / Free: ${ status.mem_used } Mb / ${ status.mem_free } Mb</strong>
                     </p>
@@ -75,10 +75,10 @@
             <div class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
-                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
                     <i class="fas fa-hdd fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
-                  <div class="col s10 m10 l10">
+                  <div class="col s11 m11 l11">
                     <p class="right-align white-text">
                       <strong>SdCard Used / Free: ${ status.sdcard_used } Gb / ${ status.sdcard_free } Gb</strong>
                     </p>
@@ -89,10 +89,10 @@
             <div class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
-                  <div style="margin-top: 0.7em" class="col s2 m2 l2">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
                     <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
                   </div>
-                  <div class="col s10 m10 l10">
+                  <div class="col s11 m11 l11">
                     <p class="right-align white-text">
                       <strong>Ip Adress: ${ status.ip_external }</strong>
                     </p>
