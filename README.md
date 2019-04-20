@@ -3,9 +3,9 @@
 Control your Raspberry Pi Pins with Flask application.
 
 Features:
-- Login,****
+- Login
 - Some system info,
-- Registre pins,
+- Register pins,
 - Control state between on/off
 
 Flask modules:
