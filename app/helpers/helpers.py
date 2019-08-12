@@ -2,7 +2,7 @@ import random
 import platform
 import requests
 from flask import jsonify
-from subprocess import getstatusoutput
+from subprocess import getstatusoutput, getoutput
 
 os = platform.machine()[0:4]
 
@@ -40,13 +40,18 @@ else:
 
 
 def statusInfo():
-    process = getstatusoutput('ps -o pid')[1].count('\n')
+    process = getstatusoutput('ps -aux | wc -l')[1]
     uptime = getstatusoutput('uptime -p')[1].split(',')[0]
-    mem_used = getstatusoutput("free -m | grep 'Mem' | cut -c 26-29")[1]
-    mem_free = getstatusoutput("free -m | grep 'Mem' | cut -c 37-40")[1]
-    sdcard_used = getstatusoutput("df -h | grep 'overlay' | cut -c 36-39")[1]
-    sdcard_free = getstatusoutput("df -h | grep 'overlay'| cut -c 46-49")[1]
-    sdcard_percent = getstatusoutput("df -h | grep 'overlay'| cut -c 26-29")[1]
+    mem_used = int(getoutput("free -m | grep Mem. | awk '{print $3}'"))
+    mem_free = int(getoutput("free -m | grep Mem. | awk '{print $4}'"))
+    if os == 'armv':
+        sdcard_used = getoutput("df -h | grep /dev/root | awk '{print $3}'")
+        sdcard_free = getoutput("df -h | grep /dev/root | awk '{print $4}'")
+        sdcard_percent = getoutput("df -h | grep /dev/root | awk '{print $5}'")
+    else:
+        sdcard_used = getoutput("df -h | grep /dev/sda6 | awk '{print $3}'")
+        sdcard_free = getoutput("df -h | grep /dev/sda6 | awk '{print $4}'")
+        sdcard_percent = getoutput("df -h | grep /dev/sda6 | awk '{print $5}'")
     cpu_temp = float(getstatusoutput("cat /sys/class/thermal/thermal_zone0/temp")[1][:3]) / 10
     ip_external = getstatusoutput(requests.get('http://bot.whatismyipaddress.com').content.decode('utf-8'))
     data = {
