@@ -1,21 +1,21 @@
 import os
+import config
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_cors import CORS
-from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO, emit
 
 
 app = Flask(__name__)
-CORS(app)
 bcrypt = Bcrypt(app)
-env = os.getenv('FLASK_ENV', 'development')
-app.config.from_object('config.' + env)
+app.config.from_object('config.' + os.getenv('FLASK_ENV'))
 
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+socketio = SocketIO(app)
 
 login = LoginManager()
 login.init_app(app)
@@ -27,8 +27,15 @@ from app.errors import errors
 from app.helpers import helpers
 
 
+@socketio.on('updateStatus')
+def on_update(data):
+    """Update content in page, receive updateStatus and emit statusUpdated"""
+    data = helpers.statusInfo()
+    emit('statusUpdated', data.json)
+
+
 @app.cli.command()
-def db_seed():
+def db_init():
     """Start migrations and seeds."""
     os.system('flask db init && flask db migrate && flask db upgrade')
     admin = tables.User.query.filter_by(username='admin').first()

@@ -10,8 +10,8 @@
           <div v-if="loading" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-sync-alt fa-spin fa-4x"></i>
           </div>
-          <div v-else>
-            <div class="col s12 m6 l6 x6">
+          <div v-else-if="status">
+            <div v-if="status.process" class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
@@ -25,16 +25,13 @@
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
-              <div 
-                v-bind:class="{ 'teal': (status.cpu_temp <= 50),
-                                'amber darken-4': (status.cpu_temp > 50 && status.cpu_temp <= 60),
-                                'red accent-4': (status.cpu_temp > 60) }"
-                class="widget-min"
-              >
+            <div v-if="status.cpu_temp" class="col s12 m6 l6 x6">
+              <div v-bind:class="{ 'teal': (status.cpu_temp <= 40),
+                'amber darken-4': (status.cpu_temp > 40 && status.cpu_temp <= 60),
+                'red accent-4': (status.cpu_temp > 60) }" class="widget-min">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                    <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: -5px"></i>
+                    <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: 4px"></i>
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
@@ -44,7 +41,7 @@
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
+            <div v-if="status.uptime" class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
@@ -58,7 +55,7 @@
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
+            <div v-if="status.mem_used || status.mem_free" class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
@@ -66,13 +63,14 @@
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>Memory Used / Free: ${ status.mem_used } Mb / ${ status.mem_free } Mb</strong>
+                      <strong>Used: ${ status.mem_used } Mb / Free: ${ status.mem_free } Mb</strong>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
+            <div>
+            <div v-if="status.sdcard_used || status.sdcard_free" class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
@@ -80,13 +78,13 @@
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>SdCard Used / Free: ${ status.sdcard_used } Gb / ${ status.sdcard_free } Gb</strong>
+                      <strong>Used: ${ status.sdcard_used } Gb / Free: ${ status.sdcard_free } Gb</strong>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col s12 m6 l6 x6">
+            <div v-if="status.ip_external" class="col s12 m6 l6 x6">
               <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
@@ -100,40 +98,57 @@
                 </div>
               </div>
             </div>
+            <small>Last updated at: ${ date }</small>
           </div>
         </div>
+        <div>
+          <div v-else class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-exclamation-circle fa-4x"></i>
+            <p><strong>Something is wrong!</strong></p>
+          </div>
+        </div>
+        <script type="text/javascript">
+          var socket = io.connect();
+          var app = new Vue({
+              el: "#app",
+              delimiters: ['${', '}'],
+              data: {
+                status: '',
+                date: '',
+                loading: true
+              },
+          });
+        
+          function updateValues() {
+            socket.emit('updateStatus', {});
+          };
+
+          function getDate(){
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            return time
+          }
+
+          socket.on('connect', function() {
+            console.log('websocket connected!');
+          });
+        
+          socket.on('statusUpdated', function(data) {
+            app.$set(app, 'status', data);
+            app.$set(app, 'loading', false);
+            app.$set(app, 'date', getDate());
+          });
+        
+          setInterval(function(){ updateValues(); }, 1000);
+        
+        </script>
       {% else %}
-      <div class="col s12 m12 l12 center-align mt1">
-        <p>Hello, please login.</p>
-        <a class="btn" href="{{ url_for('login') }}">Login</a>
-      </div>
+        <div class="col s12 m12 l12 center-align mt1">
+          <p>Hello, please login.</p>
+          <a class="btn" href="{{ url_for('login') }}">Login</a>
+        </div>
       {% endif %}
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  var socket = io.connect('http://' + document.domain + ':' + location.port + '/sockets');
-  var app = new Vue({
-      el: "#app",
-      delimiters: ['${', '}'],
-      data: {
-        status: '',
-        loading: true
-      },
-  });
-  socket.on('connect', function() {
-    console.log('Websocket connected!');
-  });
-  function updateValues() {
-    socket.emit('updateStatus', {});
-  }
-
-  socket.on('statusUpdated', function(data) {
-    app.$set(app, 'status', data);
-    app.$set(app, 'loading', false);
-  });
-
-  updateValues();
-  setInterval(function(){ updateValues(); }, 2000);
-</script>
 {% endblock %}

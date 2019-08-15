@@ -32,6 +32,7 @@ if os == 'armv':
         except ValueError:
             print('Fail to set pin.')
 else:
+    x = False
     def checkPin(pin_number):
         return random.choice([True, False])
 

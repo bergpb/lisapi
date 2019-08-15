@@ -9,7 +9,6 @@ ipdb = "*"
 [packages]
 flask = "*"
 flask-bcrypt = "*"
-flask-cors = "*"
 flask-login = "*"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
@@ -19,8 +18,8 @@ gunicorn = "*"
 'RPi.GPIO' = "*"
 flask-socketio = "*"
 python-dotenv = "*"
-eventlet = "*"
 requests = "*"
+eventlet = "*"
 
 [requires]
 python_version = "3"
