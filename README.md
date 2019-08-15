@@ -14,19 +14,22 @@ Flask modules:
 - Flask-Migrate
 - Flask-SQLAlchemy
 - Flask-Bcrypt
-- Flask-Cors
 - Flask-SocketIO
 
 System requirements:```python3``` and```pipenv```.
 
 Development:
   1. Clone project,
-  1. Enter in project folder,
-  1. Install dependencies: ```pipenv install```,
-  1. Activate virtualenv: ```pipenv shell```,
-  1. Run migrations and create admin user: ```flask db-seed```,
-  1. Run project: ```python run.py```.
+  2. Enter in project folder,
+  3. Install dependencies: ```pipenv install```,
+  4. Activate virtualenv: ```pipenv shell```,
+  5. Run migrations and create admin user: ```flask db-seed```,
+  6. Run project: ```python run.py```.
 
+
+Production:
+  1. [Wiki - Deploy with supervisor](https://github.com/bergpb/lisapi/wiki/Deploy-with-Supervisor)
+  2. [Wiki - Deploy with nginx](https://github.com/bergpb/lisapi/wiki/Deploy-with-Nginx)
 
 To do:
 - [x] User login.
