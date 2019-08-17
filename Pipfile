@@ -13,13 +13,14 @@ flask-login = "*"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
 flask-wtf = "*"
+'RPi.GPIO' = "*"
 uwsgi = "*"
 gunicorn = "*"
-'RPi.GPIO' = "*"
 flask-socketio = "*"
 python-dotenv = "*"
 requests = "*"
 eventlet = "*"
+
 
 [requires]
 python_version = "3"

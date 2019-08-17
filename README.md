@@ -16,7 +16,9 @@ Flask modules:
 - Flask-Bcrypt
 - Flask-SocketIO
 
-System requirements:```python3``` and```pipenv```.
+System requirements:
+```sudo apt install build-essential libssl-dev libffi-dev python3-dev```
+
 
 Development:
   1. Clone project,
@@ -28,8 +30,8 @@ Development:
 
 
 Production:
-  1. [Wiki - Deploy with supervisor](https://github.com/bergpb/lisapi/wiki/Deploy-with-Supervisor)
-  2. [Wiki - Deploy with nginx](https://github.com/bergpb/lisapi/wiki/Deploy-with-Nginx)
+  1. [Deploy with supervisor](https://github.com/bergpb/lisapi/wiki/Deploy-with-Supervisor)
+  2. [Deploy with nginx](https://github.com/bergpb/lisapi/wiki/Deploy-with-Nginx)
 
 To do:
 - [x] User login.
