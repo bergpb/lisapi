@@ -32,7 +32,6 @@ if os == 'armv':
         except ValueError:
             print('Fail to set pin.')
 else:
-    x = False
     def checkPin(pin_number):
         return random.choice([True, False])
 
@@ -41,10 +40,10 @@ else:
 
 
 def statusInfo():
-    process = getstatusoutput('ps -aux | wc -l')[1]
+    process = getstatusoutput('ps aux | wc -l')[1]
     uptime = getstatusoutput('uptime -p')[1].split(',')[0]
-    mem_used = int(getoutput("free -m | grep Mem. | awk '{print $3}'"))
-    mem_free = int(getoutput("free -m | grep Mem. | awk '{print $4}'"))
+    mem_used = int(getoutput("free -m | grep Mem. | awk '{print $6}'"))
+    mem_free = int(getoutput("free -m | grep Mem. | awk '{print $7}'"))
     if os == 'armv':
         sdcard_used = getoutput("df -h | grep /dev/root | awk '{print $3}'")
         sdcard_free = getoutput("df -h | grep /dev/root | awk '{print $4}'")
@@ -52,9 +51,9 @@ def statusInfo():
     else:
         sdcard_used = getoutput("df -h | grep /dev/sda6 | awk '{print $3}'")
         sdcard_free = getoutput("df -h | grep /dev/sda6 | awk '{print $4}'")
-        sdcard_percent = getoutput("df -h | grep /dev/sda6 | awk '{print $5}'")
+        sdcard_percent = getoutput("df -h | grep /dev/sda | awk '{print $5}'")
     cpu_temp = float(getstatusoutput("cat /sys/class/thermal/thermal_zone0/temp")[1][:3]) / 10
-    ip_external = getstatusoutput(requests.get('http://bot.whatismyipaddress.com').content.decode('utf-8'))
+    ip_external = requests.get('https://bot.whatismyipaddress.com/').content.decode('utf-8')
     data = {
         'process': process,
         'uptime': uptime,
@@ -64,6 +63,6 @@ def statusInfo():
         'sdcard_used': sdcard_used,
         'sdcard_free': sdcard_free,
         'sdcard_percent': sdcard_percent,
-        'ip_external': ip_external[1][9:24]
+        'ip_external': ip_external
     }
     return jsonify(data)

@@ -1,5 +1,5 @@
 import os
-import config
+import settings
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
@@ -10,7 +10,7 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-app.config.from_object('config.' + os.getenv('FLASK_ENV'))
+app.config.from_object('settings.' + os.getenv('FLASK_ENV'))
 
 
 db = SQLAlchemy(app)

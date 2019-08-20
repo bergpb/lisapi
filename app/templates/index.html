@@ -35,7 +35,7 @@
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>CPU Temp: ${ status.cpu_temp }º</strong>
+                      <strong>CPU Temp: ${ status.cpu_temp }°C</strong>
                     </p>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>Used: ${ status.sdcard_used } Gb / Free: ${ status.sdcard_free } Gb</strong>
+                      <strong>Used: ${ status.sdcard_used } / Free: ${ status.sdcard_free }</strong>
                     </p>
                   </div>
                 </div>
@@ -92,13 +92,12 @@
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>Ip Adress: ${ status.ip_external }</strong>
+                      <strong>External Ip Address: ${ status.ip_external }</strong>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <small>Last updated at: ${ date }</small>
           </div>
         </div>
         <div>
@@ -114,7 +113,6 @@
               delimiters: ['${', '}'],
               data: {
                 status: '',
-                date: '',
                 loading: true
               },
           });
@@ -122,13 +120,7 @@
           function updateValues() {
             socket.emit('updateStatus', {});
           };
-
-          function getDate(){
-            var today = new Date();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            return time
-          }
-
+            
           socket.on('connect', function() {
             console.log('websocket connected!');
           });
@@ -136,7 +128,6 @@
           socket.on('statusUpdated', function(data) {
             app.$set(app, 'status', data);
             app.$set(app, 'loading', false);
-            app.$set(app, 'date', getDate());
           });
         
           setInterval(function(){ updateValues(); }, 1000);

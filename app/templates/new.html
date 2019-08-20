@@ -17,7 +17,15 @@
         {% endif %}
       </div>
       <div class="input-field col s6">
-        {{ form.pin(placeholder="Pin") }}
+        {{ form.icon(placeholder="Icon") }}
+        {% if form.errors.icon %}
+          {% for error in form.errors.icon %}
+            <span class="helper-text red-text">{{ error }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+        <div class="input-field col s6">
+        {{ form.pin }}
         {% if form.errors.pin %}
           {% for error in form.errors.pin %}
             <span class="helper-text red-text">{{ error }}</span>
@@ -28,14 +36,6 @@
         {{ form.color }}
         {% if form.errors.color %}
           {% for error in form.errors.color %}
-            <span class="helper-text red-text">{{ error }}</span>
-          {% endfor %}
-        {% endif %}
-      </div>
-      <div class="input-field col s6">
-        {{ form.icon(placeholder="Icon") }}
-        {% if form.errors.icon %}
-          {% for error in form.errors.icon %}
             <span class="helper-text red-text">{{ error }}</span>
           {% endfor %}
         {% endif %}
