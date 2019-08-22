@@ -7,7 +7,7 @@
   {% if pins %}
     {% for pin in pins %}
       <div class="col s12 m4 l3 x3 mt1">
-        <a href="{{ url_for('control_pin', pin_number = pin.pin) }}">
+        <a href="{{ url_for('main.control_pin', pin_number = pin.pin) }}">
           <div class="widget {{ pin.color }}">
             <div class="row">
               <div style="margin-top: 1em" class="col s5">
@@ -29,7 +29,7 @@
   {% else %}
     <div class="center-align">
       <h4 class="mt2">Please register a pin.</h4>
-      <a class="btn mt2" href="{{ url_for('create_pin') }}">New Pin</a>
+      <a class="btn mt2" href="{{ url_for('main.create_pin') }}">New Pin</a>
     </div>
   {% endif %}
   </div>

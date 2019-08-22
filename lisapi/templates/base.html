@@ -4,7 +4,6 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
       <title>{% block title %} Lisa {% endblock %}</title>
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
       <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
@@ -38,45 +37,45 @@
       </li>
     {% if current_user.is_authenticated %}
       <li>
-        <a id="dashboard" data-target="#" data-toggle="pill" href="{{ url_for('index') }}">
+        <a id="dashboard" data-target="#" data-toggle="pill" href="{{ url_for('main.dashboard') }}">
           <i class="fas fa-home fa-lg"></i>
           Dashboard
         </a>
       </li>
       <li>
-        <a id="control_pins" href="{{ url_for('control_pins') }}">
+        <a id="control_pins" href="{{ url_for('main.control_pins') }}">
           <i class="fas fa-cogs fa-lg"></i>
           Control Pins
         </a>
       </li>
       <li>
-        <a id="list_pins" href="{{ url_for('list_pins') }}">
+        <a id="list_pins" href="{{ url_for('main.list_pins') }}">
           <i class="fas fa-edit fa-lg"></i>
           List Pins
         </a>
       </li>
       <li>
-        <a id="change_password" href="{{ url_for('change_password') }}">
+        <a id="change_password" href="{{ url_for('auth.change_password') }}">
           <i class="fas fa-user fa-lg"></i>
           Change Password
         </a>
       </li>
       <li>
-        <a id="logout" href="{{ url_for('logout') }}">
+        <a id="logout" href="{{ url_for('auth.logout') }}">
           <i class="fas fa-sign-out-alt fa-lg"></i>
           Logout
         </a>
       </li>
     {% else %}
       <li>
-        <a id="login" href="{{ url_for('login') }}">
+        <a id="login" href="{{ url_for('auth.login') }}">
           <i class="fas fa-sign-in-alt fa-lg"></i>
           Login
         </a>
       </li>
       <li>
-        <a id="about" href="{{ url_for('about') }}">
-          <i class="fas fa-info fa-lg"></i>
+        <a id="about" href="{{ url_for('main.about') }}">
+          <i style="padding-left: 8px;" class="fas fa-info fa-lg"></i>
           About
         </a>
       </li>

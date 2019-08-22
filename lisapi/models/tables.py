@@ -1,4 +1,4 @@
-from app import db, bcrypt
+from lisapi import db, bcrypt
 from flask_login import UserMixin
 
 

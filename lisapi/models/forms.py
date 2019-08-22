@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from app.models.tables import Pin
+from lisapi.models.tables import Pin
 
 
 class Login(FlaskForm):
@@ -20,7 +20,12 @@ class SignUp(FlaskForm):
 
 class NewPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
-    pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
+    pin = SelectField("pin", validators=[DataRequired()],
+                       choices=[('4', '4'), ('5', '5'), ('6', '6'),
+                                ('12', '12'), ('13', '13'),('16', '16'),
+                                ('17', '17'), ('18', '18'), ('20', '21'),
+                                ('22', '22'), ('23', '23'), ('24', '24'),
+                                ('25', '25'),('26', '26'), ('27', '27')])
     color = SelectField('Select Color', validators=[DataRequired()],
                         choices=[('red', 'Red'), ('green', 'Green'),
                                 ('blue', 'Blue'), ('pink', 'Pink'),
@@ -34,7 +39,12 @@ class NewPin(FlaskForm):
 
 class EditPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
-    pin = IntegerField("pin", validators=[DataRequired()], description="Pin number")
+    pin = SelectField("pin", validators=[DataRequired()],
+                       choices=[('4', '4'), ('5', '5'), ('6', '6'),
+                                ('12', '12'), ('13', '13'),('16', '16'),
+                                ('17', '17'), ('18', '18'), ('20', '21'),
+                                ('22', '22'), ('23', '23'), ('24', '24'),
+                                ('25', '25'),('26', '26'), ('27', '27')])
     color = SelectField("color", validators=[DataRequired()],
                         choices=[('red', 'Red'), ('green', 'Green'),
                                 ('blue', 'Blue'), ('pink', 'Pink'),
