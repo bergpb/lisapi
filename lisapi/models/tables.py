@@ -1,4 +1,5 @@
-from lisapi import db, bcrypt
+from lisapi import db
+from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
 
 
@@ -13,7 +14,7 @@ class User(UserMixin, db.Model):
     def __init__ (self, username, email, password):
         self.username = username
         self.email = email
-        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.password = generate_password_hash(password)
         
     def __repr__(self):
         return "<User %r>" % self.username

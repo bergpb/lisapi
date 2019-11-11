@@ -25,7 +25,7 @@ Development:
   2. Enter in project folder,
   3. Install dependencies: ```pipenv install```,
   4. Activate virtualenv: ```pipenv shell```,
-  5. Run migrations and create admin user: ```flask db-seed```,
+  5. Run migrations and create admin user: ```flask db-init```,
   6. Run project: ```python run.py```.
 
 

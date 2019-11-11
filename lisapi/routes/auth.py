@@ -1,4 +1,5 @@
-from lisapi import db, login, bcrypt
+from lisapi import db, login
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -16,7 +17,7 @@ def login():
         user = User.query.filter_by(username=form_login.username.data).first()
         form_pass = form_login.password.data
         user_pass = user.password
-        if user and bcrypt.check_password_hash(user_pass, form_pass):
+        if user and check_password_hash(user_pass, form_pass):
             login_user(user, remember=form_login.remember_me.data)
             flash('Logged in.', 'success')
             return redirect(url_for('main.dashboard'))
@@ -35,9 +36,9 @@ def change_password():
     form_passwd = ChangePassword()
     user = User.query.filter_by(id=current_user.id).first()
     if form_passwd.validate_on_submit():
-        if bcrypt.check_password_hash(user.password, form_passwd.current_password.data):
+        if check_password_hash(user.password, form_passwd.current_password.data):
             if form_passwd.new_password.data == form_passwd.confirm_password.data:
-                user.password = bcrypt.generate_password_hash(form_passwd.confirm_password.data).decode('utf-8')
+                user.password = generate_password_hash(form_passwd.confirm_password.data)
                 db.session.commit()
                 logout_user()
                 flash('Password Changed.', 'success')

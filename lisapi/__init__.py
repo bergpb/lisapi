@@ -1,13 +1,11 @@
 import os
 import settings
 from flask import Flask
-from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
 
-bcrypt = Bcrypt()
 db = SQLAlchemy()
 migrate = Migrate()
 socketio = SocketIO()
@@ -18,7 +16,6 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('settings.' + os.getenv('FLASK_ENV'))
 
-    bcrypt.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
     socketio.init_app(app)
