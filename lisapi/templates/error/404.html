@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col s12 m12 l12 center-align mt4">
+    <h3 class="center-align">404 Error</h3>
+    <p class="center-align">Ops! Not Found.</p>
+    <div class="col s12 m6 l4 offset-m3 offset-l4 center-align">
+      <a class="btn" href="{{ url_for('main.dashboard') }}">Back</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

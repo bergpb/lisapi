@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }}| Control Pins{% endblock %}}
+{% block page %} Control Pins {% endblock %}}
+
+{% block content %}
+<div class="row">
+  {% if pins %}
+    {% for pin in pins %}
+      <div class="col s12 m4 l3 x3 mt1">
+        <a href="{{ url_for('main.control_pin', pin_number = pin.pin) }}">
+          <div class="widget {{ pin.color }}">
+            <div class="row">
+              <div style="margin-top: 1em" class="col s5">
+                {% if pin.state == False %}
+                  <i class="fas fa-{{ pin.icon }} fa-4x" style="color: black; margin-left: -5px"></i>
+                {% else %}
+                  <i class="fas fa-{{ pin.icon }} fa-4x" style="color: yellow; margin-left: -5px"></i>
+                {% endif %}
+              </div>
+              <div class="col s7">
+                <h5 class="right-align black-text"><strong>{{ pin.name }}</strong></h5>
+                <h6 class="right-align black-text"><strong>{{ pin.pin }}</strong></h6>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="center-align">
+      <h4 class="mt2">Please register a pin.</h4>
+      <a class="btn mt2" href="{{ url_for('main.create_pin') }}">New Pin</a>
+    </div>
+  {% endif %}
+  </div>
+{% endblock %}
