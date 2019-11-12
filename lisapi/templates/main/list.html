@@ -1,53 +1,53 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block title %}{{ super() }}| List Pins {% endblock %}}
 {% block page %} List Pins {% endblock %}}
-
 {% block content %}
-{% if pins %}
-<table class="centered mt1">
-<thead>
-  <tr>
-    <th>Name</th>
-    <th>Pin</th>
-    <th>Color</th>
-    <th>Icon</th>
-    <th>Actions</th>
-  </tr>
-</thead>
-<tbody>
-{% for pin in pins %}
-  <tr>
-    <td>{{ pin.name }}</td>
-    <td>{{ pin.pin }}</td>
-    <td>{{ pin.color }}</td>
-    <td>{{ pin.icon }}</td>
-    <td>
-      <a class="btn white" href="{{ url_for('main.edit_pin', pin_id = pin.id) }}">
-        <i style="color: green" class="fa fa-edit"></i>
-      </a>
-      <a id="btn-delete{{ pins.index(pin) }}" class="btn white btn-delete">
-        <i style="color: red" class="fa fa-trash"></i>
-      </a>
-        <script>
-            $(function(){
-              $('#btn-delete{{ pins.index(pin) }}').on('click', function() {
-                showSwLink("Delete pin?", "question", true, "Delete",
-                           "red", "{{ url_for('main.delete_pin', pin_id = pin.id) }}")
-              });
-            });
-        </script>
-    </td>
-  </tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<div class="center-align">
-<h4 class="mt2">Your list is empty.</h4>
-</div>
-{% endif %}
-<div class="center-align">
-<a class="btn mt2" href="{{ url_for('main.create_pin') }}">New Pin</a>
+<div class="container">
+  {% if pins %}
+    <table class="centered mt4">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Pin</th>
+        <th>Color</th>
+        <th>Icon</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for pin in pins %}
+      <tr>
+        <td>{{ pin.name }}</td>
+        <td>{{ pin.pin }}</td>
+        <td>{{ pin.color }}</td>
+        <td>{{ pin.icon }}</td>
+        <td>
+          <a class="btn white" href="{{ url_for('main.edit_pin', pin_id = pin.id) }}">
+            <i style="color: green" class="fa fa-edit"></i>
+          </a>
+          <a id="btn-delete{{ pins.index(pin) }}" class="btn white btn-delete">
+            <i style="color: red" class="fa fa-trash"></i>
+          </a>
+            <script>
+                $(function(){
+                  $('#btn-delete{{ pins.index(pin) }}').on('click', function() {
+                    showSwLink("Delete pin?", "question", true, "Delete",
+                               "red", "{{ url_for('main.delete_pin', pin_id = pin.id) }}")
+                  });
+                });
+            </script>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="center-align">
+    <h4 class="mt2">Your list is empty.</h4>
+  </div>
+  {% endif %}
+  <div class="center-align">
+    <a class="btn mt2" href="{{ url_for('main.create_pin') }}">New Pin</a>
+  </div>
 </div>
 {% endblock %}

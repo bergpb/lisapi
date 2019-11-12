@@ -1,160 +1,173 @@
 {% extends 'base.html' %}
-
 {% block title %}{{ super() }}| Index{% endblock %}}
 {% block page %} Home {% endblock %}}
-
 {% block content %}
-<div class="row">
-  <div class="col s12 m12 l12 center-align mt1">
-    {% if current_user.id %}
-      <div id="app" v-cloak>
-        <div v-if="loading" class="col s12 m12 l12 center-align mt4">
-          <i class="fas fa-cog fa-spin fa-4x"></i>
-        </div>
-        <div v-else-if="status">
-          <div v-if="status.process" class="col s12 m6 l6 x6">
-            <div class="widget-min teal">
-              <div class="row">
-                <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                  <i class="fas fa-microchip fa-2x left-align" style="color: white"></i>
-                </div>
-                <div class="col s11 m11 l11">
-                  <p class="right-align white-text">
-                    <strong>Process: ${ status.process }</strong>
-                  </p>
-                </div>
-              </div>
-            </div>
+<div class="container">
+  <div class="row">
+    <div class="col s12 m12 l12 center-align mt1">
+      {% if current_user.id %}
+        <div id="app" v-cloak>
+          <div v-if="loading" class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-cog fa-spin fa-4x"></i>
           </div>
-          <div v-if="status.cpu_temp" class="col s12 m6 l6 x6">
-            <div v-bind:class="{ 'teal': (status.cpu_temp <= 40),
-              'amber darken-4': (status.cpu_temp > 40 && status.cpu_temp <= 60),
-              'red accent-4': (status.cpu_temp > 60) }" class="widget-min">
-              <div class="row">
-                <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                  <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: 4px"></i>
-                </div>
-                <div class="col s11 m11 l11">
-                  <p class="right-align white-text">
-                    <strong>CPU Temp: ${ status.cpu_temp }°C</strong>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div v-if="status.cpu_percent" class="col s12 m6 l6 x6">
-              <div v-bind:class="{ 'teal': (status.cpu_percent <= 50),
-                'amber darken-4': (status.cpu_percent > 50 && status.cpu_percent <= 70),
-                'red accent-4': (status.cpu_percent > 70) }" class="widget-min">
+          <div v-else-if="status">
+            <div v-if="status.process" class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
                 <div class="row">
                   <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                    <i class="fas fa-microchip fa-2x" style="color: white; margin-left: 4px"></i>
+                    <i class="fas fa-microchip fa-2x left-align" style="color: white"></i>
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>CPU Usage: ${ status.cpu_percent }%</strong>
+                      <strong>Process: ${ status.process }</strong>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-          <div v-if="status.uptime" class="col s12 m6 l6 x6">
-            <div class="widget-min teal">
-              <div class="row">
-                <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                  <i class="fas fa-clock fa-2x" style="color: white; margin-left: -5px"></i>
-                </div>
-                <div class="col s11 m11 l11">
-                  <p class="right-align white-text">
-                    <strong>Uptime: ${ status.uptime }</strong>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div v-if="status.mem_percent" class="col s12 m6 l6 x6">
-            <div class="widget-min teal">
-              <div class="row">
-                <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                  <i class="fas fa-memory fa-2x" style="color: white; margin-left: -5px"></i>
-                </div>
-                <div class="col s11 m11 l11">
-                  <p class="right-align white-text">
-                    <strong>Memory Free: ${ status.mem_percent }%</strong>
-                  </p>
+            <div v-if="status.cpu_temp" class="col s12 m6 l6 x6">
+              <div v-bind:class="{ 'teal': (status.cpu_temp <= 40),
+                'amber darken-4': (status.cpu_temp > 40 && status.cpu_temp <= 60),
+                'red accent-4': (status.cpu_temp > 60) }" class="widget-min">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                    <i class="fas fa-thermometer-half fa-2x" style="color: white; margin-left: 4px"></i>
+                  </div>
+                  <div class="col s11 m11 l11">
+                    <p class="right-align white-text">
+                      <strong>CPU Temp: ${ status.cpu_temp }°C</strong>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-          <div v-if="status.disk_percent" class="col s12 m6 l6 x6">
-            <div class="widget-min teal">
-              <div class="row">
-                <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                  <i class="fas fa-hdd fa-2x" style="color: white; margin-left: -5px"></i>
+            <div v-if="status.cpu_percent" class="col s12 m6 l6 x6">
+                <div v-bind:class="{ 'teal': (status.cpu_percent <= 40),
+                  'amber darken-4': (status.cpu_percent > 40 && status.cpu_percent <= 60),
+                  'red accent-4': (status.cpu_percent > 60) }" class="widget-min">
+                  <div class="row">
+                    <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                      <i class="fas fa-microchip fa-2x" style="color: white; margin-left: 4px"></i>
+                    </div>
+                    <div class="col s11 m11 l11">
+                      <p class="right-align white-text">
+                        <strong>CPU Usage: ${ status.cpu_percent }%</strong>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div class="col s11 m11 l11">
-                  <p class="right-align white-text">
-                    <strong>Disk Usage: ${ status.disk_percent }%</strong>
-                  </p>
+              </div>
+            <div v-if="status.uptime" class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                    <i class="fas fa-clock fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s11 m11 l11">
+                    <p class="right-align white-text">
+                      <strong>Uptime: ${ status.uptime }</strong>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div v-if="status.ip_internal" class="col s12 m6 l6 x6">
-            <div class="widget-min teal">
-              <div class="row">
-                <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                  <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
+            <div v-if="status.mem_percent" class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                    <i class="fas fa-memory fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s11 m11 l11">
+                    <p class="right-align white-text">
+                      <strong>Memory Free: ${ status.mem_percent }%</strong>
+                    </p>
+                  </div>
                 </div>
-                <div class="col s11 m11 l11">
-                  <p class="right-align white-text">
-                    <strong>Internal IPAddress: ${ status.ip_internal }</strong>
-                  </p>
+              </div>
+            </div>
+            <div>
+            <div v-if="status.disk_percent" class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                    <i class="fas fa-hdd fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s11 m11 l11">
+                    <p class="right-align white-text">
+                      <strong>Disk Usage: ${ status.disk_percent }%</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="status.ip_internal" class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                    <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s11 m11 l11">
+                    <p class="right-align white-text">
+                      <strong>Internal IPAddress: ${ status.ip_internal }</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="status.ip_external" class="col s12 m6 l6 x6">
+              <div class="widget-min teal">
+                <div class="row">
+                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
+                    <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
+                  </div>
+                  <div class="col s11 m11 l11">
+                    <p class="right-align white-text">
+                      <strong>External IPAddress: ${ status.ip_external }</strong>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <div v-else class="col s12 m12 l12 center-align mt4">
-          <i class="fas fa-exclamation-circle fa-4x"></i>
-          <p><strong>Something is wrong!</strong></p>
+        <div>
+          <div v-else class="col s12 m12 l12 center-align mt4">
+            <i class="fas fa-exclamation-circle fa-4x"></i>
+            <p><strong>Something is wrong!</strong></p>
+          </div>
         </div>
-      </div>
-      <script type="text/javascript">
-        var socket = io.connect();
-        var app = new Vue({
-            el: "#app",
-            delimiters: ['${', '}'],
-            data: {
-              status: '',
-              loading: true
-            },
-        });
+        <script type="text/javascript">
+          var socket = io.connect();
+          var app = new Vue({
+              el: "#app",
+              delimiters: ['${', '}'],
+              data: {
+                status: '',
+                loading: true
+              },
+          });
 
-        setInterval(function(){
-          socket.emit('updateStatus', {});
-        }, 2000);
-          
-        socket.on('connect', function() {
-          showToast("Websocket is active!", "success");
-        });
-      
-        socket.on('statusUpdated', function(data) {
-          app.$set(app, 'status', data);
-          app.$set(app, 'loading', false);
-        });
-      
-      </script>
-    {% else %}
-      <div class="col s12 m12 l12 center-align mt1">
-        <p>Hello <strong>guest</strong>, please login.</p>
-        <a class="btn" href="{{ url_for('auth.login') }}">Login</a>
-      </div>
-    {% endif %}
+          setInterval(function(){
+            socket.emit('updateStatus', {});
+          }, 2000);
+            
+          socket.on('connect', function() {
+            showToast("Websocket is active!", "success");
+          });
+        
+          socket.on('statusUpdated', function(data) {
+            app.$set(app, 'status', data);
+            app.$set(app, 'loading', false);
+          });
+        
+        </script>
+      {% else %}
+        <div class="col s12 m12 l12 center-align mt1">
+          <p>Hello <strong>guest</strong>, please login.</p>
+          <a class="btn" href="{{ url_for('auth.login') }}">Login</a>
+        </div>
+      {% endif %}
+    </div>
   </div>
-</div>
 </div>
 {% endblock %}
