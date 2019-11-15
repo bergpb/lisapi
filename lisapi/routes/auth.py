@@ -27,7 +27,13 @@ def login():
     else:
         if len(form_login.errors) > 0:
             flash('Check form data!', 'error')
-        return render_template('auth/login.html', form=form_login)
+
+    context = {
+        'form': form_login,
+        'active_menu': 'Login'
+    }
+    
+    return render_template('auth/login.html', **context)
 
 
 @auth.route('/change_password', methods=['GET', 'POST'])
@@ -52,7 +58,13 @@ def change_password():
     else:
         if len(form_passwd.errors) > 0:
             flash('Check form data!', 'error')
-        return render_template('auth/change_password.html', form=form_passwd)
+
+    context = {
+        'form': form_passwd,
+        'active_menu': 'Change Password'
+    }
+    
+    return render_template('auth/change_password.html', **context)
 
 
 @auth.route('/logout', methods=['GET'])

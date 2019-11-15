@@ -10,7 +10,7 @@
     <form novalidate action="" method="POST">
       {{ form.csrf_token }}
       <div class="input-field col s6">
-        {{ form.name(class="form-control", value=pin.name) }}
+        {{ form.name(value=pin.name) }}
         {% if form.errors.name %}
           {% for error in form.errors.name %}
             <span class="helper-text red-text">{{ error }}</span>
@@ -18,7 +18,7 @@
         {% endif %}
       </div>
       <div class="input-field col s6">
-        {{ form.icon(class="form-control", value=pin.icon) }}
+        {{ form.icon(class="autocomplete", value=pin.icon) }}
         {% if form.errors.icon %}
           {% for error in form.errors.icon %}
             <span class="helper-text red-text">{{ error }}</span>

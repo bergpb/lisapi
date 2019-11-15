@@ -1,5 +1,5 @@
 import os
-import settings
+import config
 from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -14,7 +14,7 @@ login = LoginManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('settings.' + os.getenv('FLASK_ENV'))
+    app.config.from_object('config.' + os.environ.get('FLASK_ENV', 'development'))
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -25,31 +25,31 @@ def create_app():
     from .helpers import helpers
     from .routes.auth import auth
     from .routes.main import main
+    from .routes.pwa import pwa
     from .errors.error import error
 
     app.register_blueprint(auth)
     app.register_blueprint(main)
+    app.register_blueprint(pwa)
     app.register_blueprint(error)
 
-
-    @socketio.on('updateStatus')
-    def on_update(data):
-        """Update content in page, receive updateStatus and emit statusUpdated"""
-        data = helpers.statusInfo()
-        emit('statusUpdated', data.json)
-
-
     @app.cli.command()
-    def db_seed():
+    def seed():
         """Add admin user."""
         admin = tables.User.query.filter_by(username='admin').first()
         if not admin:
-            print('Creating user admin.')
+            print('Creating user admin...')
             admin = tables.User('admin', 'admin@email.com', 'admin')
             db.session.add(admin)
             db.session.commit()
             print('User created.')
         else:
             print('User exists.')
+
+    @socketio.on('updateStatus')
+    def on_update(data):
+        """Update content in page, receive updateStatus and emit statusUpdated"""
+        data = helpers.statusInfo()
+        emit('statusUpdated', data.json)
 
     return socketio, app

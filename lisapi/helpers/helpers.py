@@ -7,6 +7,7 @@ import requests
 from flask import jsonify
 from subprocess import getstatusoutput, getoutput
 
+
 operational_system = platform.machine()[0:4]
 
 if operational_system == 'armv':
@@ -17,6 +18,7 @@ if operational_system == 'armv':
 
     def checkPin(pin_number):
         try:
+            platform.machine()[0:4]
             gpio.setup(pin_number, gpio.OUT)
             return True
         except ValueError:
@@ -33,7 +35,7 @@ if operational_system == 'armv':
                 gpio.output(pin_number, 0)
                 return False
         except ValueError:
-            print('Fail to set pin.')
+            pass
 else:
     def checkPin(pin_number):
         return random.choice([True, False])

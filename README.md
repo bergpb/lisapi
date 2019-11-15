@@ -1,13 +1,16 @@
-### Lisa Pi - Flask Application
+### LisaPi - Flask Application
 
 Control your Raspberry Pi Pins with Flask application.
-*Tested in models B+ and 3B+
+
+*Tested in models B+ and 3B+*
+
 
 Features:
 - Login
-- Some system info in dashboard,
-- Register pins to control,
-- Control state of pins between on/off
+- Some system info in dashboard (auto update using webockets).
+- Register pins to control.
+- Control state of pins between on/off.
+
 
 Flask modules:
 - Flask-Login
@@ -16,6 +19,7 @@ Flask modules:
 - Flask-SQLAlchemy
 - Flask-SocketIO
 
+
 System requirements:
 ```sudo apt install build-essential libssl-dev libffi-dev python3-dev```
 
@@ -23,15 +27,17 @@ System requirements:
 Development:
   1. Clone project,
   2. Enter in project folder,
-  3. Install dependencies: ```pipenv install```,
-  4. Activate virtualenv: ```pipenv shell```,
-  5. Run migrations and create admin user: ```flask db init && flask db migrate && flask db upgrade && flask db seed```,
-  6. Run project in development mode: ```python wsgi.py```.
+  3. Create a virtualenv: ```python3 -m venv .venv```,
+  4. Install dependencies: ```pip install -r requirements.txt```,
+  5. Run migrations: ```flask db init && flask db migrate && flask db upgrade```,
+  6. Create admin user: ```flask seed```,
+  7. Run project in development mode: ```python wsgi.py```.
 
 
 Production:
   1. [Deploy with Supervisor](https://github.com/bergpb/lisapi/wiki/Deploy-with-Supervisor)
   2. [Deploy with Nginx](https://github.com/bergpb/lisapi/wiki/Deploy-with-Nginx)
+
 
 To do:
 - [x] User login.

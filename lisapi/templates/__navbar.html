@@ -1,0 +1,12 @@
+{% set active_menu=active_menu|default('Lisa Pi') %}
+
+<nav class="nav teal">
+  <div class="nav-wrapper">
+    <div class="left">
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+    </div>
+    <span class="right mr1">
+    	<strong>{{ active_menu }}</strong>
+    </span>
+  </div>
+</nav>

@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+
 {% block title %}{{ super() }}| Index{% endblock %}}
 {% block page %} Home {% endblock %}}
+
 {% block content %}
-<div class="container">
-  <div class="row">
+<div class="row">
     <div class="col s12 m12 l12 center-align mt1">
       {% if current_user.id %}
         <div id="app" v-cloak>
@@ -47,7 +48,7 @@
                   'red accent-4': (status.cpu_percent > 60) }" class="widget-min">
                   <div class="row">
                     <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                      <i class="fas fa-microchip fa-2x" style="color: white; margin-left: 4px"></i>
+                      <i class="fas fa-microchip fa-2x" style="color: white"></i>
                     </div>
                     <div class="col s11 m11 l11">
                       <p class="right-align white-text">
@@ -108,21 +109,7 @@
                   </div>
                   <div class="col s11 m11 l11">
                     <p class="right-align white-text">
-                      <strong>Internal IPAddress: ${ status.ip_internal }</strong>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div v-if="status.ip_external" class="col s12 m6 l6 x6">
-              <div class="widget-min teal">
-                <div class="row">
-                  <div style="margin-top: 0.7em" class="col s1 m1 l1">
-                    <i class="fas fa-laptop fa-2x" style="color: white; margin-left: -5px"></i>
-                  </div>
-                  <div class="col s11 m11 l11">
-                    <p class="right-align white-text">
-                      <strong>External IPAddress: ${ status.ip_external }</strong>
+                      <strong>IPAddress: ${ status.ip_internal }</strong>
                     </p>
                   </div>
                 </div>
@@ -150,10 +137,6 @@
           setInterval(function(){
             socket.emit('updateStatus', {});
           }, 2000);
-            
-          socket.on('connect', function() {
-            showToast("Websocket is active!", "success");
-          });
         
           socket.on('statusUpdated', function(data) {
             app.$set(app, 'status', data);
@@ -169,5 +152,4 @@
       {% endif %}
     </div>
   </div>
-</div>
 {% endblock %}

@@ -1,10 +1,11 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 {% block title %}{{ super() }}| List Pins {% endblock %}}
 {% block page %} List Pins {% endblock %}}
+
 {% block content %}
-<div class="container">
   {% if pins %}
-    <table class="centered mt4">
+    <table class="centered mt1">
     <thead>
       <tr>
         <th>Name</th>
@@ -20,13 +21,13 @@
         <td>{{ pin.name }}</td>
         <td>{{ pin.pin }}</td>
         <td>{{ pin.color }}</td>
-        <td>{{ pin.icon }}</td>
+        <td><i class="fas fa-{{ pin.icon }}"></i></td>
         <td>
           <a class="btn white" href="{{ url_for('main.edit_pin', pin_id = pin.id) }}">
-            <i style="color: green" class="fa fa-edit"></i>
+            <i style="color: green" class="fas fa-edit"></i>
           </a>
           <a id="btn-delete{{ pins.index(pin) }}" class="btn white btn-delete">
-            <i style="color: red" class="fa fa-trash"></i>
+            <i style="color: red" class="fas fa-trash"></i>
           </a>
             <script>
                 $(function(){
@@ -49,5 +50,4 @@
   <div class="center-align">
     <a class="btn mt2" href="{{ url_for('main.create_pin') }}">New Pin</a>
   </div>
-</div>
 {% endblock %}

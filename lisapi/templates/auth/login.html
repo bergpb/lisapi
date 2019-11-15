@@ -8,13 +8,13 @@
     <h3 class="center-align">Login</h3>
     <form novalidate action="" method="POST">
       {{ form.csrf_token }}
-      {{ form.username(class="form-control", placeholder="Username") }}
+      {{ form.username(placeholder="Username") }}
         {% if form.errors.username %}
           {% for error in form.errors.current_password %}
             <span class="helper-text red-text">{{ error }}</span>
           {% endfor %}
         {% endif %}
-      {{ form.password(class="form-control", placeholder="Password") }}
+      {{ form.password(placeholder="Password") }}
         {% if form.errors.password %}
           {% for error in form.errors.current_password %}
             <span class="helper-text red-text">{{ error }}</span>

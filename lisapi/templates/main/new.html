@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ super() }}| New Pin{% endblock %}}
+{% block page %} New Pin {% endblock %}}
 
 {% block content %}
 <div class="row">
@@ -17,7 +18,7 @@
         {% endif %}
       </div>
       <div class="input-field col s6">
-        {{ form.icon(placeholder="Icon") }}
+        {{ form.icon(placeholder="Icon", class="autocomplete") }}
         {% if form.errors.icon %}
           {% for error in form.errors.icon %}
             <span class="helper-text red-text">{{ error }}</span>

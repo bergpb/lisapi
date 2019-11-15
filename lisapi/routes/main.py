@@ -8,7 +8,6 @@ from lisapi.models.forms import Login, NewPin, ChangePassword, EditPin
 from lisapi.helpers import helpers
 
 
-
 main = Blueprint('main', __name__)
 
 
@@ -18,13 +17,14 @@ def load_user(id):
 
 
 @main.route('/', methods=['GET'])
-def go_to_dashboard():
-    return redirect(url_for('main.dashboard'))
-
-
-@main.route('/dashboard', methods=['GET'])
 def dashboard():
-    return render_template('main/dashboard.html', data=helpers.statusInfo())
+
+    context = {
+        'data': helpers.statusInfo(),
+        'active_menu': 'Dashboard'
+    }
+
+    return render_template('main/dashboard.html', **context)
 
 
 @main.route('/create', methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def create_pin():
     form_new_pin = NewPin()
     if form_new_pin.validate_on_submit():
         pin_name = form_new_pin.name.data
-        pin_number = form_new_pin.pin.data
+        pin_number = int(form_new_pin.pin.data)
         pin_color = form_new_pin.color.data
         pin_icon = form_new_pin.icon.data
         check_pin = helpers.checkPin(pin_number)
@@ -54,14 +54,26 @@ def create_pin():
     else:
         if len(form_new_pin.errors) > 0:
             flash('Check form data!', 'error')
-        return render_template('main/new.html', form=form_new_pin)
+
+    context = {
+        'form': form_new_pin,
+        'active_menu': 'New Pin'
+    }
+        
+    return render_template('main/new.html', **context)
 
 
 @main.route('/list', methods=['GET'])
 @login_required
 def list_pins():
     list_pins = Pin.query.all()
-    return render_template('main/list.html', pins=list_pins)
+
+    context = {
+        'pins': list_pins,
+        'active_menu': 'List Pins'
+    }
+
+    return render_template('main/list.html', **context)
 
 
 @main.route('/edit/<int:pin_id>', methods=['GET', 'POST'])
@@ -85,7 +97,13 @@ def edit_pin(pin_id):
         pin = Pin.query.get(pin_id)
         form_editpin = EditPin(obj=pin)
 
-    return render_template('main/edit.html', form=form_editpin, pin=pin)
+    context = {
+        'form': form_editpin,
+        'pin': pin,
+        'active_menu': 'Edit Pin'
+    }
+
+    return render_template('main/edit.html', **context)
 
 
 @main.route('/delete/<int:pin_id>', methods=['GET'])
@@ -102,7 +120,13 @@ def delete_pin(pin_id):
 @login_required
 def control_pins():
     list_pins = Pin.query.all()
-    return render_template('main/control.html', pins=list_pins)
+
+    context = {
+        'pins': list_pins,
+        'active_menu': 'Control Pins'
+    }
+
+    return render_template('main/control.html', **context)
 
 
 @main.route('/control/<int:pin_number>', methods=['GET'])
@@ -110,6 +134,7 @@ def control_pins():
 def control_pin(pin_number):
     pin = Pin.query.filter_by(pin=pin_number).first()
     pin_state = helpers.setPin(pin_number)
+
     if pin_state is True:
         pin.state = pin_state
     elif pin_state is False:
@@ -117,6 +142,7 @@ def control_pin(pin_number):
     else:
         flash('Pin {} don\'t exists!'.format(pin.pin), 'warning')
         return redirect(url_for('main.control_pins'))
+
     db.session.commit()
     flash('{} changed.'.format(pin.name), 'success')
     return redirect(url_for('main.control_pins'))
@@ -124,4 +150,4 @@ def control_pin(pin_number):
 
 @main.route('/about', methods=['GET'])
 def about():
-    return render_template('about.html')
+    return render_template('about.html', active_menu='About')
