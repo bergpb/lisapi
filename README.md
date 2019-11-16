@@ -10,6 +10,7 @@ Features:
 - Some system info in dashboard (auto update using webockets).
 - Register pins to control.
 - Control state of pins between on/off.
+- PWA Ready.
 
 
 Flask modules:
@@ -46,6 +47,7 @@ To do:
 - [x] Check if pin is disponible before register.
 - [x] Verify if pins exist in Raspberry Pi GPIO.
 - [x] Return system status in dashboard (auto update using wesockets).
+- [X] PWA implementation.
 - [ ] User permissions.
 - [ ] Apply Unit Tests.
 - [ ] RestFull Api.
