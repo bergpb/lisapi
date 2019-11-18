@@ -1,7 +1,6 @@
-from lisapi import db, login
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from lisapi import db, login, socketio
+from flask import Blueprint, render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
-
 
 from lisapi.models.tables import User, Pin
 from lisapi.models.forms import Login, NewPin, ChangePassword, EditPin
@@ -9,6 +8,39 @@ from lisapi.helpers import helpers
 
 
 main = Blueprint('main', __name__)
+
+
+@socketio.on('updateStatus')
+def on_update(data):
+    """Update content in page, receive updateStatus and emit statusUpdated"""
+    data = helpers.statusInfo()
+    socketio.emit('statusUpdated', data.json)
+
+
+@socketio.on('changeState')
+def change_pin_state(data):
+    current_state = 0
+    pin_number = data['pin_number']
+    pin = Pin.query.filter_by(pin=pin_number).first()
+    pin_state = helpers.setPin(pin_number)
+    pin.state = pin_state
+
+    if pin_state is True:
+        current_state = 1
+
+    db.session.commit()
+
+    data = jsonify({
+        'pin': pin_number,
+        'currentState': current_state
+    })
+
+    socketio.emit('statusChanged', data.json)
+
+
+@socketio.on_error()
+def error_handler(e):
+    socketio.emit('error', e)
 
 
 @login.user_loader

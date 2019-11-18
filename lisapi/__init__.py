@@ -4,7 +4,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -45,11 +45,5 @@ def create_app():
             print('User created.')
         else:
             print('User exists.')
-
-    @socketio.on('updateStatus')
-    def on_update(data):
-        """Update content in page, receive updateStatus and emit statusUpdated"""
-        data = helpers.statusInfo()
-        emit('statusUpdated', data.json)
 
     return socketio, app

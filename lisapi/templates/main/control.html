@@ -6,27 +6,52 @@
 {% block content %}
 <div class="row">
   {% if pins %}
-    {% for pin in pins %}
-      <div class="col s12 m4 l3 x3 mt1">
-        <a href="{{ url_for('main.control_pin', pin_number = pin.pin) }}">
-          <div class="widget {{ pin.color }}">
-            <div class="row">
-              <div style="margin-top: 1em" class="col s5">
-                {% if pin.state == False %}
-                  <i class="fas fa-{{ pin.icon }} fa-4x" style="color: black; margin-left: -5px"></i>
-                {% else %}
-                  <i class="fas fa-{{ pin.icon }} fa-4x" style="color: yellow; margin-left: -5px"></i>
-                {% endif %}
-              </div>
-              <div class="col s7">
-                <h5 class="right-align black-text"><strong>{{ pin.name }}</strong></h5>
-                <h6 class="right-align black-text"><strong>{{ pin.pin }}</strong></h6>
+    <div id="control-pins">
+      {% for pin in pins %}
+        <div class="col s12 m4 l3 x3 mt1">
+          <a href="#" v-on:click="changeState({{ pin.pin }});">
+            <div class="widget {{ pin.color }}">
+              <div class="row">
+                <div style="margin-top: 1em" class="col s5">
+                  <div id="pin-{{ pin.pin }}" class="{% if pin.state == True %}pin-on{% else %}pin-off{% endif %}">
+                    <i class="fas fa-{{ pin.icon }} fa-4x" style="margin-left: -5px;"></i>
+                  </div>
+                </div>
+                <div class="col s7">
+                  <h5 class="right-align black-text"><strong>{{ pin.name }}</strong></h5>
+                  <h6 class="right-align black-text"><strong>{{ pin.pin }}</strong></h6>
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </div>
-    {% endfor %}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      var socket = io();
+      var app = new Vue({
+        el: "#control-pins",
+        delimiters: ["${", "}"],
+        data: {
+          pin: "",
+          error: null,
+        },
+        methods: {
+          changeState: function (pin) {
+            socket.emit("changeState", {"pin_number": pin});
+          },
+        }
+      });
+
+      socket.on("statusChanged", function(data) {
+        div_pin = document.getElementById('pin-' + data.pin)
+        data.currentState == 0 ? div_pin.className = "pin-off" : div_pin.className = "pin-on"
+      });
+
+      socket.on("error", function(error) {
+        console.log(error);
+      });
+    </script>
   {% else %}
     <div class="center-align">
       <h4 class="mt2">Please register a pin.</h4>
