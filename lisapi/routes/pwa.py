@@ -11,6 +11,6 @@ def manifest():
 
 @pwa.route('/sw.js')
 def service_worker():
-    response = make_response(send_from_directory('static', 'sw.js'))
+    response = make_response(send_from_directory('static', 'js/sw.js'))
     response.headers['Cache-Control'] = 'no-cache'
     return response

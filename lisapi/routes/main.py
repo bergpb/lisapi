@@ -161,25 +161,6 @@ def control_pins():
     return render_template('main/control.html', **context)
 
 
-@main.route('/control/<int:pin_number>', methods=['GET'])
-@login_required
-def control_pin(pin_number):
-    pin = Pin.query.filter_by(pin=pin_number).first()
-    pin_state = helpers.setPin(pin_number)
-
-    if pin_state is True:
-        pin.state = pin_state
-    elif pin_state is False:
-        pin.state = pin_state
-    else:
-        flash('Pin {} don\'t exists!'.format(pin.pin), 'warning')
-        return redirect(url_for('main.control_pins'))
-
-    db.session.commit()
-    flash('{} changed.'.format(pin.name), 'success')
-    return redirect(url_for('main.control_pins'))
-
-
 @main.route('/about', methods=['GET'])
 def about():
     return render_template('about.html', active_menu='About')
