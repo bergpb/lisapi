@@ -81,3 +81,16 @@
   color: black !important;
 }
 
+.hide-icon {
+  display: none;
+}
+
+.show-icon{
+  display: none;
+}
+
+.fake-disable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+

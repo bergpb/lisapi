@@ -9,12 +9,17 @@
     <div id="control-pins">
       {% for pin in pins %}
         <div class="col s12 m4 l3 x3 mt1">
-          <a href="#" v-on:click="changeState({{ pin.pin }});">
+          <div id="card-{{ pin.pin }}" v-on:click="changeState({{ pin.pin }});">
             <div class="widget {{ pin.color }}">
               <div class="row">
-                <div style="margin-top: 1em" class="col s5">
+                <div style="margin-top: 16px" class="col s5">
                   <div id="pin-{{ pin.pin }}" class="{% if pin.state == True %}pin-on{% else %}pin-off{% endif %}">
-                    <i class="fas fa-{{ pin.icon }} fa-4x" style="margin-left: -5px;"></i>
+                    <div id="icon-{{ pin.pin }}" class="show">
+                      <i class="fas fa-{{ pin.icon }} fa-4x"></i>
+                    </div>
+                  </div>
+                  <div id="wait-{{ pin.pin }}" class="hide">
+                    <i class="fas fa-circle-notch fa-spin fa-4x"></i>
                   </div>
                 </div>
                 <div class="col s7">
@@ -23,7 +28,7 @@
                 </div>
               </div>
             </div>
-          </a>
+          </div>
         </div>
       {% endfor %}
     </div>
@@ -39,18 +44,29 @@
         methods: {
           changeState: function (pin) {
             socket.emit("changeState", {"pin_number": pin});
+            changeView(pin)
           },
         }
       });
 
       socket.on("statusChanged", function(data) {
-        div_pin = document.getElementById('pin-' + data.pin)
         data.currentState == 0 ? div_pin.className = "pin-off" : div_pin.className = "pin-on"
+        changeView(data.pin)
       });
 
       socket.on("error", function(error) {
         console.log(error);
       });
+
+      function changeView(pin){
+        div_pin = document.getElementById('pin-' + pin)
+        icon_pin = document.getElementById('icon-' + pin);
+        icon_load = document.getElementById('wait-' + pin);
+        card_pin = document.getElementById('card-' + pin);
+        icon_pin.className == "show" ? icon_pin.className = "hide" : icon_pin.className = "show";
+        icon_load.className == "hide" ? icon_load.className = "show" : icon_load.className = "hide";
+        card_pin.className == "" ? card_pin.className = "fake-disable" : card_pin.classList.remove("fake-disable");
+      }
     </script>
   {% else %}
     <div class="center-align">
