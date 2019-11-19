@@ -38,9 +38,10 @@ def change_pin_state(data):
     socketio.emit('statusChanged', data.json)
 
 
-@socketio.on_error()
-def error_handler(e):
-    socketio.emit('error', e)
+@socketio.on_error_default
+def error_handler(error):
+    socketio.emit('error', error)
+    print(e)
 
 
 @login.user_loader

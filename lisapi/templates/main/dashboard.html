@@ -143,9 +143,10 @@
             app.$set(app, "status", data);
           });
 
-          socket.on("error", function(data) {
+          socket.on("error", function(error) {
             app.$set(app, "loading", false);
             app.$set(app, "error", true);
+            M.toast({html: `Error: ${pin}`, displayLength: 2000});
           });
         </script>
       {% else %}

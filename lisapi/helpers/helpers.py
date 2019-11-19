@@ -5,7 +5,7 @@ import socket
 import platform
 import requests
 from flask import jsonify
-from subprocess import getstatusoutput, getoutput
+from subprocess import getstatusoutput
 
 
 operational_system = platform.machine()[0:4]

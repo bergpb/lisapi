@@ -43,19 +43,31 @@
         },
         methods: {
           changeState: function (pin) {
-            socket.emit("changeState", {"pin_number": pin});
-            changeView(pin)
+            socket.emit("changeState", { "pin_number": pin });
+            icon_pin = document.getElementById('icon-' + pin);
+            icon_load = document.getElementById('wait-' + pin);
+            card_pin = document.getElementById('card-' + pin);
+            icon_pin.className = "hide";
+            icon_load.className = "show";
+            card_pin.className = "fake-disable";
           },
         }
       });
 
       socket.on("statusChanged", function(data) {
+        var pin = data.pin
+        div_pin = document.getElementById('pin-' + pin)
+        icon_pin = document.getElementById('icon-' + pin);
+        icon_load = document.getElementById('wait-' + pin);
+        card_pin = document.getElementById('card-' + pin);
+        icon_pin.className = "show";
+        icon_load.className = "hide";
+        card_pin.classList.remove("fake-disable");
         data.currentState == 0 ? div_pin.className = "pin-off" : div_pin.className = "pin-on"
-        changeView(data.pin)
       });
 
       socket.on("error", function(error) {
-        console.log(error);
+        M.toast({html: `Error: ${pin}`, displayLength: 2000});
       });
 
       function changeView(pin){
