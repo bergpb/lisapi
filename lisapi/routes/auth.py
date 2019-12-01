@@ -16,14 +16,14 @@ def login():
     if form_login.validate_on_submit():
         user = User.query.filter_by(username=form_login.username.data).first()
         form_pass = form_login.password.data
-        user_pass = user.password
-        if user and check_password_hash(user_pass, form_pass):
-            login_user(user, remember=form_login.remember_me.data)
-            flash('Logged in.', 'success')
-            return redirect(url_for('main.dashboard'))
-        else:
-            flash('Invalid login!', 'error')
-            return render_template('auth/login.html', form=form_login)
+        if user:
+            user_pass = user.password
+            if check_password_hash(user_pass, form_pass):   
+                login_user(user, remember=form_login.remember_me.data)
+                flash('Logged in.', 'success')
+                return redirect(url_for('main.dashboard'))
+        flash('Invalid login!', 'error')
+        return render_template('auth/login.html', form=form_login)
     else:
         if len(form_login.errors) > 0:
             flash('Check form data!', 'error')
