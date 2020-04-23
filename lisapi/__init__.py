@@ -21,29 +21,10 @@ def create_app():
     socketio.init_app(app)
     login.init_app(app)
 
-    from .models import tables, forms
-    from .helpers import helpers
-    from .routes.auth import auth
-    from .routes.main import main
-    from .routes.pwa import pwa
-    from .errors.error import error
+    from lisapi import routes
+    routes.init_app(app)
 
-    app.register_blueprint(auth)
-    app.register_blueprint(main)
-    app.register_blueprint(pwa)
-    app.register_blueprint(error)
-
-    @app.cli.command()
-    def seed():
-        """Add admin user."""
-        admin = tables.User.query.filter_by(username='admin').first()
-        if not admin:
-            print('Creating user admin...')
-            admin = tables.User('admin', 'admin@email.com', 'admin')
-            db.session.add(admin)
-            db.session.commit()
-            print('User created.')
-        else:
-            print('User exists.')
+    from lisapi import cli
+    cli.init_app(app)
 
     return socketio, app

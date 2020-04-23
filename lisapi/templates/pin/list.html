@@ -23,7 +23,7 @@
         <td>{{ pin.color }}</td>
         <td><i class="fas fa-{{ pin.icon }}"></i></td>
         <td>
-          <a class="btn white" href="{{ url_for('main.edit_pin', pin_id = pin.id) }}">
+          <a class="btn white" href="{{ url_for('pin.edit_pin', pin_id = pin.id) }}">
             <i style="color: green" class="fas fa-edit"></i>
           </a>
           <a id="btn-delete{{ pins.index(pin) }}" class="btn white btn-delete">
@@ -33,7 +33,7 @@
                 $(function(){
                   $('#btn-delete{{ pins.index(pin) }}').on('click', function() {
                     showSwLink("Delete pin?", "question", true, "Delete",
-                               "red", "{{ url_for('main.delete_pin', pin_id = pin.id) }}")
+                               "red", "{{ url_for('pin.delete_pin', pin_id = pin.id) }}")
                   });
                 });
             </script>
@@ -48,6 +48,6 @@
   </div>
   {% endif %}
   <div class="center-align">
-    <a class="btn mt2" href="{{ url_for('main.create_pin') }}">New Pin</a>
+    <a class="btn mt2" href="{{ url_for('pin.create_pin') }}">New Pin</a>
   </div>
 {% endblock %}

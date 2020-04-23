@@ -1,7 +1,5 @@
 from flask import Blueprint, make_response, send_from_directory
-
-
-pwa = Blueprint('pwa', __name__)
+from . import pwa
 
 
 @pwa.route('/manifest.json')
