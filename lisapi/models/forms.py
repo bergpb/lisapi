@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, EqualTo
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from lisapi.models.tables import Pin
 
@@ -50,4 +50,7 @@ class EditPin(FlaskForm):
 class ChangePassword(FlaskForm):
     current_password = PasswordField("current_password", validators=[DataRequired()])
     new_password = PasswordField("new_password", validators=[DataRequired()])
-    confirm_password = PasswordField("confirm_password", validators=[DataRequired()])
+    confirm_password = PasswordField("confirm_password", validators=[
+        DataRequired(), 
+        EqualTo('new_password', message='Passwords dont match')
+    ])

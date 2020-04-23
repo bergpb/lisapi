@@ -1,11 +1,10 @@
+from flask import (Blueprint, flash, jsonify, redirect, render_template,
+                   request, url_for)
+from flask_login import current_user, login_required, login_user, logout_user
 from lisapi import db, login, socketio
-from flask import Blueprint, render_template, flash, redirect, url_for, request, jsonify
-from flask_login import login_user, logout_user, login_required, current_user
-
-from lisapi.models.tables import User, Pin
-from lisapi.models.forms import Login, NewPin, ChangePassword, EditPin
 from lisapi.helpers import helpers
-
+from lisapi.models.forms import ChangePassword, EditPin, Login, NewPin
+from lisapi.models.tables import Pin, User
 
 main = Blueprint('main', __name__)
 
@@ -19,6 +18,7 @@ def on_update(data):
 
 @socketio.on('changeState')
 def change_pin_state(data):
+    """Change state for pins """
     current_state = 0
     pin_number = data['pin_number']
     pin = Pin.query.filter_by(pin=pin_number).first()
@@ -51,12 +51,10 @@ def load_user(id):
 
 @main.route('/', methods=['GET'])
 def dashboard():
-
     context = {
         'data': helpers.statusInfo(),
         'active_menu': 'Dashboard'
     }
-
     return render_template('main/dashboard.html', **context)
 
 
@@ -68,13 +66,13 @@ def create_pin():
         pin_number = int(form_new_pin.pin.data)
         pin_color = form_new_pin.color.data
         pin_icon = form_new_pin.icon.data
-        check_pin = helpers.checkPin(pin_number)
+        check_pin = helpers.checkPin(pin_number)    
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if not check_pin:
             flash('Pin {} dont exists!'.format(pin_number), 'error')
             return render_template('main/new.html', form=form_new_pin)
         elif pin_exists:
-            flash('Pin {} is not disponible!'.format(pin_number), 'error')
+            flash('Pin {} not disponible!'.format(pin_number), 'error')
             return render_template('main/new.html', form=form_new_pin)
         else:
             pin = Pin(name=pin_name, pin=pin_number,
@@ -84,9 +82,9 @@ def create_pin():
             db.session.commit()
             flash('Pin created!', 'success')
             return redirect(url_for('main.list_pins'))
-    else:
-        if len(form_new_pin.errors) > 0:
-            flash('Check form data!', 'error')
+
+    if len(form_new_pin.errors) > 0:
+        flash('Check form data!', 'error')
 
     context = {
         'form': form_new_pin,
@@ -112,8 +110,8 @@ def list_pins():
 @main.route('/edit/<int:pin_id>', methods=['GET', 'POST'])
 @login_required
 def edit_pin(pin_id):
+    form_editpin = EditPin()
     if request.method == 'POST':
-        form_editpin = EditPin()
         if form_editpin.validate_on_submit():
             pin = Pin.query.get(pin_id)
             pin.name = form_editpin.name.data
@@ -123,12 +121,12 @@ def edit_pin(pin_id):
             db.session.commit()
             flash('Pin edited!', 'success')
             return redirect(url_for('main.list_pins'))
-        else:
-            if len(form_editpin.errors) > 0:
-                flash('Check form data!', 'error')
-    else:
-        pin = Pin.query.get(pin_id)
-        form_editpin = EditPin(obj=pin)
+
+        if len(form_editpin.errors) > 0:
+            flash('Check form data!', 'error')
+            print(form_editpin.errors)
+
+    pin = Pin.query.get(pin_id)
 
     context = {
         'form': form_editpin,

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
+
     <script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
@@ -30,14 +31,7 @@
 
     {% include '__navbar.html' %}
     {% include '__sidemenu.html' %}
-
-    {% with msg = get_flashed_messages(with_categories = true) %}
-      {% if msg %}
-        {% for category, message in msg %}
-          <script> showToast("{{ message }}", "{{ category }}"); </script>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
+    {% include '__flash_messages.html'%}
 
     <div class="container">
       {% block content %} {% endblock %}
