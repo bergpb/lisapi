@@ -18,7 +18,7 @@
         {% endif %}
       </div>
       <div class="input-field col s6">
-        {{ form.icon(class="autocomplete", value=pin.icon) }}
+        {{ form.icon(value=pin.icon) }}
         {% if form.errors.icon %}
           {% for error in form.errors.icon %}
             <span class="helper-text red-text">{{ error }}</span>

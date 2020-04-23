@@ -1,11 +1,8 @@
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
 from lisapi import db, login
-from werkzeug.security import check_password_hash, generate_password_hash
-from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_login import login_user, logout_user, login_required, current_user
-
+from lisapi.models.forms import ChangePassword, Login
 from lisapi.models.tables import User
-from lisapi.models.forms import Login, ChangePassword
-
 
 auth = Blueprint('auth', __name__)
 
@@ -15,18 +12,18 @@ def login():
     form_login = Login()
     if form_login.validate_on_submit():
         user = User.query.filter_by(username=form_login.username.data).first()
-        form_pass = form_login.password.data
-        if user:
-            user_pass = user.password
-            if check_password_hash(user_pass, form_pass):   
-                login_user(user, remember=form_login.remember_me.data)
-                flash('Logged in.', 'success')
-                return redirect(url_for('main.dashboard'))
+        password = form_login.password.data
+
+        if user.check_password(password):
+            login_user(user, remember=form_login.remember_me.data)
+            flash('Logged in.', 'success')
+            return redirect(url_for('main.dashboard'))
+
         flash('Invalid login!', 'error')
         return render_template('auth/login.html', form=form_login)
-    else:
-        if len(form_login.errors) > 0:
-            flash('Check form data!', 'error')
+
+    if len(form_login.errors) > 0:
+        flash('Check form data!', 'error')
 
     context = {
         'form': form_login,
@@ -40,24 +37,24 @@ def login():
 @login_required
 def change_password():
     form_passwd = ChangePassword()
-    user = User.query.filter_by(id=current_user.id).first()
+
     if form_passwd.validate_on_submit():
-        if check_password_hash(user.password, form_passwd.current_password.data):
-            if form_passwd.new_password.data == form_passwd.confirm_password.data:
-                user.password = generate_password_hash(form_passwd.confirm_password.data)
-                db.session.commit()
-                logout_user()
-                flash('Password Changed!', 'success')
-                return redirect(url_for('auth.login'))
-            else:
-                flash('Passwords dont match!', 'error')
-                return render_template('auth/change_password.html', form=form_passwd)
-        else:
-            flash('Wrong password!', 'error')
-            return render_template('auth/change_password.html', form=form_passwd)
-    else:
-        if len(form_passwd.errors) > 0:
-            flash('Check form data!', 'error')
+        user = User.query.filter_by(id=current_user.id).first()
+        current_password = form_passwd.current_password.data
+        new_password = form_passwd.new_password.data
+
+        if user.check_password(current_password):
+            user.set_password(new_password)
+            db.session.commit()
+            logout_user()
+            flash('Password Changed!', 'success')
+            return redirect(url_for('auth.login'))
+
+        flash('Wrong password!', 'error')
+        return render_template('auth/change_password.html', form=form_passwd)
+
+    if len(form_passwd.errors) > 0:
+        flash('Check form data!', 'error')
 
     context = {
         'form': form_passwd,
