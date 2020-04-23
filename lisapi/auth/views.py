@@ -1,10 +1,9 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from lisapi import db, login
 from lisapi.models.forms import ChangePassword, Login
 from lisapi.models.tables import User
-
-auth = Blueprint('auth', __name__)
+from . import auth
 
 
 @auth.route('/login', methods=['GET', 'POST'])

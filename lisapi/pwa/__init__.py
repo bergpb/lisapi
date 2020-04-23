@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-errors = Blueprint('errors', __name__)
+pwa = Blueprint('pwa', __name__)
 
 from . import views
