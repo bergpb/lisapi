@@ -53,11 +53,11 @@ To do:
 
 Some project images:
 
-<img src="./images/img1.png" height="400">
-<img src="./images/img2.png" height="400">
-<img src="./images/img3.png" height="400">
-<img src="./images/img4.png" height="400">
-<img src="./images/img5.png" height="400">
-<img src="./images/img6.png" height="400">
-<img src="./images/img7.png" height="400">
-<img src="./images/img8.png" height="400">
+![img1.png](./images/img1.png)
+![img2.png](./images/img2.png)
+![img3.png](./images/img3.png)
+![img4.png](./images/img4.png)
+![img5.png](./images/img5.png)
+![img6.png](./images/img6.png)
+![img7.png](./images/img7.png)
+![img8.png](./images/img8.png)
