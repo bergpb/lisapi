@@ -16,7 +16,7 @@ def create_pin():
         pin_number = int(form_new_pin.pin.data)
         pin_color = form_new_pin.color.data
         pin_icon = form_new_pin.icon.data
-        check_pin = helpers.checkPin(pin_number)    
+        check_pin = helpers.checkPin(pin_number)
         pin_exists = Pin.query.filter_by(pin=pin_number).first()
         if not check_pin:
             flash('Pin {} dont exists!'.format(pin_number), 'error')
@@ -63,6 +63,17 @@ def edit_pin(pin_id):
     form_editpin = EditPin()
     if request.method == 'POST':
         if form_editpin.validate_on_submit():
+            pin_number = int(form_editpin.pin.data)
+            check_pin = helpers.checkPin(pin_number)
+            pin_exists = Pin.query.filter_by(pin=pin_number).first()
+
+            if not check_pin:
+                flash('Pin {} dont exists!'.format(pin_number), 'error')
+                return render_template('pin/new.html', form=form_editpin)
+            elif pin_exists:
+                flash('Pin {} not disponible!'.format(pin_number), 'error')
+                return render_template('pin/new.html', form=form_editpin)
+
             pin = Pin.query.get(pin_id)
             pin.name = form_editpin.name.data
             pin.pin = form_editpin.pin.data
