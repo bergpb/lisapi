@@ -46,7 +46,7 @@ To do:
 - [x] Save pins in database.
 - [x] Check if pin is disponible before register.
 - [x] Verify if pins exist in Raspberry Pi GPIO.
-- [x] Return system status in dashboard (auto update using wesockets).
+- [x] Return system status in dashboard (auto update using websockets).
 - [X] PWA implementation.
 - [ ] User permissions.
 - [ ] Apply Unit Tests.
