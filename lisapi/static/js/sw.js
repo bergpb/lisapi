@@ -4,19 +4,18 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox
 
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
-  // workbox.googleAnalytics.initialize();
 
   workbox.routing.registerRoute(
     /\.(?:js|css)$/,
-    workbox.strategies.staleWhileRevalidate({
-      cacheName: 'static-resources',
+    workbox.strategies.networkFirst({
+      cacheName: 'lisapi-static-resources',
     }),
   );
 
   workbox.routing.registerRoute(
     /\.(?:png|gif|jpg|jpeg|svg)$/,
-    workbox.strategies.cacheFirst({
-      cacheName: 'images',
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'lisapi-images',
       plugins: [
         new workbox.expiration.Plugin({
           maxEntries: 60,
@@ -28,8 +27,8 @@ if (workbox) {
 
   workbox.routing.registerRoute(
     new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'),
-    workbox.strategies.cacheFirst({
-      cacheName: 'googleapis',
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'lisapi-googleapis',
       plugins: [
         new workbox.expiration.Plugin({
           maxEntries: 30,

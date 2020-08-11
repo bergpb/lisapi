@@ -1,0 +1,7 @@
+{% with msg = get_flashed_messages(with_categories = true) %}
+  {% if msg %}
+    {% for category, message in msg %}
+      <script> showToast("{{ message }}", "{{ category }}"); </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}

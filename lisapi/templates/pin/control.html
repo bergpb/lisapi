@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }}| Control Pins{% endblock %}}
+{% block page %} Control Pins {% endblock %}}
+
+{% block content %}
+<div class="row">
+  {% if pins %}
+    <div id="control-pins">
+      {% for pin in pins %}
+        <div class="col s12 m4 l3 x3 mt1">
+          <div id="card-{{ pin.pin }}" v-on:click="changeState({{ pin.pin }});">
+            <div class="widget {{ pin.color }}">
+              <div class="row">
+                <div style="margin-top: 16px" class="col s5">
+                  <div id="pin-{{ pin.pin }}" class="{% if pin.state == True %}pin-on{% else %}pin-off{% endif %}">
+                    <div id="icon-{{ pin.pin }}" class="show">
+                      <i class="fas fa-{{ pin.icon }} fa-4x"></i>
+                    </div>
+                  </div>
+                  <div id="wait-{{ pin.pin }}" class="hide">
+                    <i class="fas fa-circle-notch fa-spin fa-4x"></i>
+                  </div>
+                </div>
+                <div class="col s7">
+                  <h5 class="right-align black-text"><strong>{{ pin.name }}</strong></h5>
+                  <h6 class="right-align black-text"><strong>{{ pin.pin }}</strong></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      var socket = io();
+      var app = new Vue({
+        el: "#control-pins",
+        delimiters: ["${", "}"],
+        data: {
+          pin: "",
+          error: null,
+        },
+        methods: {
+          changeState: function (pin) {
+            socket.emit("changeState", { "pin_number": pin });
+            icon_pin = document.getElementById('icon-' + pin);
+            icon_load = document.getElementById('wait-' + pin);
+            card_pin = document.getElementById('card-' + pin);
+            icon_pin.className = "hide";
+            icon_load.className = "show";
+            card_pin.className = "fake-disable";
+          },
+        }
+      });
+
+      socket.on("statusChanged", function(data) {
+        var pin = data.pin
+        div_pin = document.getElementById('pin-' + pin)
+        icon_pin = document.getElementById('icon-' + pin);
+        icon_load = document.getElementById('wait-' + pin);
+        card_pin = document.getElementById('card-' + pin);
+        icon_pin.className = "show";
+        icon_load.className = "hide";
+        card_pin.classList.remove("fake-disable");
+        data.currentState == 0 ? div_pin.className = "pin-off" : div_pin.className = "pin-on"
+      });
+
+      socket.on("error", function(error) {
+        M.toast({html: `Error: ${pin}`, displayLength: 2000});
+      });
+
+      function changeView(pin){
+        div_pin = document.getElementById('pin-' + pin)
+        icon_pin = document.getElementById('icon-' + pin);
+        icon_load = document.getElementById('wait-' + pin);
+        card_pin = document.getElementById('card-' + pin);
+        icon_pin.className == "show" ? icon_pin.className = "hide" : icon_pin.className = "show";
+        icon_load.className == "hide" ? icon_load.className = "show" : icon_load.className = "hide";
+        card_pin.className == "" ? card_pin.className = "fake-disable" : card_pin.classList.remove("fake-disable");
+      }
+    </script>
+  {% else %}
+    <div class="center-align">
+      <h4 class="mt2">Please register a pin.</h4>
+      <a class="btn mt2" href="{{ url_for('pin.create_pin') }}">New Pin</a>
+    </div>
+  {% endif %}
+  </div>
+{% endblock %}

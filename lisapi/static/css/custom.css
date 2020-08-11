@@ -1,5 +1,24 @@
 [v-cloak] > * { display: none; }
 
+/*show hamburger menu in large screens*/
+@media only screen and (min-width: 993px){
+  nav a.sidenav-trigger {
+      display: unset !important;
+  }
+}
+
+@media only screen and (min-width: 601px){
+  .container {
+    width: 95% !important;
+  }
+}
+@media only screen and (min-width: 993px){
+  .container {
+    width: 95% !important;
+  }
+}
+/*https://stackoverflow.com/questions/42435938/simple-materialize-ui-responsive-side-menu*/
+
 .side-nav {
     transform: translateX(0%) !important;
 }
@@ -50,26 +69,28 @@
   display: unset !important;
 }
 
-.swal2-top-end{
+.swal2-top-end {
   margin-top: 60px;
 }
 
-
-/*show hamburger menu in large screens*/
-@media only screen and (min-width: 993px){
-  nav a.sidenav-trigger {
-      display: unset !important;
-  }
+.pin-on {
+  color: yellow !important;
 }
 
-@media only screen and (min-width: 601px){
-  .container {
-    width: 95% !important;
-  }
+.pin-off {
+  color: black !important;
 }
-@media only screen and (min-width: 993px){
-  .container {
-    width: 95% !important;
-  }
+
+.hide-icon {
+  display: none;
 }
-/*https://stackoverflow.com/questions/42435938/simple-materialize-ui-responsive-side-menu*/
+
+.show-icon{
+  display: none;
+}
+
+.fake-disable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+

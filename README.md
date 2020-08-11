@@ -25,15 +25,13 @@ System requirements:
 ```sudo apt install build-essential libssl-dev libffi-dev python3-dev```
 
 
-Development:
+Development (using poetry):
   1. Clone project,
   2. Enter in project folder,
-  3. Create a virtualenv: ```python3 -m venv .venv```,
-  4. Activate venv: ```source .venv/bin/activate```,
-  5. Install dependencies: ```pip install -r requirements.txt```,
-  6. Run migrations: ```flask db init && flask db migrate && flask db upgrade```,
-  7. Create admin user: ```flask seed```,
-  8. Run project in development mode: ```python wsgi.py```.
+  3. Install dependencies with poetry: ```poetry install```,
+  4. Run migrations: ```flask db init && flask db migrate && flask db upgrade```,
+  5. Create admin user: ```flask seed```,
+  6. Run project in development mode: ```python wsgi.py```.
 
 
 Production:
@@ -51,3 +49,15 @@ To do:
 - [ ] User permissions.
 - [ ] Apply Unit Tests.
 - [ ] RestFull Api.
+
+
+Some project images:
+
+![img1.png](./images/img1.png)
+![img2.png](./images/img2.png)
+![img3.png](./images/img3.png)
+![img4.png](./images/img4.png)
+![img5.png](./images/img5.png)
+![img6.png](./images/img6.png)
+![img7.png](./images/img7.png)
+![img8.png](./images/img8.png)

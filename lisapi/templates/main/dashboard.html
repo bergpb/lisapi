@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col s12 m12 l12 center-align mt1">
       {% if current_user.id %}
-        <div id="app" v-cloak>
+        <div id="dash" v-cloak>
           <div v-if="loading" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-cog fa-spin fa-4x"></i>
           </div>
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div v-if="status.cpu_temp" class="col s12 m6 l6 x6">
-              <div v-bind:class="{ 'teal': (status.cpu_temp <= 40),
+              <div :class="{ 'teal': (status.cpu_temp <= 40),
                 'amber darken-4': (status.cpu_temp > 40 && status.cpu_temp <= 60),
                 'red accent-4': (status.cpu_temp > 60) }" class="widget-min">
                 <div class="row">
@@ -43,8 +43,8 @@
               </div>
             </div>
             <div v-if="status.cpu_percent" class="col s12 m6 l6 x6">
-                <div v-bind:class="{ 'teal': (status.cpu_percent <= 40),
-                  'amber darken-4': (status.cpu_percent > 40 && status.cpu_percent <= 60),
+                <div v-bind:class="{ 'teal': (status.cpu_percent <= 50),
+                  'amber darken-4': (status.cpu_percent > 50 && status.cpu_percent <= 60),
                   'red accent-4': (status.cpu_percent > 60) }" class="widget-min">
                   <div class="row">
                     <div style="margin-top: 0.7em" class="col s1 m1 l1">
@@ -116,40 +116,44 @@
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div v-else class="col s12 m12 l12 center-align mt4">
+          </div>
+          <div v-else-if="error" class="col s12 m12 l12 center-align mt4">
             <i class="fas fa-exclamation-circle fa-4x"></i>
             <p><strong>Something is wrong!</strong></p>
           </div>
         </div>
-        <script type="text/javascript">
-          var socket = io.connect();
+        <script>
+          var socket = io();
           var app = new Vue({
-              el: "#app",
-              delimiters: ['${', '}'],
-              data: {
-                status: '',
-                loading: true
-              },
+            el: "#dash",
+            delimiters: ["${", "}"],
+            data: {
+              status: "",
+              loading: true,
+              error: null,
+            },
           });
 
           setInterval(function(){
-            socket.emit('updateStatus', {});
-          }, 2000);
-        
-          socket.on('statusUpdated', function(data) {
-            app.$set(app, 'status', data);
-            app.$set(app, 'loading', false);
+            socket.emit("updateStatus", {});
+          }, 1500);
+
+          socket.on("statusUpdated", function(data) {
+            app.$set(app, "loading", false);
+            app.$set(app, "status", data);
           });
-        
+
+          socket.on("error", function(error) {
+            app.$set(app, "loading", false);
+            app.$set(app, "error", true);
+            M.toast({html: `Error: ${pin}`, displayLength: 2000});
+          });
         </script>
       {% else %}
         <div class="col s12 m12 l12 center-align mt1">
-          <p>Hello <strong>guest</strong>, please login.</p>
+          <p>Hello, please login.</p>
           <a class="btn" href="{{ url_for('auth.login') }}">Login</a>
         </div>
       {% endif %}
-    </div>
   </div>
 {% endblock %}

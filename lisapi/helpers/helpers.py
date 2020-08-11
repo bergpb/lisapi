@@ -1,12 +1,13 @@
 import os
-import psutil
+import platform
 import random
 import socket
-import platform
-import requests
-from flask import jsonify
-from subprocess import getstatusoutput, getoutput
+from subprocess import getstatusoutput
 
+import requests
+
+import psutil
+from flask import jsonify
 
 operational_system = platform.machine()[0:4]
 
