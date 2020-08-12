@@ -8,7 +8,7 @@ from . import main
 @socketio.on('updateStatus')
 def on_update(data):
     """Update content in page, receive updateStatus and emit statusUpdated"""
-    data = helpers.statusInfo()
+    data = helpers.status_info()
     socketio.emit('statusUpdated', data.json)
 
 
@@ -18,7 +18,7 @@ def change_pin_state(data):
     current_state = 0
     pin_number = data['pin_number']
     pin = Pin.query.filter_by(pin=pin_number).first()
-    pin_state = helpers.setPin(pin_number)
+    pin_state = helpers.set_pin(pin_number)
     pin.state = pin_state
 
     if pin_state is True:
@@ -48,7 +48,7 @@ def load_user(id):
 @main.route('/', methods=['GET'])
 def dashboard():
     context = {
-        'data': helpers.statusInfo(),
+        'data': helpers.status_info(),
         'active_menu': 'Dashboard'
     }
     return render_template('main/dashboard.html', **context)

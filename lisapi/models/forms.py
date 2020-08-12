@@ -4,6 +4,11 @@ from wtforms.validators import DataRequired, EqualTo
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from lisapi.models.tables import Pin
 
+from lisapi.utils.validators import (
+    UniqueCheckerCreate,
+    UniqueCheckerUpdate
+)
+
 
 PIN_CHOICES = [('4', '4'), ('5', '5'), ('6', '6'),
             ('12', '12'), ('13', '13'),('16', '16'),
@@ -35,14 +40,20 @@ class SignUp(FlaskForm):
 
 class NewPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
-    pin = SelectField("pin", validators=[DataRequired()], choices=PIN_CHOICES)
+    pin = SelectField("pin", validators=[
+            DataRequired(),
+            UniqueCheckerCreate(Pin, Pin.pin, message="Pin not disponible!"),
+        ], choices=PIN_CHOICES)
     color = SelectField('Select Color', validators=[DataRequired()], choices=COLORS_CHOICES)
     icon = StringField("icon", validators=[DataRequired()], description="Card icon")
 
 
 class EditPin(FlaskForm):
     name = StringField("name", validators=[DataRequired()], description="Pin name")
-    pin = SelectField("pin", validators=[DataRequired()], choices=PIN_CHOICES)
+    pin = SelectField("pin", validators=[
+            DataRequired(),
+            UniqueCheckerUpdate('pin_id', Pin, Pin.pin, message="Pin not disponible!"),
+        ], choices=PIN_CHOICES)
     color = SelectField("color", validators=[DataRequired()], choices=COLORS_CHOICES)
     icon = StringField("icon", validators=[DataRequired()], description="Card icon")
 
@@ -52,5 +63,5 @@ class ChangePassword(FlaskForm):
     new_password = PasswordField("new_password", validators=[DataRequired()])
     confirm_password = PasswordField("confirm_password", validators=[
         DataRequired(), 
-        EqualTo('new_password', message='Passwords dont match')
+        EqualTo('new_password', message="Passwords don\'t match")
     ])

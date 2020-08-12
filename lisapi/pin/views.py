@@ -16,13 +16,10 @@ def create_pin():
         pin_number = int(form_new_pin.pin.data)
         pin_color = form_new_pin.color.data
         pin_icon = form_new_pin.icon.data
-        check_pin = helpers.checkPin(pin_number)
-        pin_exists = Pin.query.filter_by(pin=pin_number).first()
+        check_pin = helpers.check_pin(pin_number)
+
         if not check_pin:
             flash('Pin {} dont exists!'.format(pin_number), 'error')
-            return render_template('pin/new.html', form=form_new_pin)
-        elif pin_exists:
-            flash('Pin {} not disponible!'.format(pin_number), 'error')
             return render_template('pin/new.html', form=form_new_pin)
         else:
             pin = Pin(name=pin_name, pin=pin_number,
@@ -60,19 +57,23 @@ def list_pins():
 @pin.route('/edit/<int:pin_id>', methods=['GET', 'POST'])
 @login_required
 def edit_pin(pin_id):
-    form_editpin = EditPin()
+    pin = Pin.query.get(pin_id)
+    form_editpin = EditPin(obj=pin)
+
+    context = {
+        'form': form_editpin,
+        'pin': pin,
+        'active_menu': 'Edit Pin'
+    }
+
     if request.method == 'POST':
         if form_editpin.validate_on_submit():
             pin_number = int(form_editpin.pin.data)
-            check_pin = helpers.checkPin(pin_number)
-            pin_exists = Pin.query.filter_by(pin=pin_number).first()
+            check_pin = helpers.check_pin(pin_number)
 
             if not check_pin:
                 flash('Pin {} dont exists!'.format(pin_number), 'error')
-                return render_template('pin/new.html', form=form_editpin)
-            elif pin_exists:
-                flash('Pin {} not disponible!'.format(pin_number), 'error')
-                return render_template('pin/new.html', form=form_editpin)
+                return render_template('pin/edit.html', **context)
 
             pin = Pin.query.get(pin_id)
             pin.name = form_editpin.name.data
@@ -86,14 +87,6 @@ def edit_pin(pin_id):
         if len(form_editpin.errors) > 0:
             flash('Check form data!', 'error')
             print(form_editpin.errors)
-
-    pin = Pin.query.get(pin_id)
-
-    context = {
-        'form': form_editpin,
-        'pin': pin,
-        'active_menu': 'Edit Pin'
-    }
 
     return render_template('pin/edit.html', **context)
 

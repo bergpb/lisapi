@@ -17,15 +17,14 @@ if operational_system == 'armv':
     gpio.setmode(gpio.BCM)
     gpio.setwarnings(False)
 
-    def checkPin(pin_number):
+    def check_pin(pin_number):
         try:
-            platform.machine()[0:4]
             gpio.setup(pin_number, gpio.OUT)
             return True
         except ValueError:
             return False
 
-    def setPin(pin_number):
+    def set_pin(pin_number):
         try:
             gpio.setup(pin_number, gpio.OUT)
             state = gpio.input(pin_number)
@@ -38,11 +37,11 @@ if operational_system == 'armv':
         except ValueError:
             pass
 else:
-    def checkPin(pin_number):
-        return random.choice([True, False])
+    def check_pin(pin_number):
+        return True
 
-    def setPin(pin_number):
-        return random.choice([True, False])
+    def set_pin(pin_number):
+        return True
 
 
 def get_ip():
@@ -60,7 +59,7 @@ def get_ip():
 os.environ['IP_INTERNAL'] = get_ip()
 
 
-def statusInfo():
+def status_info():
     process = getstatusoutput('ps aux | wc -l')[1]
     uptime = getstatusoutput('uptime -p')[1].split(',')[0]
     mem_percent = psutil.virtual_memory()[2]
