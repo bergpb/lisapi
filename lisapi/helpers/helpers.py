@@ -12,6 +12,7 @@ from flask import jsonify
 operational_system = platform.machine()[0:4]
 
 if operational_system == 'armv':
+    """Change pin in Raspberry Pi device"""
     import RPi.GPIO as gpio
 
     gpio.setmode(gpio.BCM)
@@ -37,11 +38,13 @@ if operational_system == 'armv':
         except ValueError:
             pass
 else:
+    """Return a random True or False"""
+    import random
     def check_pin(pin_number):
-        return True
+        return bool(random.getrandbits(1))
 
     def set_pin(pin_number):
-        return True
+        return bool(random.getrandbits(1))
 
 
 def get_ip():
