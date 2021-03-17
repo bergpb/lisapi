@@ -21,11 +21,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/custom.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
   </head>
   <body>
 
@@ -37,5 +33,9 @@
       {% block content %} {% endblock %}
     </div>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
   </body>
 </html>

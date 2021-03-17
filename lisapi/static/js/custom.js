@@ -1,4 +1,4 @@
-let url = location.pathname.split("/")[1]
+const url = location.pathname.split("/")[1]
 
 $(function() {
   if (url == ""){

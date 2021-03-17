@@ -8,7 +8,7 @@
   {% if pins %}
     <div id="control-pins">
       {% for pin in pins %}
-        <div class="col s12 m4 l3 x3 mt1">
+        <div class="col s12 m6 l3 x3 mt1">
           <div id="card-{{ pin.pin }}" v-on:click="changeState({{ pin.pin }});">
             <div class="widget {{ pin.color }}">
               <div class="row">
@@ -33,8 +33,8 @@
       {% endfor %}
     </div>
     <script>
-      var socket = io();
-      var app = new Vue({
+      const socket = io();
+      const app = new Vue({
         el: "#control-pins",
         delimiters: ["${", "}"],
         data: {
