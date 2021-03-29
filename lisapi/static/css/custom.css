@@ -94,3 +94,43 @@
   pointer-events: none;
 }
 
+/* Dark Mode Materialize */
+body.dark {
+  background-color: #202123;
+  color: #fff;
+}
+body.dark nav {
+  background-color: #26A69A;
+}
+body.dark .card {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+body.dark .divider {
+  opacity: 0.2;
+}
+body.dark .sidenav {
+  background-color: #2D2D31;
+}
+body.dark .sidenav li a:not(.subheader) {
+  color: #fff;
+}
+body.dark .sidenav li a:not(.subheader):hover {
+  background-color: #3B4043;
+}
+body.dark .sidenav li a.subheader {
+  color: #9AA0A6;
+}
+body.dark .sidenav li a .material-icons {
+  color: #9AA0A6;
+}
+body.dark .collection {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+body.dark .collection .collection-item {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark .sidenav li > a > i {
+  color: #fff;
+}

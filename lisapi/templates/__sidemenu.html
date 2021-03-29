@@ -1,54 +1,61 @@
 <ul id="slide-out" class="sidenav">
-    <li>
-      <div class="user-view">
-        <div class="background teal"></div>
-        <a><span class="white-text name">Hello {{ current_user.username }}!</span></a>
-        <a><span class="white-text email"></span></a>
-      </div>
-    </li>
-  {% if current_user.is_authenticated %}
-    <li>
-      <a id="dashboard" data-target="#" data-toggle="pill" href="{{ url_for('main.dashboard') }}">
-        <i class="fas fa-home fa-lg"></i>
-        Dashboard
-      </a>
-    </li>
-    <li>
-      <a id="control_pins" href="{{ url_for('pin.control_pins') }}">
-        <i class="fas fa-cogs fa-lg"></i>
-        Control Pins
-      </a>
-    </li>
-    <li>
-      <a id="list_pins" href="{{ url_for('pin.list_pins') }}">
-        <i class="fas fa-edit fa-lg"></i>
-        List Pins
-      </a>
-    </li>
-    <li>
-      <a id="change_password" href="{{ url_for('auth.change_password') }}">
-        <i class="fas fa-user fa-lg"></i>
-        Change Password
-      </a>
-    </li>
-    <li>
-      <a id="logout" href="{{ url_for('auth.logout') }}">
-        <i class="fas fa-sign-out-alt fa-lg"></i>
-        Logout
-      </a>
-    </li>
-  {% else %}
-    <li>
-      <a id="login" href="{{ url_for('auth.login') }}">
-        <i class="fas fa-sign-in-alt fa-lg"></i>
-        Login
-      </a>
-    </li>
-    <li>
-      <a id="about" href="{{ url_for('main.about') }}">
-        <i style="padding-left: 8px;" class="fas fa-info fa-lg"></i>
-        About
-      </a>
-    </li>
-  {% endif %}
-  </ul>
+  <li>
+    <div class="user-view">
+      <div class="background teal"></div>
+      <a><span class="white-text name">Hello {{ current_user.username }}!</span></a>
+      <a><span class="white-text email"></span></a>
+    </div>
+  </li>
+{% if current_user.is_authenticated %}
+  <li>
+    <a id="dashboard" data-target="#" data-toggle="pill" href="{{ url_for('main.dashboard') }}">
+      <i class="fas fa-home fa-lg"></i>
+      Dashboard
+    </a>
+  </li>
+  <li>
+    <a id="control_pins" href="{{ url_for('pin.control_pins') }}">
+      <i class="fas fa-cogs fa-lg"></i>
+      Control Pins
+    </a>
+  </li>
+  <li>
+    <a id="list_pins" href="{{ url_for('pin.list_pins') }}">
+      <i class="fas fa-edit fa-lg"></i>
+      List Pins
+    </a>
+  </li>
+  <li>
+    <a id="change_password" href="{{ url_for('auth.change_password') }}">
+      <i class="fas fa-user fa-lg"></i>
+      Change Password
+    </a>
+  </li>
+  <li>
+    <a id="logout" href="{{ url_for('auth.logout') }}">
+      <i class="fas fa-sign-out-alt fa-lg"></i>
+      Logout
+    </a>
+  </li>
+{% else %}
+  <li>
+    <a id="login" href="{{ url_for('auth.login') }}">
+      <i class="fas fa-sign-in-alt fa-lg"></i>
+      Login
+    </a>
+  </li>
+{% endif %}
+ <li>
+    <a id="dark-toggle" href="#"
+      onclick="manageTheme(true)" title="Light/Dark">
+      <i class="fas fa-sun fa-lg"></i>
+      Toggle Theme
+    </a>
+  </li>
+  <li>
+    <a id="about" href="{{ url_for('main.about') }}">
+      <i style="padding-left: 6px;" class="fas fa-info fa-lg"></i>
+      About
+    </a>
+  </li>
+</ul>

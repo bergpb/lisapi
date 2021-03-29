@@ -1,4 +1,4 @@
-const url = location.pathname.split("/")[1]
+const url = location.pathname.split("/")[1];
 
 $(function() {
   if (url == ""){
@@ -37,7 +37,27 @@ function showSwLink(title, type, showCancel, textConfirm, colorConfirm, link){
       window.location.href = link;
     }
   });
-}
+};
+
+function manageTheme(change = false) {
+  if(localStorage.getItem('theme') === null){
+    localStorage.setItem('theme', "light");
+  }
+
+  if(change){
+    localStorage.setItem('theme', (localStorage.getItem('theme') === 'dark') ? 'light' : 'dark');
+  }
+
+  if(localStorage.getItem('theme') === 'dark'){
+    document.querySelector('body').classList.add('dark');
+    document.querySelector("#dark-toggle").children[0].classList.remove("fa-sun");
+    document.querySelector("#dark-toggle").children[0].classList.add("fa-moon");
+  } else {
+    document.querySelector('body').classList.remove('dark');
+    document.querySelector("#dark-toggle").children[0].classList.remove("fa-moon");
+    document.querySelector("#dark-toggle").children[0].classList.add("fa-sun");
+  }
+};
 
 (function() {
   if('serviceWorker' in navigator) {
