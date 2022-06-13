@@ -27,4 +27,4 @@ def create_app():
     from lisapi import cli
     cli.init_app(app)
 
-    return socketio, app
+    return app
