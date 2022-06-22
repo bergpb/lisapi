@@ -1,11 +1,11 @@
-### LisaPi - Flask Application
+## LisaPi - Flask Application
 
 Control your Raspberry Pi Pins with Flask application.
 
 *Tested in models B+ and 3B+*
 
 
-Features:
+#### Features:
 - Login
 - Some system info in dashboard (auto update using webockets).
 - Register pins to control.
@@ -13,7 +13,7 @@ Features:
 - PWA Ready.
 
 
-Flask modules:
+#### Flask modules:
 - Flask-Login
 - Flask-WTF
 - Flask-Migrate
@@ -21,11 +21,11 @@ Flask modules:
 - Flask-SocketIO
 
 
-System requirements:
+#### System requirements:
 ```sudo apt install build-essential libssl-dev libffi-dev python3-dev```
 
 
-Development (using poetry):
+#### Development (using poetry):
   1. Clone project,
   2. Enter in project folder,
   3. Install dependencies with poetry: ```poetry install```,
@@ -34,12 +34,12 @@ Development (using poetry):
   6. Run project in development mode: ```python wsgi.py```.
 
 
-Production:
+#### Production:
   1. [Deploy with Supervisor](https://github.com/bergpb/lisapi/wiki/Deploy-with-Supervisor)
   2. [Deploy with Nginx](https://github.com/bergpb/lisapi/wiki/Deploy-with-Nginx)
 
 
-To do:
+#### To do:
 - [x] User login.
 - [x] Save pins in database.
 - [x] Check if pin is disponible before register.
